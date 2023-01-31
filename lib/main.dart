@@ -244,6 +244,7 @@ class MyApp extends StatelessWidget {
           final palette = context.watch<Palette>();
 
           return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData.from(
               colorScheme: ColorScheme.fromSeed(

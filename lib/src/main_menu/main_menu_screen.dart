@@ -31,11 +31,11 @@ class MainMenuScreen extends StatelessWidget {
           child: Transform.rotate(
             angle: -0.1,
             child: const Text(
-              'Flutter Game Template!',
+              'Schrodinger\'s Box',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Permanent Marker',
-                fontSize: 55,
+                fontSize: 50,
                 height: 1,
               ),
             ),
@@ -47,7 +47,8 @@ class MainMenuScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 audioController.playSfx(SfxType.buttonTap);
-                GoRouter.of(context).go('/play');
+                // GoRouter.of(context).go('/play');
+                GoRouter.of(context).go('/play/session/1');
               },
               child: const Text('Play'),
             ),
