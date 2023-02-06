@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/play_session/game_board.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
@@ -54,6 +55,9 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
             onWin: _playerWon,
           ),
         ),
+        ChangeNotifierProvider(
+          create: (context) => GameState(),
+        ),
       ],
       child: IgnorePointer(
         ignoring: _duringCelebration,
@@ -76,7 +80,9 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                         ),
                       ),
                     ),
-                    Text('風險 ${1}'),
+                    Consumer<GameState>(builder: (context, state, child) {
+                      return Text('風險 ${state.currentRisk}');
+                    }),
                     GameBoard(),
                     const Spacer(),
                   ],
