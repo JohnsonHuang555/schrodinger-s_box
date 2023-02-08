@@ -12,6 +12,7 @@ enum MathSymbol {
 class GameState extends ChangeNotifier {
   int? currentRisk;
   List<MathSymbol> currentSymbols = [];
+  List<MathSymbol> selectedSymbols = [];
 
   GameState() {
     currentRisk = _getRandomNumber(10);
@@ -25,6 +26,6 @@ class GameState extends ChangeNotifier {
   }
 
   void selectSymbol(MathSymbol symbol) {
-    print(symbol);
+    selectedSymbols.add(symbol);
   }
 }

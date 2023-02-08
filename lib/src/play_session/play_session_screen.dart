@@ -63,12 +63,10 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         ignoring: _duringCelebration,
         child: Scaffold(
           backgroundColor: palette.backgroundPlaySession,
-          body: Stack(
-            children: [
-              Center(
-                // This is the entirety of the "game".
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Column(
                   children: [
                     Align(
                       alignment: Alignment.centerRight,
@@ -83,22 +81,18 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                     Consumer<GameState>(builder: (context, state, child) {
                       return Text('風險 ${state.currentRisk}');
                     }),
-                    GameBoard(),
-                    const Spacer(),
+                    Expanded(
+                      child: GameBoard(),
+                    ),
+                    Container(
+                      color: Colors.blue,
+                      height: 100,
+                      width: 100,
+                    )
                   ],
                 ),
-              ),
-              SizedBox.expand(
-                child: Visibility(
-                  visible: _duringCelebration,
-                  child: IgnorePointer(
-                    child: Confetti(
-                      isStopped: !_duringCelebration,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

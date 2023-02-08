@@ -8,18 +8,18 @@ class GameBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 400,
-      child: Consumer<GameState>(
-        builder: ((context, state, child) {
-          return GridView.count(
-            crossAxisCount: 3,
-            children: state.currentSymbols
-                .map((symbol) => GameCard(symbol: symbol))
-                .toList(),
-          );
-        }),
-      ),
+    return Consumer<GameState>(
+      builder: ((context, state, child) {
+        return GridView.count(
+          padding: const EdgeInsets.all(20),
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          crossAxisCount: 3,
+          children: state.currentSymbols
+              .map((symbol) => GameCard(symbol: symbol))
+              .toList(),
+        );
+      }),
     );
   }
 }
