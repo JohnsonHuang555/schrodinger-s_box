@@ -12,8 +12,8 @@ class GameBoard extends StatelessWidget {
       builder: ((context, state, child) {
         return GridView.count(
           padding: const EdgeInsets.all(20),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 15,
           crossAxisCount: 3,
           children: state.currentSymbols
               .map((symbol) => GameCard(symbol: symbol))

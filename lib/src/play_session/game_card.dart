@@ -6,7 +6,7 @@ class GameCard extends StatelessWidget {
   final MathSymbol symbol;
   const GameCard({super.key, required this.symbol});
 
-  IconData? GetIcon() {
+  IconData? getIcon() {
     switch (symbol) {
       case MathSymbol.plus:
         return Icons.add;
@@ -37,7 +37,7 @@ class GameCard extends StatelessWidget {
             margin: EdgeInsets.all(3.0),
             child: Center(
               child: Icon(
-                GetIcon(),
+                getIcon(),
                 color: Colors.white,
                 size: 40.0,
               ),

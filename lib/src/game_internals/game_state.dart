@@ -15,14 +15,43 @@ class GameState extends ChangeNotifier {
   List<MathSymbol> selectedSymbols = [];
 
   GameState() {
-    currentRisk = _getRandomNumber(10);
-    currentSymbols = GameRisk().risk1();
+    var risk = _getRandomNumber(3);
+    currentRisk = risk;
+
+    var symbols = _getSymbolsByRisk(risk);
+    currentSymbols = _shuffleArray(symbols);
   }
 
   /// 產生 1~max 的隨機亂數
   int _getRandomNumber(int max) {
     var random = Random();
     return random.nextInt(max) + 1;
+  }
+
+  List<MathSymbol> _getSymbolsByRisk(int? risk) {
+    switch (risk) {
+      case 1:
+        return GameRisk().risk1();
+      case 2:
+        return GameRisk().risk2();
+      case 3:
+        return GameRisk().risk3();
+      default:
+        return GameRisk().risk1();
+    }
+  }
+
+  /// 隨機洗牌
+  List<T> _shuffleArray<T>(List<T> array) {
+    var random = Random();
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = random.nextInt(i + 1);
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+
+    return array;
   }
 
   void selectSymbol(MathSymbol symbol) {
