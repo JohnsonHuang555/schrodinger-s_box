@@ -1,6 +1,9 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
+
 import './game_risk.dart';
+import './selected_symbol.dart';
 
 enum MathSymbol {
   plus,
@@ -12,7 +15,7 @@ enum MathSymbol {
 class GameState extends ChangeNotifier {
   int? currentRisk;
   List<MathSymbol> currentSymbols = [];
-  List<MathSymbol> selectedSymbols = [];
+  List<SelectedSymbol> selectedSymbols = [];
 
   GameState() {
     var risk = _getRandomNumber(3);
@@ -54,7 +57,9 @@ class GameState extends ChangeNotifier {
     return array;
   }
 
-  void selectSymbol(MathSymbol symbol) {
-    selectedSymbols.add(symbol);
+  void selectSymbol(int index, MathSymbol symbol) {
+    print(index);
+    print(symbol);
+    selectedSymbols.add(SelectedSymbol(index, symbol));
   }
 }

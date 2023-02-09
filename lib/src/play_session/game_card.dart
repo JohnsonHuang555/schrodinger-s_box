@@ -3,8 +3,9 @@ import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:provider/provider.dart';
 
 class GameCard extends StatelessWidget {
+  final int index;
   final MathSymbol symbol;
-  const GameCard({super.key, required this.symbol});
+  const GameCard({super.key, required this.index, required this.symbol});
 
   IconData? getIcon() {
     switch (symbol) {
@@ -25,7 +26,8 @@ class GameCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkResponse(
       onTap: () {
-        Provider.of<GameState>(context, listen: false).selectSymbol(symbol);
+        Provider.of<GameState>(context, listen: false)
+            .selectSymbol(index, symbol);
       },
       child: Center(
         child: Container(

@@ -6,19 +6,22 @@ import 'package:provider/provider.dart';
 class GameBoard extends StatelessWidget {
   const GameBoard({super.key});
 
+  List<Widget> getGameCard(List<MathSymbol> symbols) {
+    var cards = List.generate(symbols.length,
+        (index) => GameCard(index: index, symbol: symbols[index]));
+    return cards;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GameState>(
       builder: ((context, state, child) {
         return GridView.count(
-          padding: const EdgeInsets.all(20),
-          crossAxisSpacing: 15,
-          mainAxisSpacing: 15,
-          crossAxisCount: 3,
-          children: state.currentSymbols
-              .map((symbol) => GameCard(symbol: symbol))
-              .toList(),
-        );
+            padding: const EdgeInsets.all(20),
+            crossAxisSpacing: 15,
+            mainAxisSpacing: 15,
+            crossAxisCount: 3,
+            children: getGameCard(state.currentSymbols));
       }),
     );
   }
