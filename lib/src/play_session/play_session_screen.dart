@@ -20,7 +20,6 @@ import '../games_services/score.dart';
 import '../in_app_purchase/in_app_purchase.dart';
 import '../level_selection/levels.dart';
 import '../player_progress/player_progress.dart';
-import '../style/confetti.dart';
 import '../style/palette.dart';
 
 class PlaySessionScreen extends StatefulWidget {
@@ -68,6 +67,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               children: [
                 Column(
                   children: [
+                    // toolbar
                     Align(
                       alignment: Alignment.centerRight,
                       child: InkResponse(
@@ -78,16 +78,65 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                         ),
                       ),
                     ),
+                    // 關卡風險
                     Consumer<GameState>(builder: (context, state, child) {
-                      return Text('風險 ${state.currentRisk}');
+                      return Text(
+                        '風險 ${state.currentRisk}',
+                        style: TextStyle(fontSize: 24),
+                      );
                     }),
+                    // 盒子
                     Expanded(
+                      flex: 2,
                       child: GameBoard(),
                     ),
+                    // 內容物
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '請選擇至少兩個符號',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          Text(
+                            '內容物',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Consumer<GameState>(
+                            builder: (context, state, child) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: state.symbolsHint
+                                    .map(
+                                      (icon) => Icon(
+                                        icon,
+                                        size: 30.0,
+                                      ),
+                                    )
+                                    .toList(),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                     Container(
-                      color: Colors.blue,
-                      height: 100,
-                      width: 100,
+                      margin: EdgeInsets.all(10),
+                      child: ElevatedButton(
+                        child: Text('確定'),
+                        onPressed: () {
+                          // 跳彈窗
+                        },
+                      ),
                     )
                   ],
                 ),

@@ -7,8 +7,12 @@ class GameBoard extends StatelessWidget {
   const GameBoard({super.key});
 
   List<Widget> getGameCard(List<MathSymbol> symbols) {
-    var cards = List.generate(symbols.length,
-        (index) => GameCard(index: index, symbol: symbols[index]));
+    var cards = List.generate(symbols.length, (index) {
+      return GameCard(
+        index: index,
+        symbol: symbols[index],
+      );
+    });
     return cards;
   }
 

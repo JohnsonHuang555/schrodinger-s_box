@@ -18,30 +18,54 @@ class GameState extends ChangeNotifier {
   List<SelectedSymbol> selectedSymbols = [];
 
   GameState() {
-    var risk = _getRandomNumber(3);
-    currentRisk = risk;
+    currentRisk = _getRandomNumber(3);
+    currentSymbols = _getCurrentSymbols();
+  }
 
-    var symbols = _getSymbolsByRisk(risk);
-    currentSymbols = _shuffleArray(symbols);
+  // 所有關卡的盒子
+  List<MathSymbol> _getCurrentSymbols() {
+    List<MathSymbol> symbols;
+    switch (currentRisk) {
+      case 1:
+        symbols = GameRisk.risk1();
+        break;
+      case 2:
+        symbols = GameRisk.risk2();
+        break;
+      case 3:
+        symbols = GameRisk.risk3();
+        break;
+      default:
+        symbols = GameRisk.risk1();
+        break;
+    }
+    return _shuffleArray(symbols);
+  }
+
+  // 關卡提示內容物
+  List<IconData> get symbolsHint {
+    List<IconData> icons;
+    switch (currentRisk) {
+      case 1:
+        icons = [Icons.add_circle, Icons.remove_circle];
+        break;
+      case 2:
+        icons = [Icons.add_circle, Icons.remove_circle, Icons.question_mark];
+        break;
+      case 3:
+        icons = [Icons.add_circle, Icons.remove_circle, Icons.question_mark];
+        break;
+      default:
+        icons = [Icons.add_circle, Icons.remove_circle];
+        break;
+    }
+    return icons;
   }
 
   /// 產生 1~max 的隨機亂數
   int _getRandomNumber(int max) {
     var random = Random();
     return random.nextInt(max) + 1;
-  }
-
-  List<MathSymbol> _getSymbolsByRisk(int? risk) {
-    switch (risk) {
-      case 1:
-        return GameRisk().risk1();
-      case 2:
-        return GameRisk().risk2();
-      case 3:
-        return GameRisk().risk3();
-      default:
-        return GameRisk().risk1();
-    }
   }
 
   /// 隨機洗牌
@@ -58,8 +82,7 @@ class GameState extends ChangeNotifier {
   }
 
   void selectSymbol(int index, MathSymbol symbol) {
-    print(index);
-    print(symbol);
     selectedSymbols.add(SelectedSymbol(index, symbol));
+    notifyListeners();
   }
 }
