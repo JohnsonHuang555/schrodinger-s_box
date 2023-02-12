@@ -81,8 +81,26 @@ class GameState extends ChangeNotifier {
     return array;
   }
 
+  // 選擇符號
   void selectSymbol(int index, MathSymbol symbol) {
-    selectedSymbols.add(SelectedSymbol(index, symbol));
+    var isExist = false;
+    for (var element in selectedSymbols) {
+      if (element.index == index) {
+        isExist = true;
+        break;
+      }
+    }
+
+    if (selectedSymbols.isEmpty || !isExist) {
+      selectedSymbols.add(SelectedSymbol(index, symbol));
+      notifyListeners();
+      return;
+    }
+
+    if (isExist) {
+      selectedSymbols.removeWhere((element) => element.index == index);
+    }
+
     notifyListeners();
   }
 }

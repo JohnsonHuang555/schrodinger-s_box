@@ -21,14 +21,18 @@ class _GameCardState extends State<GameCard> {
 
   @override
   Widget build(BuildContext context) {
-    print("repaint");
     var selectedSymbols = Provider.of<GameState>(context).selectedSymbols;
-    // var a = selectedSymbols.every((element) => element.index == widget.index);
+    if (selectedSymbols.isEmpty) {
+      setState(() {
+        isChecked = false;
+      });
+    }
     for (var element in selectedSymbols) {
       if (element.index == widget.index) {
         setState(() {
-          isChecked = true;
+          isChecked = element.index == widget.index;
         });
+        break;
       }
     }
     return InkResponse(
