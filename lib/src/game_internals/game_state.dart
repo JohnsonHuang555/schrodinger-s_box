@@ -92,6 +92,10 @@ class GameState extends ChangeNotifier {
     }
 
     if (selectedSymbols.isEmpty || !isExist) {
+      // 最多選三個
+      if (selectedSymbols.length == 3) {
+        return;
+      }
       selectedSymbols.add(SelectedSymbol(index, symbol));
       notifyListeners();
       return;

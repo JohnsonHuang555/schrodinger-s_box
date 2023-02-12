@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_template/src/game_internals/game_risk.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
+import 'package:game_template/src/game_internals/selected_symbol.dart';
 import 'package:provider/provider.dart';
 
 class GameCard extends StatefulWidget {
@@ -27,14 +28,28 @@ class _GameCardState extends State<GameCard> {
         isChecked = false;
       });
     }
-    for (var element in selectedSymbols) {
-      if (element.index == widget.index) {
-        setState(() {
-          isChecked = element.index == widget.index;
-        });
-        break;
-      }
+
+    var alreadySelected = selectedSymbols.singleWhere(
+        (element) => element.index == widget.index,
+        orElse: () => SelectedSymbol(-1, null));
+
+    if (alreadySelected.index != -1) {
+      setState(() {
+        isChecked = true;
+      });
+    } else {
+      setState(() {
+        isChecked = false;
+      });
     }
+
+    // for (var element in selectedSymbols) {
+    //   if (element.index == widget.index) {
+    //     setState(() {
+    //       isChecked = true;
+    //     });
+    //   }
+    // }
     return InkResponse(
       onTap: () {
         Provider.of<GameState>(context, listen: false)

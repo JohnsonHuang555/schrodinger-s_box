@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
+import 'package:game_template/src/play_session/confirm_dialog.dart';
 import 'package:game_template/src/play_session/game_board.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
@@ -98,7 +99,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                             height: 10,
                           ),
                           Text(
-                            '請選擇至少兩個符號',
+                            '請選擇至少兩個最多三個',
                             style: TextStyle(fontSize: 14),
                           ),
                           SizedBox(
@@ -129,13 +130,15 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                         ],
                       ),
                     ),
+                    // 確認視窗
                     Container(
                       margin: EdgeInsets.all(10),
                       child: ElevatedButton(
                         child: Text('確定'),
-                        onPressed: () {
-                          // 跳彈窗
-                        },
+                        onPressed: () => showDialog<String>(
+                          context: context,
+                          builder: (context) => ConfirmDialog(),
+                        ),
                       ),
                     )
                   ],
