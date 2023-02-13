@@ -25,7 +25,7 @@ class GameBoard extends StatelessWidget {
             crossAxisSpacing: 15,
             mainAxisSpacing: 15,
             crossAxisCount: 3,
-            children: getGameCard(state.currentSymbols));
+            children: getGameCard(state.mathSymbols));
       }),
     );
   }

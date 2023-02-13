@@ -13,19 +13,21 @@ enum MathSymbol {
 }
 
 class GameState extends ChangeNotifier {
-  int? currentRisk;
-  List<MathSymbol> currentSymbols = [];
+  int? risk;
+  List<MathSymbol> mathSymbols = [];
   List<SelectedSymbol> selectedSymbols = [];
 
+  int step = 1;
+
   GameState() {
-    currentRisk = _getRandomNumber(3);
-    currentSymbols = _getCurrentSymbols();
+    risk = _getRandomNumber(3);
+    mathSymbols = _getCurrentSymbols();
   }
 
   // 所有關卡的盒子
   List<MathSymbol> _getCurrentSymbols() {
     List<MathSymbol> symbols;
-    switch (currentRisk) {
+    switch (risk) {
       case 1:
         symbols = GameRisk.risk1();
         break;
@@ -42,10 +44,23 @@ class GameState extends ChangeNotifier {
     return _shuffleArray(symbols);
   }
 
+  String get currentStep {
+    switch (step) {
+      case 1:
+        return '符號';
+      case 2:
+        return '數字';
+      case 3:
+        return '組合';
+      default:
+        return '';
+    }
+  }
+
   // 關卡提示內容物
   List<IconData> get symbolsHint {
     List<IconData> icons;
-    switch (currentRisk) {
+    switch (risk) {
       case 1:
         icons = [Icons.add_circle, Icons.remove_circle];
         break;
@@ -79,6 +94,15 @@ class GameState extends ChangeNotifier {
     }
 
     return array;
+  }
+
+  // 下一步
+  void nextStep() {
+    if (selectedSymbols.isEmpty) {
+      return;
+    }
+    step = step + 1;
+    notifyListeners();
   }
 
   // 選擇符號

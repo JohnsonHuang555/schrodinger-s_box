@@ -43,13 +43,6 @@ class _GameCardState extends State<GameCard> {
       });
     }
 
-    // for (var element in selectedSymbols) {
-    //   if (element.index == widget.index) {
-    //     setState(() {
-    //       isChecked = true;
-    //     });
-    //   }
-    // }
     return InkResponse(
       onTap: () {
         Provider.of<GameState>(context, listen: false)

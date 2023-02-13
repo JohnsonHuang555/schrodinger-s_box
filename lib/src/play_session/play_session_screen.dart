@@ -82,7 +82,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                     // 關卡風險
                     Consumer<GameState>(builder: (context, state, child) {
                       return Text(
-                        '風險 ${state.currentRisk}',
+                        '風險 ${state.risk} - ${state.currentStep}',
                         style: TextStyle(fontSize: 24),
                       );
                     }),
@@ -99,7 +99,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                             height: 10,
                           ),
                           Text(
-                            '請選擇至少兩個最多三個',
+                            '請選擇至少一個最多三個',
                             style: TextStyle(fontSize: 14),
                           ),
                           SizedBox(
