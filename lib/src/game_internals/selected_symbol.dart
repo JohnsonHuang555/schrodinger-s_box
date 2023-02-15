@@ -1,8 +1,13 @@
 import './game_state.dart';
 
-class SelectedSymbol {
+class SelectedItem {
   int index;
   MathSymbol? symbol;
+  int? number;
 
-  SelectedSymbol(this.index, this.symbol);
+  SelectedItem({
+    required this.index,
+    this.symbol,
+    this.number,
+  });
 }

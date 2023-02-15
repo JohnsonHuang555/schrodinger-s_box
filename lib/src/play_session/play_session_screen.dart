@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/play_session/confirm_dialog.dart';
 import 'package:game_template/src/play_session/game_board.dart';
+import 'package:game_template/src/play_session/symbols_hint.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
 import 'package:provider/provider.dart';
@@ -67,7 +68,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
             child: Stack(
               children: [
                 Consumer<GameState>(builder: ((context, state, child) {
-                  print(state.step);
+                  print(state.selectedItems.length);
                   return Column(
                     children: [
                       // toolbar
@@ -89,43 +90,20 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       // 盒子
                       Expanded(
                         flex: 2,
-                        child: GameBoard(),
-                      ),
-                      // 內容物
-                      Expanded(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              '請選擇至少一個最多三個',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            Text(
-                              '內容物',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: state.symbolsHint
-                                  .map(
-                                    (icon) => Icon(
-                                      icon,
-                                      size: 30.0,
-                                    ),
-                                  )
-                                  .toList(),
-                            )
-                          ],
+                        child: GameBoard<MathSymbol>(
+                          items: state.mathSymbols,
+                          selectedItems: state.selectedItems,
+                          isSymbol: true,
+                          onSelect: ({dynamic index, dynamic item}) {
+                            state.selectItem(
+                              index: index as int,
+                              symbol: item as MathSymbol,
+                            );
+                          },
                         ),
                       ),
+                      // 內容物
+                      Expanded(child: SymbolsHint(symbols: state.symbolsHint)),
                       // 確認視窗
                       Container(
                         margin: EdgeInsets.all(10),

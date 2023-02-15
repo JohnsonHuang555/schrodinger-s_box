@@ -4,13 +4,19 @@ import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
 import 'package:provider/provider.dart';
 
-class GameCard extends StatefulWidget {
+class GameCard<T> extends StatefulWidget {
   final int index;
-  final MathSymbol symbol;
+  final T item;
+  final List<SelectedItem> selectedItems;
+  final bool isSymbol;
+  final dynamic onTap;
   const GameCard({
     super.key,
     required this.index,
-    required this.symbol,
+    required this.item,
+    required this.selectedItems,
+    required this.isSymbol,
+    required this.onTap,
   });
 
   @override
@@ -22,16 +28,15 @@ class _GameCardState extends State<GameCard> {
 
   @override
   Widget build(BuildContext context) {
-    var selectedSymbols = Provider.of<GameState>(context).selectedSymbols;
-    if (selectedSymbols.isEmpty) {
+    if (widget.selectedItems.isEmpty) {
       setState(() {
         isChecked = false;
       });
     }
 
-    var alreadySelected = selectedSymbols.singleWhere(
+    var alreadySelected = widget.selectedItems.singleWhere(
         (element) => element.index == widget.index,
-        orElse: () => SelectedSymbol(-1, null));
+        orElse: () => SelectedItem(index: -1));
 
     if (alreadySelected.index != -1) {
       setState(() {
@@ -45,45 +50,45 @@ class _GameCardState extends State<GameCard> {
 
     return InkResponse(
       onTap: () {
-        Provider.of<GameState>(context, listen: false)
-            .selectSymbol(widget.index, widget.symbol);
+        widget.onTap(index: widget.index, item: widget.item);
       },
-      child: Consumer<GameState>(builder: (context, state, child) {
-        return Stack(
-          children: [
-            Center(
+      child: Stack(
+        children: [
+          Center(
+            child: Container(
+              color: Colors.blue,
               child: Container(
-                color: Colors.blue,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  margin: EdgeInsets.all(3.0),
-                  child: Center(
-                    child: Icon(
-                      GameRisk.convertSymbolToIcon(widget.symbol),
-                      color: Colors.white,
-                      size: 40.0,
-                    ),
-                  ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(3.0),
+                child: Center(
+                  child: widget.isSymbol
+                      ? Icon(
+                          GameRisk.convertSymbolToIcon(
+                              widget.item as MathSymbol),
+                          color: Colors.white,
+                          size: 40.0,
+                        )
+                      : Text(widget.item.toString()),
                 ),
               ),
             ),
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: Colors.blueAccent,
-              child: Center(
-                  child: isChecked
-                      ? Icon(
-                          Icons.check,
-                          size: 30,
-                        )
-                      : null),
-            ),
-          ],
-        );
-      }),
+          ),
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.blueAccent,
+            child: Center(
+                child: isChecked
+                    ? Icon(
+                        Icons.check,
+                        size: 30,
+                      )
+                    : null),
+          ),
+        ],
+      ),
     );
   }
 }

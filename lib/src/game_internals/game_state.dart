@@ -15,7 +15,7 @@ enum MathSymbol {
 class GameState extends ChangeNotifier {
   int? risk;
   List<MathSymbol> mathSymbols = [];
-  List<SelectedSymbol> selectedSymbols = [];
+  List<SelectedItem> selectedItems = [];
 
   int step = 1;
 
@@ -98,35 +98,40 @@ class GameState extends ChangeNotifier {
 
   // 下一步
   void nextStep() {
-    if (selectedSymbols.isEmpty) {
+    if (selectedItems.isEmpty) {
       return;
     }
     step = step + 1;
     notifyListeners();
   }
 
-  // 選擇符號
-  void selectSymbol(int index, MathSymbol symbol) {
+  // 選擇盒子
+  void selectItem({required int index, MathSymbol? symbol, int? number}) {
     var isExist = false;
-    for (var element in selectedSymbols) {
+    for (var element in selectedItems) {
       if (element.index == index) {
         isExist = true;
         break;
       }
     }
 
-    if (selectedSymbols.isEmpty || !isExist) {
+    if (selectedItems.isEmpty || !isExist) {
       // 最多選三個
-      if (selectedSymbols.length == 3) {
+      if (selectedItems.length == 3) {
         return;
       }
-      selectedSymbols.add(SelectedSymbol(index, symbol));
+
+      selectedItems.add(SelectedItem(
+        index: index,
+        symbol: symbol,
+        number: number,
+      ));
       notifyListeners();
       return;
     }
 
     if (isExist) {
-      selectedSymbols.removeWhere((element) => element.index == index);
+      selectedItems.removeWhere((element) => element.index == index);
     }
 
     notifyListeners();
