@@ -15,6 +15,7 @@ enum MathSymbol {
 class GameState extends ChangeNotifier {
   int? risk;
   List<MathSymbol> mathSymbols = [];
+  List<double> numbers = [];
   List<SelectedItem> selectedItems = [];
 
   int step = 1;
@@ -22,26 +23,47 @@ class GameState extends ChangeNotifier {
   GameState() {
     risk = _getRandomNumber(3);
     mathSymbols = _getCurrentSymbols();
+    numbers = _getCurrentNumbers();
   }
 
-  // 所有關卡的盒子
+  // 所有關卡符號的盒子
   List<MathSymbol> _getCurrentSymbols() {
     List<MathSymbol> symbols;
     switch (risk) {
       case 1:
-        symbols = GameRisk.risk1();
+        symbols = GameRisk.symbolRisk1();
         break;
       case 2:
-        symbols = GameRisk.risk2();
+        symbols = GameRisk.symbolRisk2();
         break;
       case 3:
-        symbols = GameRisk.risk3();
+        symbols = GameRisk.symbolRisk3();
         break;
       default:
-        symbols = GameRisk.risk1();
+        symbols = GameRisk.symbolRisk1();
         break;
     }
     return _shuffleArray(symbols);
+  }
+
+  // 所有關卡數字的盒子
+  List<double> _getCurrentNumbers() {
+    List<double> numbers;
+    switch (risk) {
+      case 1:
+        numbers = GameRisk.numberRisk1();
+        break;
+      case 2:
+        numbers = GameRisk.numberRisk2();
+        break;
+      case 3:
+        numbers = GameRisk.numberRisk3();
+        break;
+      default:
+        numbers = GameRisk.numberRisk1();
+        break;
+    }
+    return _shuffleArray(numbers);
   }
 
   String get currentStep {
@@ -58,7 +80,7 @@ class GameState extends ChangeNotifier {
   }
 
   // 關卡提示內容物
-  List<IconData> get symbolsHint {
+  List<IconData> get contentHint {
     List<IconData> icons;
     switch (risk) {
       case 1:
@@ -106,7 +128,7 @@ class GameState extends ChangeNotifier {
   }
 
   // 選擇盒子
-  void selectItem({required int index, MathSymbol? symbol, int? number}) {
+  void selectItem({required int index, MathSymbol? symbol, double? number}) {
     var isExist = false;
     for (var element in selectedItems) {
       if (element.index == index) {
@@ -119,6 +141,10 @@ class GameState extends ChangeNotifier {
       // 最多選三個
       if (selectedItems.length == 3) {
         return;
+      }
+
+      if (step == 2) {
+        // var currentSelectedSymbolCount = selectedItems.firstWhere((element) => element.symbol);
       }
 
       selectedItems.add(SelectedItem(

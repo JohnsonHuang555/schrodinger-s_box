@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/play_session/confirm_dialog.dart';
 import 'package:game_template/src/play_session/game_board.dart';
-import 'package:game_template/src/play_session/symbols_hint.dart';
+import 'package:game_template/src/play_session/content_hint.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
 import 'package:provider/provider.dart';
@@ -43,6 +43,37 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   bool _duringCelebration = false;
 
   late DateTime _startOfPlay;
+
+  Widget _getGameBoard(GameState state) {
+    switch (state.step) {
+      case 1:
+        return GameBoard<MathSymbol>(
+          items: state.mathSymbols,
+          selectedItems: state.selectedItems,
+          isSymbol: true,
+          onSelect: ({dynamic index, dynamic item}) {
+            state.selectItem(
+              index: index as int,
+              symbol: item as MathSymbol,
+            );
+          },
+        );
+      case 2:
+        return GameBoard<double>(
+          items: state.numbers,
+          selectedItems: state.selectedItems,
+          isSymbol: false,
+          onSelect: ({dynamic index, dynamic item}) {
+            state.selectItem(
+              index: index as int,
+              number: item as double,
+            );
+          },
+        );
+      default:
+        return Text('Something wrong...');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,20 +121,17 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       // 盒子
                       Expanded(
                         flex: 2,
-                        child: GameBoard<MathSymbol>(
-                          items: state.mathSymbols,
-                          selectedItems: state.selectedItems,
-                          isSymbol: true,
-                          onSelect: ({dynamic index, dynamic item}) {
-                            state.selectItem(
-                              index: index as int,
-                              symbol: item as MathSymbol,
-                            );
-                          },
-                        ),
+                        child: _getGameBoard(state),
                       ),
                       // 內容物
-                      Expanded(child: SymbolsHint(symbols: state.symbolsHint)),
+                      Expanded(
+                        child: ContentHint(
+                          content: state.contentHint,
+                          currentSelectedSymbolCount:
+                              state.selectedItems.length,
+                          step: state.step,
+                        ),
+                      ),
                       // 確認視窗
                       Container(
                         margin: EdgeInsets.all(10),

@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
 
-class SymbolsHint extends StatelessWidget {
-  final List<IconData> symbols;
-  const SymbolsHint({super.key, required this.symbols});
+class ContentHint extends StatelessWidget {
+  final List<IconData> content;
+  final int currentSelectedSymbolCount;
+  final int step;
+  const ContentHint({
+    super.key,
+    required this.content,
+    required this.currentSelectedSymbolCount,
+    required this.step,
+  });
+
+  String _getDescription() {
+    switch (step) {
+      case 1:
+        return '請選擇至少 1 個最多 3 個';
+      case 2:
+        return '請選擇 $currentSelectedSymbolCount 個';
+      default:
+        return 'Something wrong...';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +30,7 @@ class SymbolsHint extends StatelessWidget {
           height: 10,
         ),
         Text(
-          '請選擇至少一個最多三個',
+          _getDescription(),
           style: TextStyle(fontSize: 14),
         ),
         SizedBox(
@@ -27,7 +45,7 @@ class SymbolsHint extends StatelessWidget {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: symbols
+          children: content
               .map(
                 (icon) => Icon(
                   icon,

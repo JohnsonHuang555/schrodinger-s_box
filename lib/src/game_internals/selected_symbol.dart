@@ -3,7 +3,7 @@ import './game_state.dart';
 class SelectedItem {
   int index;
   MathSymbol? symbol;
-  int? number;
+  double? number;
 
   SelectedItem({
     required this.index,
