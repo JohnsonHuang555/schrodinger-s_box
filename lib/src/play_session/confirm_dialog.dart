@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../game_internals/game_state.dart';
 
 class ConfirmDialog extends StatelessWidget {
-  const ConfirmDialog({super.key});
+  final VoidCallback onConfirm;
+  const ConfirmDialog({
+    super.key,
+    required this.onConfirm,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,8 @@ class ConfirmDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            Provider.of<GameState>(context, listen: false).nextStep();
+            Navigator.of(context).pop();
+            onConfirm();
           },
           child: const Text('確定'),
         ),

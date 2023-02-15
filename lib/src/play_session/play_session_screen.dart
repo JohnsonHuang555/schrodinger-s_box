@@ -66,83 +66,84 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
           body: SafeArea(
             child: Stack(
               children: [
-                Column(
-                  children: [
-                    // toolbar
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: InkResponse(
-                        onTap: () => GoRouter.of(context).push('/settings'),
-                        child: Image.asset(
-                          'assets/images/settings.png',
-                          semanticLabel: 'Settings',
+                Consumer<GameState>(builder: ((context, state, child) {
+                  print(state.step);
+                  return Column(
+                    children: [
+                      // toolbar
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: InkResponse(
+                          onTap: () => GoRouter.of(context).push('/settings'),
+                          child: Image.asset(
+                            'assets/images/settings.png',
+                            semanticLabel: 'Settings',
+                          ),
                         ),
                       ),
-                    ),
-                    // 關卡風險
-                    Consumer<GameState>(builder: (context, state, child) {
-                      return Text(
+                      // 關卡風險
+                      Text(
                         '風險 ${state.risk} - ${state.currentStep}',
                         style: TextStyle(fontSize: 24),
-                      );
-                    }),
-                    // 盒子
-                    Expanded(
-                      flex: 2,
-                      child: GameBoard(),
-                    ),
-                    // 內容物
-                    Expanded(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            '請選擇至少一個最多三個',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          Text(
-                            '內容物',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Consumer<GameState>(
-                            builder: (context, state, child) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: state.symbolsHint
-                                    .map(
-                                      (icon) => Icon(
-                                        icon,
-                                        size: 30.0,
-                                      ),
-                                    )
-                                    .toList(),
-                              );
-                            },
-                          ),
-                        ],
                       ),
-                    ),
-                    // 確認視窗
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        child: Text('確定'),
-                        onPressed: () => showDialog<String>(
-                          context: context,
-                          builder: (context) => ConfirmDialog(),
+                      // 盒子
+                      Expanded(
+                        flex: 2,
+                        child: GameBoard(),
+                      ),
+                      // 內容物
+                      Expanded(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              '請選擇至少一個最多三個',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Text(
+                              '內容物',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: state.symbolsHint
+                                  .map(
+                                    (icon) => Icon(
+                                      icon,
+                                      size: 30.0,
+                                    ),
+                                  )
+                                  .toList(),
+                            )
+                          ],
                         ),
                       ),
-                    )
-                  ],
-                ),
+                      // 確認視窗
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          child: Text('確定'),
+                          onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (context) => ConfirmDialog(
+                              onConfirm: (() {
+                                state.nextStep();
+                              }),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }))
               ],
             ),
           ),
