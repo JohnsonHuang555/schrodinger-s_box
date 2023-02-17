@@ -49,9 +49,16 @@ class _GameCardState extends State<GameCard> {
       });
     }
 
-    var alreadySelected = widget.selectedItems.singleWhere(
-        (element) => element.index == widget.index,
-        orElse: () => SelectedItem(index: -1));
+    SelectedItem alreadySelected;
+    if (widget.isSymbol) {
+      alreadySelected = widget.selectedItems.singleWhere(
+          (element) => element.index == widget.index && element.symbol != null,
+          orElse: () => SelectedItem(index: -1));
+    } else {
+      alreadySelected = widget.selectedItems.singleWhere(
+          (element) => element.index == widget.index && element.number != null,
+          orElse: () => SelectedItem(index: -1));
+    }
 
     if (alreadySelected.index != -1) {
       setState(() {
@@ -96,18 +103,18 @@ class _GameCardState extends State<GameCard> {
               ),
             ),
           ),
-          // Container(
-          //   height: double.infinity,
-          //   width: double.infinity,
-          //   color: Colors.blueAccent,
-          //   child: Center(
-          //       child: isChecked
-          //           ? Icon(
-          //               Icons.check,
-          //               size: 30,
-          //             )
-          //           : null),
-          // ),
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.blueAccent,
+            child: Center(
+                child: isChecked
+                    ? Icon(
+                        Icons.check,
+                        size: 30,
+                      )
+                    : null),
+          ),
         ],
       ),
     );

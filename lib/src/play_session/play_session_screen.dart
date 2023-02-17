@@ -127,8 +127,9 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       Expanded(
                         child: ContentHint(
                           content: state.contentHint,
-                          currentSelectedSymbolCount:
-                              state.selectedItems.length,
+                          currentSelectedSymbolCount: state.selectedItems
+                              .where((element) => element.symbol != null)
+                              .length,
                           step: state.step,
                         ),
                       ),

@@ -129,37 +129,52 @@ class GameState extends ChangeNotifier {
 
   // 選擇盒子
   void selectItem({required int index, MathSymbol? symbol, double? number}) {
-    var isExist = false;
-    for (var element in selectedItems) {
-      if (element.index == index) {
-        isExist = true;
-        break;
-      }
-    }
-
-    if (selectedItems.isEmpty || !isExist) {
-      // 最多選三個
-      if (selectedItems.length == 3) {
-        return;
+    if (step == 1) {
+      var isExist = false;
+      for (var element in selectedItems) {
+        if (element.index == index && element.symbol != null) {
+          isExist = true;
+          break;
+        }
       }
 
-      if (step == 2) {
-        // var currentSelectedSymbolCount = selectedItems.firstWhere((element) => element.symbol);
+      // 第一階段最多選三個
+      if (!isExist && selectedItems.length != 3) {
+        selectedItems.add(SelectedItem(
+          index: index,
+          symbol: symbol,
+        ));
+      }
+      if (isExist) {
+        selectedItems.removeWhere(
+            (element) => element.index == index && element.symbol != null);
+      }
+    } else {
+      var isExist = false;
+      for (var element in selectedItems) {
+        if (element.index == index && element.number != null) {
+          isExist = true;
+          break;
+        }
       }
 
-      selectedItems.add(SelectedItem(
-        index: index,
-        symbol: symbol,
-        number: number,
-      ));
-      notifyListeners();
-      return;
-    }
+      // 已選擇的符號
+      var currentSelectedSymbolCount =
+          selectedItems.where((element) => element.symbol != null).length;
 
-    if (isExist) {
-      selectedItems.removeWhere((element) => element.index == index);
+      // 第二階段依照第一階段選幾個就要選幾個
+      if (!isExist &&
+          currentSelectedSymbolCount * 2 >= selectedItems.length + 1) {
+        selectedItems.add(SelectedItem(
+          index: index,
+          number: number,
+        ));
+      }
+      if (isExist) {
+        selectedItems.removeWhere(
+            (element) => element.index == index && element.number != null);
+      }
     }
-
     notifyListeners();
   }
 }
