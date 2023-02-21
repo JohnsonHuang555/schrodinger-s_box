@@ -123,6 +123,15 @@ class GameState extends ChangeNotifier {
     if (selectedItems.isEmpty) {
       return;
     }
+    // 要等於 step 1 的數量
+    if (step == 2) {
+      // 已選擇的符號
+      var currentSelectedSymbolCount =
+          selectedItems.where((element) => element.symbol != null).length;
+      if (selectedItems.length != currentSelectedSymbolCount * 2) {
+        return;
+      }
+    }
     step = step + 1;
     notifyListeners();
   }

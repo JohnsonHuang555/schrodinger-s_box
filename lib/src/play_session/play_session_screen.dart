@@ -70,6 +70,53 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
             );
           },
         );
+      case 3:
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(children: [
+              Text(
+                '當 x= 100 時',
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueAccent,
+                      ),
+                      width: 60,
+                      height: 90,
+                      child: Center(
+                        child: Text(
+                          'x',
+                          style: TextStyle(
+                            fontSize: 36,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ]),
+            Text(
+              '= ?',
+              style: TextStyle(fontSize: 40),
+            )
+          ],
+        );
       default:
         return Text('Something wrong...');
     }
@@ -127,6 +174,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       Expanded(
                         child: ContentHint(
                           content: state.contentHint,
+                          selectedItems: state.selectedItems,
                           currentSelectedSymbolCount: state.selectedItems
                               .where((element) => element.symbol != null)
                               .length,
