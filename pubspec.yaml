@@ -7,7 +7,7 @@ publish_to: 'none'
 version: 0.0.1+1
 
 environment:
-  sdk: ">=2.17.0-0 <3.0.0"
+  sdk: '>=2.17.0-0 <3.0.0'
 
 dependencies:
   flutter:
@@ -23,11 +23,11 @@ dependencies:
   # If you don't need one of the following dependencies,
   # delete the relevant line below, and get rid of any Dart code
   # that references the dependency.
-  firebase_core: ^2.1.1  # Needed for Crashlytics below
-  firebase_crashlytics: ^3.0.3  # Error reporting
-  games_services: ^3.0.0  # Achievements and leaderboards
-  google_mobile_ads: ^2.0.1  # Ads
-  in_app_purchase: ^3.0.1  # In-app purchases
+  firebase_core: ^2.1.1 # Needed for Crashlytics below
+  firebase_crashlytics: ^3.0.3 # Error reporting
+  games_services: ^3.0.0 # Achievements and leaderboards
+  google_mobile_ads: ^2.0.1 # Ads
+  in_app_purchase: ^3.0.1 # In-app purchases
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +53,6 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icon.png"
-  adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/icon-adaptive-foreground.png"
+  image_path: 'assets/icon.png'
+  adaptive_icon_background: '#FFFFFF'
+  adaptive_icon_foreground: 'assets/icon-adaptive-foreground.png'

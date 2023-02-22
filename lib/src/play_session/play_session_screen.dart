@@ -42,8 +42,22 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   bool _duringCelebration = false;
 
   late DateTime _startOfPlay;
+  final _scrollController = ScrollController();
+  final _gridViewKey = GlobalKey();
+  final _fruits = <String>["apple", "banana", "strawberry"];
 
   Widget _getGameBoard(GameState state) {
+    final generatedChildren = List.generate(
+      _fruits.length,
+      (index) => Container(
+        key: Key(_fruits.elementAt(index)),
+        color: Colors.lightBlue,
+        child: Text(
+          _fruits.elementAt(index),
+        ),
+      ),
+    );
+
     switch (state.step) {
       case 1:
         return GameBoard<MathSymbol>(
@@ -164,10 +178,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
             child: Stack(
               children: [
                 Consumer<GameState>(builder: ((context, state, child) {
-                  print(state.selectedItems.length);
                   return Column(
                     children: [
-                      // toolbar
                       Align(
                         alignment: Alignment.centerRight,
                         child: InkResponse(
@@ -185,7 +197,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       ),
                       // 盒子
                       Expanded(
-                        flex: 2,
+                        flex: state.step == 3 ? 4 : 2,
                         child: _getGameBoard(state),
                       ),
                       // 內容物
