@@ -80,7 +80,7 @@ class GameState extends ChangeNotifier {
   }
 
   // 關卡提示內容物
-  List<IconData> get contentHint {
+  List<IconData> get hint {
     List<IconData> icons;
     switch (risk) {
       case 1:

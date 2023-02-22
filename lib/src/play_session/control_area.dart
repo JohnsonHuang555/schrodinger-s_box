@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
+import 'package:game_template/src/play_session/confirm_dialog.dart';
 
-class ContentHint extends StatelessWidget {
+/// 提示與操作區塊
+class ControlArea extends StatelessWidget {
   final List<IconData> content;
   final List<SelectedItem> selectedItems;
   final int currentSelectedSymbolCount;
   final int step;
-  const ContentHint({
+  final VoidCallback nextStep;
+  const ControlArea({
     super.key,
     required this.content,
     required this.currentSelectedSymbolCount,
     required this.step,
     required this.selectedItems,
+    required this.nextStep,
   });
 
   String _getDescription() {
@@ -66,6 +70,7 @@ class ContentHint extends StatelessWidget {
                 ],
               )
             : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: selectedItems
                     .map((e) => Draggable(
                         feedback: Container(),
@@ -80,6 +85,21 @@ class ContentHint extends StatelessWidget {
                         )))
                     .toList(),
               ),
+        // 確認視窗
+        Container(
+          margin: EdgeInsets.all(10),
+          child: ElevatedButton(
+            child: Text('確定'),
+            onPressed: () => showDialog<String>(
+              context: context,
+              builder: (context) => ConfirmDialog(
+                onConfirm: (() {
+                  nextStep();
+                }),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

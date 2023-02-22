@@ -6,9 +6,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
-import 'package:game_template/src/play_session/confirm_dialog.dart';
+import 'package:game_template/src/play_session/control_area.dart';
 import 'package:game_template/src/play_session/game_board.dart';
-import 'package:game_template/src/play_session/content_hint.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
 import 'package:provider/provider.dart';
@@ -172,28 +171,14 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       ),
                       // 內容物
                       Expanded(
-                        child: ContentHint(
-                          content: state.contentHint,
+                        child: ControlArea(
+                          content: state.hint,
                           selectedItems: state.selectedItems,
                           currentSelectedSymbolCount: state.selectedItems
                               .where((element) => element.symbol != null)
                               .length,
                           step: state.step,
-                        ),
-                      ),
-                      // 確認視窗
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        child: ElevatedButton(
-                          child: Text('確定'),
-                          onPressed: () => showDialog<String>(
-                            context: context,
-                            builder: (context) => ConfirmDialog(
-                              onConfirm: (() {
-                                state.nextStep();
-                              }),
-                            ),
-                          ),
+                          nextStep: state.nextStep,
                         ),
                       ),
                     ],
