@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_template/src/game_internals/game_risk.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
 
@@ -23,23 +24,6 @@ class GameCard<T> extends StatefulWidget {
 
 class _GameCardState extends State<GameCard> {
   var isChecked = false;
-
-  IconData? convertSymbolToIcon(MathSymbol symbol) {
-    switch (symbol) {
-      case MathSymbol.plus:
-        return Icons.add;
-      case MathSymbol.minus:
-        return Icons.remove;
-      case MathSymbol.times:
-        return Icons.close;
-      case MathSymbol.divide:
-        return Icons.safety_divider;
-      default:
-        return null;
-    }
-  }
-
-  bool _isInteger(double value) => value == value.toInt();
 
   @override
   Widget build(BuildContext context) {
@@ -87,12 +71,13 @@ class _GameCardState extends State<GameCard> {
                 child: Center(
                   child: widget.isSymbol
                       ? Icon(
-                          convertSymbolToIcon(widget.item as MathSymbol),
+                          GameRisk.convertSymbolToIcon(
+                              widget.item as MathSymbol),
                           color: Colors.white,
                           size: 40.0,
                         )
                       : Text(
-                          _isInteger(widget.item as double)
+                          GameRisk.isInteger(widget.item as double)
                               ? (widget.item as double).toInt().toString()
                               : widget.item.toString(),
                           style: TextStyle(

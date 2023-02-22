@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:game_template/src/game_internals/game_risk.dart';
+import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
 import 'package:game_template/src/play_session/confirm_dialog.dart';
+import 'package:game_template/src/play_session/game_card.dart';
 
 /// 提示與操作區塊
 class ControlArea extends StatelessWidget {
@@ -72,8 +75,39 @@ class ControlArea extends StatelessWidget {
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: selectedItems
-                    .map((e) => Draggable(
-                        feedback: Container(),
+                    .map(
+                      (e) => Draggable(
+                        feedback: Container(
+                          width: 60,
+                          height: 90,
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.lightBlue,
+                          ),
+                        ),
+                        childWhenDragging: Container(
+                          width: 60,
+                          height: 90,
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+                        onDragStarted: () {
+                          debugPrint('onDragStarted(), 開始拖動');
+                        },
+                        onDraggableCanceled:
+                            (Velocity velocity, Offset offset) {
+                          debugPrint('onDraggableCanceled(), 被放掉＋沒被接受');
+                        },
+                        onDragCompleted: () {
+                          debugPrint('onDragCompleted(), 被放掉＋接受');
+                        },
+                        onDragEnd: (DraggableDetails details) {
+                          debugPrint('onDragEnd(), 被放掉');
+                        },
                         child: Container(
                           width: 60,
                           height: 90,
@@ -82,7 +116,29 @@ class ControlArea extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                             color: Colors.blueAccent,
                           ),
-                        )))
+                          child: e.symbol != null
+                              ? Icon(
+                                  GameRisk.convertSymbolToIcon(
+                                      e.symbol as MathSymbol),
+                                  color: Colors.white,
+                                  size: 40.0,
+                                )
+                              : Center(
+                                  child: Text(
+                                    GameRisk.isInteger(e.number as double)
+                                        ? (e.number as double)
+                                            .toInt()
+                                            .toString()
+                                        : e.number.toString(),
+                                    style: TextStyle(
+                                      fontSize: 36,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                        ),
+                      ),
+                    )
                     .toList(),
               ),
         // 確認視窗

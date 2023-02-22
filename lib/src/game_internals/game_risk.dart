@@ -2,6 +2,23 @@ import 'package:flutter/material.dart';
 import './game_state.dart';
 
 class GameRisk {
+  static IconData? convertSymbolToIcon(MathSymbol symbol) {
+    switch (symbol) {
+      case MathSymbol.plus:
+        return Icons.add;
+      case MathSymbol.minus:
+        return Icons.remove;
+      case MathSymbol.times:
+        return Icons.close;
+      case MathSymbol.divide:
+        return Icons.safety_divider;
+      default:
+        return null;
+    }
+  }
+
+  static bool isInteger(double value) => value == value.toInt();
+
   /// 產生數學符號 risk 1
   static List<MathSymbol> symbolRisk1() {
     var plusSymbol = _createBoxes(MathSymbol.plus, 5);

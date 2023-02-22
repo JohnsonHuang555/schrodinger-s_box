@@ -82,11 +82,30 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                 height: 20,
               ),
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueAccent,
+                      ),
+                      width: 60,
+                      height: 90,
+                      child: Center(
+                        child: Text(
+                          'x',
+                          style: TextStyle(
+                            fontSize: 36,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: Colors.blueAccent,
