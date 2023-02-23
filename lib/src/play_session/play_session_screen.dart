@@ -11,6 +11,7 @@ import 'package:game_template/src/play_session/game_board.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
 import 'package:provider/provider.dart';
+import 'package:reorderables/reorderables.dart';
 
 import '../ads/ads_controller.dart';
 import '../audio/audio_controller.dart';
@@ -42,21 +43,16 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   bool _duringCelebration = false;
 
   late DateTime _startOfPlay;
-  final _scrollController = ScrollController();
-  final _gridViewKey = GlobalKey();
-  final _fruits = <String>["apple", "banana", "strawberry"];
+  late List<Widget> _tiles;
+  final double _iconSize = 90;
 
   Widget _getGameBoard(GameState state) {
-    final generatedChildren = List.generate(
-      _fruits.length,
-      (index) => Container(
-        key: Key(_fruits.elementAt(index)),
-        color: Colors.lightBlue,
-        child: Text(
-          _fruits.elementAt(index),
-        ),
-      ),
-    );
+    void _onReorder(int oldIndex, int newIndex) {
+      setState(() {
+        Widget row = _tiles.removeAt(oldIndex);
+        _tiles.insert(newIndex, row);
+      });
+    }
 
     switch (state.step) {
       case 1:
@@ -84,71 +80,88 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
           },
         );
       case 3:
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(children: [
-              Text(
-                '當 x= 100 時',
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.blueAccent,
-                      ),
-                      width: 60,
-                      height: 90,
-                      child: Center(
-                        child: Text(
-                          'x',
-                          style: TextStyle(
-                            fontSize: 36,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.blueAccent,
-                      ),
-                      width: 60,
-                      height: 90,
-                      child: Center(
-                        child: Text(
-                          'x',
-                          style: TextStyle(
-                            fontSize: 36,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ]),
-            Text(
-              '= ?',
-              style: TextStyle(fontSize: 40),
-            )
-          ],
+        return ReorderableWrap(
+          spacing: 8.0,
+          runSpacing: 4.0,
+          padding: const EdgeInsets.all(8),
+          onReorder: _onReorder,
+          onNoReorder: (int index) {
+            //this callback is optional
+            debugPrint(
+                '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index:$index');
+          },
+          onReorderStarted: (int index) {
+            //this callback is optional
+            debugPrint(
+                '${DateTime.now().toString().substring(5, 22)} reorder started: index:$index');
+          },
+          children: _tiles,
         );
+      // return Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     Column(children: [
+      //       Text(
+      //         '當 x= 100 時',
+      //         style: TextStyle(fontSize: 20),
+      //       ),
+      //       SizedBox(
+      //         height: 20,
+      //       ),
+      //       Padding(
+      //         padding: EdgeInsets.all(5),
+      //         child: Row(
+      //           mainAxisAlignment: MainAxisAlignment.start,
+      //           children: [
+      //             Container(
+      //               margin: EdgeInsets.all(5),
+      //               decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(8),
+      //                 color: Colors.blueAccent,
+      //               ),
+      //               width: 60,
+      //               height: 90,
+      //               child: Center(
+      //                 child: Text(
+      //                   'x',
+      //                   style: TextStyle(
+      //                     fontSize: 36,
+      //                     color: Colors.white,
+      //                   ),
+      //                 ),
+      //               ),
+      //             ),
+      //             Container(
+      //               margin: EdgeInsets.all(5),
+      //               decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(8),
+      //                 color: Colors.blueAccent,
+      //               ),
+      //               width: 60,
+      //               height: 90,
+      //               child: Center(
+      //                 child: Text(
+      //                   'x',
+      //                   style: TextStyle(
+      //                     fontSize: 36,
+      //                     color: Colors.white,
+      //                   ),
+      //                 ),
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //       SizedBox(
+      //         height: 20,
+      //       ),
+      //     ]),
+      //     Text(
+      //       '= ?',
+      //       style: TextStyle(fontSize: 40),
+      //     )
+      //   ],
+      // );
       default:
         return Text('Something wrong...');
     }
@@ -226,6 +239,17 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   @override
   void initState() {
     super.initState();
+    _tiles = <Widget>[
+      Icon(Icons.filter_1, size: _iconSize),
+      Icon(Icons.filter_2, size: _iconSize),
+      Icon(Icons.filter_3, size: _iconSize),
+      Icon(Icons.filter_4, size: _iconSize),
+      Icon(Icons.filter_5, size: _iconSize),
+      Icon(Icons.filter_6, size: _iconSize),
+      Icon(Icons.filter_7, size: _iconSize),
+      Icon(Icons.filter_8, size: _iconSize),
+      Icon(Icons.filter_9, size: _iconSize),
+    ];
 
     _startOfPlay = DateTime.now();
 
