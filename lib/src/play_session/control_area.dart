@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:game_template/src/game_internals/game_risk.dart';
-import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
 import 'package:game_template/src/play_session/confirm_dialog.dart';
-import 'package:game_template/src/play_session/game_card.dart';
 
 /// 提示與操作區塊
 class ControlArea extends StatelessWidget {

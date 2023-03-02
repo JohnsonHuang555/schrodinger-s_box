@@ -31,6 +31,7 @@ class GameBoard<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
+      shrinkWrap: true,
       padding: const EdgeInsets.all(20),
       crossAxisSpacing: 15,
       mainAxisSpacing: 15,

@@ -186,4 +186,13 @@ class GameState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void sortSelectedItem(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    var item = selectedItems.removeAt(oldIndex);
+    selectedItems.insert(newIndex, item);
+    notifyListeners();
+  }
 }

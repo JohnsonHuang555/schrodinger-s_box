@@ -11,12 +11,13 @@ import 'package:game_template/src/play_session/game_board.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
 import 'package:provider/provider.dart';
-import 'package:reorderables/reorderables.dart';
 
 import '../ads/ads_controller.dart';
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
+import '../game_internals/game_risk.dart';
 import '../game_internals/level_state.dart';
+import '../game_internals/selected_symbol.dart';
 import '../games_services/games_services.dart';
 import '../games_services/score.dart';
 import '../in_app_purchase/in_app_purchase.dart';
@@ -43,17 +44,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   bool _duringCelebration = false;
 
   late DateTime _startOfPlay;
-  late List<Widget> _tiles;
-  final double _iconSize = 90;
 
   Widget _getGameBoard(GameState state) {
-    void _onReorder(int oldIndex, int newIndex) {
-      setState(() {
-        Widget row = _tiles.removeAt(oldIndex);
-        _tiles.insert(newIndex, row);
-      });
-    }
-
     switch (state.step) {
       case 1:
         return GameBoard<MathSymbol>(
@@ -80,88 +72,74 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
           },
         );
       case 3:
-        return ReorderableWrap(
-          spacing: 8.0,
-          runSpacing: 4.0,
-          padding: const EdgeInsets.all(8),
-          onReorder: _onReorder,
-          onNoReorder: (int index) {
-            //this callback is optional
-            debugPrint(
-                '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index:$index');
-          },
-          onReorderStarted: (int index) {
-            //this callback is optional
-            debugPrint(
-                '${DateTime.now().toString().substring(5, 22)} reorder started: index:$index');
-          },
-          children: _tiles,
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '預覽: 100 + 1 + 2',
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            SizedBox(
+              height: 100,
+              child: ReorderableListView(
+                scrollDirection: Axis.horizontal,
+                buildDefaultDragHandles: false,
+                children: <Widget>[
+                  for (int index = 0;
+                      index < state.selectedItems.length;
+                      index += 1)
+                    Container(
+                      key: Key('$index'),
+                      width: 100,
+                      color: Colors.blue,
+                      child: ReorderableDragStartListener(
+                        index: index,
+                        child: Card(
+                          elevation: 2,
+                          child: Center(
+                            child: state.selectedItems[index].symbol != null
+                                ? Icon(
+                                    GameRisk.convertSymbolToIcon(state
+                                        .selectedItems[index]
+                                        .symbol as MathSymbol),
+                                    size: 40.0,
+                                  )
+                                : Text(
+                                    GameRisk.isInteger(state
+                                            .selectedItems[index]
+                                            .number as double)
+                                        ? (state.selectedItems[index].number
+                                                as double)
+                                            .toInt()
+                                            .toString()
+                                        : state.selectedItems[index].number
+                                            .toString(),
+                                    style: TextStyle(
+                                      fontSize: 36,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+                onReorder: (oldIndex, newIndex) {
+                  state.sortSelectedItem(oldIndex, newIndex);
+                },
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              '= ?',
+              style: TextStyle(fontSize: 40),
+            ),
+          ],
         );
-      // return Column(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     Column(children: [
-      //       Text(
-      //         '當 x= 100 時',
-      //         style: TextStyle(fontSize: 20),
-      //       ),
-      //       SizedBox(
-      //         height: 20,
-      //       ),
-      //       Padding(
-      //         padding: EdgeInsets.all(5),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.start,
-      //           children: [
-      //             Container(
-      //               margin: EdgeInsets.all(5),
-      //               decoration: BoxDecoration(
-      //                 borderRadius: BorderRadius.circular(8),
-      //                 color: Colors.blueAccent,
-      //               ),
-      //               width: 60,
-      //               height: 90,
-      //               child: Center(
-      //                 child: Text(
-      //                   'x',
-      //                   style: TextStyle(
-      //                     fontSize: 36,
-      //                     color: Colors.white,
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //             Container(
-      //               margin: EdgeInsets.all(5),
-      //               decoration: BoxDecoration(
-      //                 borderRadius: BorderRadius.circular(8),
-      //                 color: Colors.blueAccent,
-      //               ),
-      //               width: 60,
-      //               height: 90,
-      //               child: Center(
-      //                 child: Text(
-      //                   'x',
-      //                   style: TextStyle(
-      //                     fontSize: 36,
-      //                     color: Colors.white,
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       SizedBox(
-      //         height: 20,
-      //       ),
-      //     ]),
-      //     Text(
-      //       '= ?',
-      //       style: TextStyle(fontSize: 40),
-      //     )
-      //   ],
-      // );
       default:
         return Text('Something wrong...');
     }
@@ -239,17 +217,6 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   @override
   void initState() {
     super.initState();
-    _tiles = <Widget>[
-      Icon(Icons.filter_1, size: _iconSize),
-      Icon(Icons.filter_2, size: _iconSize),
-      Icon(Icons.filter_3, size: _iconSize),
-      Icon(Icons.filter_4, size: _iconSize),
-      Icon(Icons.filter_5, size: _iconSize),
-      Icon(Icons.filter_6, size: _iconSize),
-      Icon(Icons.filter_7, size: _iconSize),
-      Icon(Icons.filter_8, size: _iconSize),
-      Icon(Icons.filter_9, size: _iconSize),
-    ];
 
     _startOfPlay = DateTime.now();
 
