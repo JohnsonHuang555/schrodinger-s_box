@@ -19,6 +19,7 @@ dependencies:
   logging: ^1.1.0
   provider: ^6.0.2
   shared_preferences: ^2.0.13
+  function_tree: ^0.8.13
 
   # If you don't need one of the following dependencies,
   # delete the relevant line below, and get rid of any Dart code

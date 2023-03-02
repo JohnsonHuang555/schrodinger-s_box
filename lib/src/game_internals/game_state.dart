@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:function_tree/function_tree.dart';
 
 import './game_risk.dart';
 import './selected_symbol.dart';
@@ -131,6 +132,52 @@ class GameState extends ChangeNotifier {
       if (selectedItems.length != currentSelectedSymbolCount * 2) {
         return;
       }
+    }
+    // 送出算式
+    if (step == 3) {
+      // FIXME: 不要寫死 100
+      String result = '100';
+      print('???');
+      print(selectedItems[0].symbol != null);
+
+      // 第一個一定要放符號最後一個一定要放數字
+      if (selectedItems[0].symbol == null ||
+          selectedItems[selectedItems.length - 1].number == null) {
+        return;
+      }
+
+      for (var i = 0; i < selectedItems.length; i++) {
+        // 奇數 - 符號
+        if (i % 2 == 0 && selectedItems[i].symbol != null) {
+          switch (selectedItems[i].symbol) {
+            case MathSymbol.plus:
+              result += '+';
+              break;
+            case MathSymbol.minus:
+              result += '-';
+              break;
+            case MathSymbol.times:
+              result += '*';
+              break;
+            case MathSymbol.divide:
+              result += '/';
+              break;
+            default:
+              break;
+          }
+        }
+        // 偶數 - 數字
+        else if (i % 2 == 1 && selectedItems[i].number != null) {
+          result += selectedItems[i].number.toString();
+        } else {
+          // 算式不合法
+          return;
+        }
+      }
+
+      print(result.interpret());
+      return;
+      // print(result.in)
     }
     step = step + 1;
     notifyListeners();
