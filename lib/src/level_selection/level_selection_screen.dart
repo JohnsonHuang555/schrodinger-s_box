@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
+import '../components/custom_button.dart';
 import '../player_progress/player_progress.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
@@ -30,41 +31,88 @@ class LevelSelectionScreen extends StatelessWidget {
               padding: EdgeInsets.all(16),
               child: Center(
                 child: Text(
-                  'Select level',
-                  style:
-                      TextStyle(fontFamily: 'Permanent Marker', fontSize: 30),
+                  '你的積分',
+                  style: TextStyle(fontSize: 22),
                 ),
               ),
             ),
-            const SizedBox(height: 50),
-            Expanded(
-              child: ListView(
-                children: [
-                  for (final level in gameLevels)
-                    ListTile(
-                      enabled: playerProgress.highestLevelReached >=
-                          level.number - 1,
-                      onTap: () {
-                        final audioController = context.read<AudioController>();
-                        audioController.playSfx(SfxType.buttonTap);
-
-                        GoRouter.of(context)
-                            .go('/play/session/${level.number}');
-                      },
-                      leading: Text(level.number.toString()),
-                      title: Text('Level #${level.number}'),
-                    )
-                ],
+            Center(
+              child: Text(
+                '1000',
+                style: TextStyle(fontSize: 36),
               ),
             ),
+            const SizedBox(height: 80),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 250,
+                    margin: EdgeInsets.all(16),
+                    child: CustomButton(
+                      title: '開始遊戲',
+                      onTap: () {
+                        GoRouter.of(context).go('/playSession');
+                      },
+                    ),
+                  ),
+                  Container(
+                    width: 250,
+                    margin: EdgeInsets.all(16),
+                    child: CustomButton(
+                      title: '遊戲規則',
+                      onTap: () {},
+                    ),
+                  ),
+                  Container(
+                    width: 250,
+                    margin: EdgeInsets.all(16),
+                    child: CustomButton(
+                      title: '設定',
+                      onTap: () {},
+                    ),
+                  ),
+                  Container(
+                    width: 250,
+                    margin: EdgeInsets.all(16),
+                    child: CustomButton(
+                      title: '離開',
+                      onTap: () {},
+                    ),
+                  ),
+                ],
+              ),
+            )
+            // Expanded(
+            //   child: ListView(
+            //     children: [
+            //       for (final level in gameLevels)
+            //         ListTile(
+            //           enabled: playerProgress.highestLevelReached >=
+            //               level.number - 1,
+            //           onTap: () {
+            //             final audioController = context.read<AudioController>();
+            //             audioController.playSfx(SfxType.buttonTap);
+
+            //             GoRouter.of(context)
+            //                 .go('/play/session/${level.number}');
+            //           },
+            //           leading: Text(level.number.toString()),
+            //           title: Text('Level #${level.number}'),
+            //         )
+            //     ],
+            //   ),
+            // ),
           ],
         ),
-        rectangularMenuArea: ElevatedButton(
-          onPressed: () {
-            GoRouter.of(context).go('/');
-          },
-          child: const Text('Back'),
-        ),
+        // rectangularMenuArea: ElevatedButton(
+        //   onPressed: () {
+        //     GoRouter.of(context).go('/');
+        //   },
+        //   child: const Text('Back'),
+        // ),
+        rectangularMenuArea: Container(),
       ),
     );
   }

@@ -25,9 +25,9 @@ import '../player_progress/player_progress.dart';
 import '../style/palette.dart';
 
 class PlaySessionScreen extends StatefulWidget {
-  final GameLevel level;
+  // final GameLevel level;
 
-  const PlaySessionScreen(this.level, {super.key});
+  const PlaySessionScreen({super.key});
 
   @override
   State<PlaySessionScreen> createState() => _PlaySessionScreenState();
@@ -150,12 +150,12 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => LevelState(
-            goal: widget.level.difficulty,
-            onWin: _playerWon,
-          ),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => LevelState(
+        //     goal: widget.level.difficulty,
+        //     onWin: _playerWon,
+        //   ),
+        // ),
         ChangeNotifierProvider(
           create: (context) => GameState(),
         ),
@@ -229,16 +229,16 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   }
 
   Future<void> _playerWon() async {
-    _log.info('Level ${widget.level.number} won');
+    // _log.info('Level ${widget.level.number} won');
 
-    final score = Score(
-      widget.level.number,
-      widget.level.difficulty,
-      DateTime.now().difference(_startOfPlay),
-    );
+    // final score = Score(
+    //   widget.level.number,
+    //   widget.level.difficulty,
+    //   DateTime.now().difference(_startOfPlay),
+    // );
 
     final playerProgress = context.read<PlayerProgress>();
-    playerProgress.setLevelReached(widget.level.number);
+    // playerProgress.setLevelReached(widget.level.number);
 
     // Let the player see the game just after winning for a bit.
     await Future<void>.delayed(_preCelebrationDuration);
@@ -254,21 +254,21 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     final gamesServicesController = context.read<GamesServicesController?>();
     if (gamesServicesController != null) {
       // Award achievement.
-      if (widget.level.awardsAchievement) {
-        await gamesServicesController.awardAchievement(
-          android: widget.level.achievementIdAndroid!,
-          iOS: widget.level.achievementIdIOS!,
-        );
-      }
+      // if (widget.level.awardsAchievement) {
+      //   await gamesServicesController.awardAchievement(
+      //     android: widget.level.achievementIdAndroid!,
+      //     iOS: widget.level.achievementIdIOS!,
+      //   );
+      // }
 
       // Send score to leaderboard.
-      await gamesServicesController.submitLeaderboardScore(score);
+      // await gamesServicesController.submitLeaderboardScore(score);
     }
 
     /// Give the player some time to see the celebration animation.
     await Future<void>.delayed(_celebrationDuration);
     if (!mounted) return;
 
-    GoRouter.of(context).go('/play/won', extra: {'score': score});
+    // GoRouter.of(context).go('/play/won', extra: {'score': score});
   }
 }

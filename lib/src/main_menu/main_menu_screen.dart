@@ -44,53 +44,58 @@ class MainMenuScreen extends StatelessWidget {
         rectangularMenuArea: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ElevatedButton(
-              onPressed: () {
+            InkResponse(
+              highlightShape: BoxShape.rectangle,
+              onTap: () {
                 audioController.playSfx(SfxType.buttonTap);
-                // GoRouter.of(context).go('/play');
-                GoRouter.of(context).go('/play/session/1');
+                GoRouter.of(context).go('/play');
               },
-              child: const Text('Play'),
-            ),
-            _gap,
-            if (gamesServicesController != null) ...[
-              _hideUntilReady(
-                ready: gamesServicesController.signedIn,
-                child: ElevatedButton(
-                  onPressed: () => gamesServicesController.showAchievements(),
-                  child: const Text('Achievements'),
-                ),
-              ),
-              _gap,
-              _hideUntilReady(
-                ready: gamesServicesController.signedIn,
-                child: ElevatedButton(
-                  onPressed: () => gamesServicesController.showLeaderboard(),
-                  child: const Text('Leaderboard'),
-                ),
-              ),
-              _gap,
-            ],
-            ElevatedButton(
-              onPressed: () => GoRouter.of(context).push('/settings'),
-              child: const Text('Settings'),
-            ),
-            _gap,
-            Padding(
-              padding: const EdgeInsets.only(top: 32),
-              child: ValueListenableBuilder<bool>(
-                valueListenable: settingsController.muted,
-                builder: (context, muted, child) {
-                  return IconButton(
-                    onPressed: () => settingsController.toggleMuted(),
-                    icon: Icon(muted ? Icons.volume_off : Icons.volume_up),
-                  );
-                },
+              child: const Text(
+                'TAP TO PLAY',
+                style: TextStyle(fontSize: 20, letterSpacing: 1.5),
               ),
             ),
-            _gap,
-            const Text('Music by Mr Smith'),
-            _gap,
+            SizedBox(
+              height: 200,
+            )
+            // if (gamesServicesController != null) ...[
+            //   _hideUntilReady(
+            //     ready: gamesServicesController.signedIn,
+            //     child: ElevatedButton(
+            //       onPressed: () => gamesServicesController.showAchievements(),
+            //       child: const Text('Achievements'),
+            //     ),
+            //   ),
+            //   _gap,
+            //   _hideUntilReady(
+            //     ready: gamesServicesController.signedIn,
+            //     child: ElevatedButton(
+            //       onPressed: () => gamesServicesController.showLeaderboard(),
+            //       child: const Text('Leaderboard'),
+            //     ),
+            //   ),
+            //   _gap,
+            // ],
+            // ElevatedButton(
+            //   onPressed: () => GoRouter.of(context).push('/settings'),
+            //   child: const Text('Settings'),
+            // ),
+            // _gap,
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 32),
+            //   child: ValueListenableBuilder<bool>(
+            //     valueListenable: settingsController.muted,
+            //     builder: (context, muted, child) {
+            //       return IconButton(
+            //         onPressed: () => settingsController.toggleMuted(),
+            //         icon: Icon(muted ? Icons.volume_off : Icons.volume_up),
+            //       );
+            //     },
+            //   ),
+            // ),
+            // _gap,
+            // const Text('Music by Mr Smith'),
+            // _gap,
           ],
         ),
       ),
