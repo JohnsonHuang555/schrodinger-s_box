@@ -23,23 +23,30 @@ class LevelSelectionScreen extends StatelessWidget {
     final playerProgress = context.watch<PlayerProgress>();
 
     return Scaffold(
-      backgroundColor: palette.backgroundLevelSelection,
+      backgroundColor: palette.secondary,
       body: ResponsiveScreen(
         squarishMainArea: Column(
           children: [
+            SizedBox(
+              height: 50,
+            ),
             const Padding(
               padding: EdgeInsets.all(16),
               child: Center(
                 child: Text(
                   '你的積分',
-                  style: TextStyle(fontSize: 22),
+                  style: TextStyle(
+                    fontSize: 22,
+                  ),
                 ),
               ),
             ),
             Center(
               child: Text(
                 '1000',
-                style: TextStyle(fontSize: 36),
+                style: TextStyle(
+                  fontSize: 36,
+                ),
               ),
             ),
             const SizedBox(height: 80),
@@ -53,7 +60,7 @@ class LevelSelectionScreen extends StatelessWidget {
                     child: CustomButton(
                       title: '開始遊戲',
                       onTap: () {
-                        GoRouter.of(context).go('/playSession');
+                        GoRouter.of(context).push('/playSession');
                       },
                     ),
                   ),

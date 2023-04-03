@@ -135,7 +135,7 @@ class MyApp extends StatelessWidget {
               path: 'play',
               pageBuilder: (context, state) => buildMyTransition<void>(
                 child: const LevelSelectionScreen(key: Key('level selection')),
-                color: context.watch<Palette>().backgroundLevelSelection,
+                color: context.watch<Palette>().secondary,
               ),
               // routes: [
               //   GoRoute(
@@ -258,7 +258,7 @@ class MyApp extends StatelessWidget {
               ),
               textTheme: TextTheme(
                 bodyMedium: TextStyle(
-                  color: palette.ink,
+                  color: palette.trueWhite,
                 ),
               ),
             ),
