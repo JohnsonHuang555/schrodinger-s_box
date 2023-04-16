@@ -27,19 +27,17 @@ class Palette {
   Color get darkPen => const Color(0xFF0050bc);
   Color get redPen => const Color(0xFFd10841);
   Color get inkFullOpacity => const Color(0xff352b42);
-  Color get ink => const Color(0xee352b42);
+  Color get ink => const Color(0xff7f5539);
   Color get backgroundMain => const Color(0xffd1bfb0);
   Color get backgroundLevelSelection => const Color(0xffa2dcc7);
   Color get backgroundPlaySession => const Color(0xffffebb5);
   Color get background4 => const Color(0xffffd7ff);
   Color get backgroundSettings => const Color(0xffbfc8e3);
-  Color get trueWhite => const Color(0xffffffff);
+  Color get trueWhite => const Color(0xffEDE0D4);
 
-  Color get primary => const Color(0xff7a9c96);
-  Color get secondary => const Color(0xff486b7f);
-  Color get text => const Color(0xff392b35);
+  Color get primary => const Color(0xffddb892);
+  Color get secondary => const Color(0xffb08968);
+  Color get text => const Color(0xff5D3820);
   Color get alert => const Color(0xffbb474f);
   Color get warning => const Color(0xffd1bfb0);
 }
-// #0050bc #d1bfb0
-// #392b35 #7a9c96 #486b7f #d1bfb0 #bb474f

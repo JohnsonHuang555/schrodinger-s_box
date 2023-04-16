@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:game_template/src/game_internals/game_risk.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
+import 'package:provider/provider.dart';
+import '../style/palette.dart';
 
 class GameCard<T> extends StatefulWidget {
   final int index;
@@ -27,6 +29,8 @@ class _GameCardState extends State<GameCard> {
 
   @override
   Widget build(BuildContext context) {
+    final palette = context.watch<Palette>();
+
     if (widget.selectedItems.isEmpty) {
       setState(() {
         isChecked = false;
@@ -62,41 +66,41 @@ class _GameCardState extends State<GameCard> {
         children: [
           Center(
             child: Container(
-              color: Colors.blue,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                margin: EdgeInsets.all(3.0),
-                child: Center(
-                  child: widget.isSymbol
-                      ? Icon(
-                          GameRisk.convertSymbolToIcon(
-                              widget.item as MathSymbol),
-                          color: Colors.white,
-                          size: 40.0,
-                        )
-                      : Text(
-                          GameRisk.isInteger(widget.item as double)
-                              ? (widget.item as double).toInt().toString()
-                              : widget.item.toString(),
-                          style: TextStyle(
-                            fontSize: 36,
-                          ),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: EdgeInsets.all(3.0),
+              child: Center(
+                child: widget.isSymbol
+                    ? Icon(
+                        GameRisk.convertSymbolToIcon(widget.item as MathSymbol),
+                        color: Colors.white,
+                        size: 40.0,
+                      )
+                    : Text(
+                        GameRisk.isInteger(widget.item as double)
+                            ? (widget.item as double).toInt().toString()
+                            : widget.item.toString(),
+                        style: TextStyle(
+                          fontSize: 36,
                         ),
-                ),
+                      ),
               ),
             ),
           ),
           Container(
             height: double.infinity,
             width: double.infinity,
-            color: Colors.blueAccent,
+            decoration: BoxDecoration(
+              color: palette.secondary,
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: Center(
                 child: isChecked
                     ? Icon(
                         Icons.check,
-                        size: 30,
+                        size: 50,
                       )
                     : null),
           ),

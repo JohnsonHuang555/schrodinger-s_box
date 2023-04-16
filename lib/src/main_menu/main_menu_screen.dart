@@ -24,7 +24,7 @@ class MainMenuScreen extends StatelessWidget {
     final audioController = context.watch<AudioController>();
 
     return Scaffold(
-      backgroundColor: palette.primary,
+      backgroundColor: Color(0xffD19626),
       body: ResponsiveScreen(
           mainAreaProminence: 0.45,
           squarishMainArea: Center(
@@ -51,8 +51,7 @@ class MainMenuScreen extends StatelessWidget {
               child: Text(
                 'TAP TO PLAY',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 20, letterSpacing: 1.5, color: palette.text),
+                style: TextStyle(fontSize: 20, letterSpacing: 1.5),
               ),
             ),
           )

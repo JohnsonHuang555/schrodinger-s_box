@@ -23,7 +23,7 @@ class LevelSelectionScreen extends StatelessWidget {
     final playerProgress = context.watch<PlayerProgress>();
 
     return Scaffold(
-      backgroundColor: palette.secondary,
+      backgroundColor: palette.primary,
       body: ResponsiveScreen(
         squarishMainArea: Column(
           children: [

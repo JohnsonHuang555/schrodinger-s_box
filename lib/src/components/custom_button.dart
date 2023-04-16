@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../style/palette.dart';
 
 class CustomButton extends StatelessWidget {
   final String title;
@@ -8,18 +10,20 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = context.watch<Palette>();
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: palette.secondary,
         borderRadius: BorderRadius.circular(8.0),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(1.0, 2.0),
-            blurRadius: 8.0,
-            spreadRadius: 2.0,
-          )
-        ],
+        // boxShadow: const [
+        //   BoxShadow(
+        //     color: Colors.grey,
+        //     offset: Offset(1.0, 2.0),
+        //     blurRadius: 8.0,
+        //     spreadRadius: 2.0,
+        //   )
+        // ],
       ),
       child: SizedBox(
         height: 48,
