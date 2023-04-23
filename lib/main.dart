@@ -251,17 +251,17 @@ class MyApp extends StatelessWidget {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
-            theme: ThemeData.from(
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: palette.darkPen,
-                background: palette.backgroundMain,
-              ),
-              textTheme: TextTheme(
-                bodyMedium: TextStyle(
-                  color: palette.text,
-                ),
-              ),
-            ),
+            // theme: ThemeData.from(
+            //   colorScheme: ColorScheme.fromSeed(
+            //     seedColor: palette.darkPen,
+            //     background: palette.backgroundMain,
+            //   ),
+            //   textTheme: TextTheme(
+            //     bodyMedium: TextStyle(
+            //       color: palette.text,
+            //     ),
+            //   ),
+            // ),
             routeInformationProvider: _router.routeInformationProvider,
             routeInformationParser: _router.routeInformationParser,
             routerDelegate: _router.routerDelegate,

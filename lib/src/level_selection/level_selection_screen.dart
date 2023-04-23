@@ -3,12 +3,12 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:game_template/src/components/fancy_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
-import '../components/custom_button.dart';
 import '../player_progress/player_progress.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
@@ -57,35 +57,57 @@ class LevelSelectionScreen extends StatelessWidget {
                   Container(
                     width: 250,
                     margin: EdgeInsets.all(16),
-                    child: CustomButton(
-                      title: '開始遊戲',
-                      onTap: () {
-                        GoRouter.of(context).push('/playSession');
+                    child: FancyButton.text(
+                      color: Colors.blueGrey,
+                      onPressed: () {
+                        Future.delayed(Duration(milliseconds: 300), () {
+                          GoRouter.of(context).push('/playSession');
+                        });
                       },
+                      text: '開始遊戲',
+                      elevation: 8,
                     ),
                   ),
                   Container(
                     width: 250,
                     margin: EdgeInsets.all(16),
-                    child: CustomButton(
-                      title: '遊戲規則',
-                      onTap: () {},
+                    child: FancyButton.text(
+                      color: Colors.blueGrey,
+                      onPressed: () {
+                        Future.delayed(Duration(milliseconds: 300), () {
+                          // GoRouter.of(context).push('/playSession');
+                        });
+                      },
+                      text: '遊戲規則',
+                      elevation: 8,
                     ),
                   ),
                   Container(
                     width: 250,
                     margin: EdgeInsets.all(16),
-                    child: CustomButton(
-                      title: '設定',
-                      onTap: () {},
+                    child: FancyButton.text(
+                      color: Colors.blueGrey,
+                      onPressed: () {
+                        Future.delayed(Duration(milliseconds: 300), () {
+                          // GoRouter.of(context).push('/playSession');
+                        });
+                      },
+                      text: '設定',
+                      elevation: 8,
                     ),
                   ),
                   Container(
                     width: 250,
                     margin: EdgeInsets.all(16),
-                    child: CustomButton(
-                      title: '離開',
-                      onTap: () {},
+                    child: FancyButton.text(
+                      color: Colors.blueGrey,
+                      onPressed: () {
+                        Future.delayed(Duration(milliseconds: 300), () {
+                          // GoRouter.of(context).push('/playSession');
+                        });
+                      },
+                      text: '離開',
+                      elevation: 8,
                     ),
                   ),
                 ],

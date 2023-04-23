@@ -24,20 +24,15 @@ class MainMenuScreen extends StatelessWidget {
     final audioController = context.watch<AudioController>();
 
     return Scaffold(
-      backgroundColor: Color(0xffD19626),
+      backgroundColor: Color(0xff7d8ca8),
       body: ResponsiveScreen(
           mainAreaProminence: 0.45,
           squarishMainArea: Center(
-            child: Transform.rotate(
-              angle: -0.1,
-              child: const Text(
-                'Schrodinger\'s Box',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 50,
-                  height: 1,
-                ),
+            child: SizedBox(
+              width: 200,
+              child: Image.asset(
+                'assets/images/logo.png',
+                // semanticLabel: 'LOGO',
               ),
             ),
           ),
