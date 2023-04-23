@@ -3,8 +3,10 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
@@ -23,8 +25,15 @@ class MainMenuScreen extends StatelessWidget {
     final settingsController = context.watch<SettingsController>();
     final audioController = context.watch<AudioController>();
 
-    return Scaffold(
-      backgroundColor: Color(0xff7d8ca8),
+    return ScaffoldGradientBackground(
+      gradient: LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Color(0xFF7d8ca8),
+          Color.fromARGB(255, 94, 107, 132),
+        ],
+      ),
       body: ResponsiveScreen(
           mainAreaProminence: 0.45,
           squarishMainArea: Center(
@@ -32,7 +41,7 @@ class MainMenuScreen extends StatelessWidget {
               width: 200,
               child: Image.asset(
                 'assets/images/logo.png',
-                // semanticLabel: 'LOGO',
+                semanticLabel: 'LOGO',
               ),
             ),
           ),
@@ -43,11 +52,26 @@ class MainMenuScreen extends StatelessWidget {
                 audioController.playSfx(SfxType.buttonTap);
                 GoRouter.of(context).go('/play');
               },
-              child: Text(
-                'TAP TO PLAY',
+              child: Animate(
+                  child: Text(
+                'TAP  TO  PLAY',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20, letterSpacing: 1.5),
-              ),
+                style: TextStyle(
+                  fontSize: 26,
+                  letterSpacing: 1,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+                      .animate(
+                        delay: 100
+                            .ms, // this delay only happens once at the very start
+                        onPlay: (controller) => controller.repeat(), // loop
+                      )
+                      .fadeIn(
+                          duration: 1000
+                              .ms) // this delay happens at the start of each loop
+                      .fadeOut(delay: 500.ms)),
             ),
           )
           //   Column(

@@ -35,7 +35,7 @@ class Palette {
   Color get backgroundSettings => const Color(0xffbfc8e3);
   Color get trueWhite => const Color(0xffEDE0D4);
 
-  Color get primary => const Color(0xffdfe7f0);
+  Color get primary => Color.fromARGB(255, 156, 168, 189);
   Color get secondary => const Color(0xff7d8ca8);
   Color get text => const Color(0xff303233);
   Color get alert => const Color(0xffbb474f);
