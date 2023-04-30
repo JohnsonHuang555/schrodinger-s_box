@@ -33,7 +33,7 @@ class Palette {
   Color get backgroundPlaySession => const Color(0xffffebb5);
   Color get background4 => const Color(0xffffd7ff);
   Color get backgroundSettings => const Color(0xffbfc8e3);
-  Color get trueWhite => const Color(0xffEDE0D4);
+  Color get trueWhite => const Color(0xffdfe7f0);
 
   Color get primary => Color.fromARGB(255, 156, 168, 189);
   Color get secondary => const Color(0xff7d8ca8);

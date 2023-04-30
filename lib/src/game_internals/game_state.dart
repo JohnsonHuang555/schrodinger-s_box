@@ -137,8 +137,6 @@ class GameState extends ChangeNotifier {
     if (step == 3) {
       // FIXME: 不要寫死 100
       String result = '100';
-      print('???');
-      print(selectedItems[0].symbol != null);
 
       // 第一個一定要放符號最後一個一定要放數字
       if (selectedItems[0].symbol == null ||
@@ -234,6 +232,7 @@ class GameState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // 移動算式
   void sortSelectedItem(int oldIndex, int newIndex) {
     if (oldIndex < newIndex) {
       newIndex -= 1;

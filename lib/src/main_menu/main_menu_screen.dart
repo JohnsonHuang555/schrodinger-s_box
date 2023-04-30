@@ -29,7 +29,7 @@ class MainMenuScreen extends StatelessWidget {
       gradient: LinearGradient(
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
-        colors: [
+        colors: const [
           Color(0xFF7d8ca8),
           Color.fromARGB(255, 94, 107, 132),
         ],

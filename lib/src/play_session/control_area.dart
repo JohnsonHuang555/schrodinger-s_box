@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
 import 'package:game_template/src/play_session/confirm_dialog.dart';
 
+import '../components/fancy_button.dart';
+
 /// 提示與操作區塊
 class ControlArea extends StatelessWidget {
   final List<IconData> content;
@@ -25,7 +27,7 @@ class ControlArea extends StatelessWidget {
       case 2:
         return '請選擇 $currentSelectedSymbolCount 個';
       case 3:
-        return '請組合出最大值的算式';
+        return '請組合算式';
       default:
         return 'Something wrong...';
     }
@@ -43,7 +45,7 @@ class ControlArea extends StatelessWidget {
           style: TextStyle(fontSize: 14),
         ),
         SizedBox(
-          height: 25,
+          height: 10,
         ),
         (step == 1 || step == 2)
             ? Column(
@@ -72,17 +74,22 @@ class ControlArea extends StatelessWidget {
             : Container(),
         // 確認視窗
         Container(
-          margin: EdgeInsets.all(10),
-          child: ElevatedButton(
-            child: Text('確定'),
-            onPressed: () => showDialog<String>(
-              context: context,
-              builder: (context) => ConfirmDialog(
-                onConfirm: (() {
-                  nextStep();
-                }),
-              ),
-            ),
+          width: double.infinity,
+          margin: EdgeInsets.all(20),
+          child: FancyButton.text(
+            color: Colors.blueGrey,
+            onPressed: () {
+              Future.delayed(Duration(milliseconds: 300), () {
+                showDialog<String>(
+                  context: context,
+                  builder: (context) => ConfirmDialog(onConfirm: () {
+                    nextStep();
+                  }),
+                );
+              });
+            },
+            text: '確定',
+            elevation: 8,
           ),
         ),
       ],

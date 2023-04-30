@@ -37,6 +37,7 @@ class LevelSelectionScreen extends StatelessWidget {
                   '你的積分',
                   style: TextStyle(
                     fontSize: 22,
+                    color: Color.fromARGB(255, 33, 33, 33),
                   ),
                 ),
               ),
@@ -46,6 +47,7 @@ class LevelSelectionScreen extends StatelessWidget {
                 '1000',
                 style: TextStyle(
                   fontSize: 36,
+                  color: Color.fromARGB(255, 33, 33, 33),
                 ),
               ),
             ),

@@ -11,6 +11,7 @@ import 'package:game_template/src/play_session/game_board.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
 import 'package:provider/provider.dart';
+import 'package:lottie/lottie.dart';
 
 import '../ads/ads_controller.dart';
 import '../audio/audio_controller.dart';
@@ -44,7 +45,37 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   late DateTime _startOfPlay;
 
-  Widget _getGameBoard(GameState state) {
+  String getPreviewText(GameState state) {
+    var result = '100';
+    for (var item in state.selectedItems) {
+      if (item.symbol != null) {
+        switch (item.symbol) {
+          case MathSymbol.plus:
+            result += ' + ';
+            break;
+          case MathSymbol.minus:
+            result += ' - ';
+            break;
+          case MathSymbol.times:
+            result += ' x ';
+            break;
+          case MathSymbol.divide:
+            result += ' / ';
+            break;
+          default:
+        }
+      } else {
+        if (GameRisk.isInteger(item.number as double)) {
+          result += (item.number as double).toInt().toString();
+        } else {
+          result += item.number.toString();
+        }
+      }
+    }
+    return result;
+  }
+
+  Widget _getGameBoard(GameState state, Palette palette) {
     switch (state.step) {
       case 1:
         return GameBoard<MathSymbol>(
@@ -72,11 +103,28 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         );
       case 3:
         return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              height: 20,
+            ),
+            // SizedBox(
+            //   height: 200,
+            //   child: Lottie.asset('assets/animations/calculator.json'),
+            // ),
+            SizedBox(
+              height: 10,
+            ),
             Text(
-              '預覽: 100 + 1 + 2',
-              style: TextStyle(fontSize: 20),
+              '預覽',
+              style: TextStyle(fontSize: 22),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              getPreviewText(state),
+              style: TextStyle(fontSize: 18),
             ),
             SizedBox(
               height: 30,
@@ -90,13 +138,13 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                   for (int index = 0;
                       index < state.selectedItems.length;
                       index += 1)
-                    Container(
+                    SizedBox(
                       key: Key('$index'),
                       width: 100,
-                      color: Colors.blue,
                       child: ReorderableDragStartListener(
                         index: index,
                         child: Card(
+                          color: palette.secondary,
                           elevation: 2,
                           child: Center(
                             child: state.selectedItems[index].symbol != null
@@ -105,6 +153,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                                         .selectedItems[index]
                                         .symbol as MathSymbol),
                                     size: 40.0,
+                                    color: palette.trueWhite,
                                   )
                                 : Text(
                                     GameRisk.isInteger(state
@@ -118,6 +167,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                                             .toString(),
                                     style: TextStyle(
                                       fontSize: 36,
+                                      color: palette.trueWhite,
                                     ),
                                   ),
                           ),
@@ -188,7 +238,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       // 盒子
                       Expanded(
                         flex: state.step == 3 ? 4 : 2,
-                        child: _getGameBoard(state),
+                        child: _getGameBoard(state, palette),
                       ),
                       // 內容物
                       Expanded(
