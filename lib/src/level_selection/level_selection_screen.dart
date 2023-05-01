@@ -93,7 +93,7 @@ class LevelSelectionScreen extends StatelessWidget {
                           GoRouter.of(context).push('/playSession');
                           // });
                         },
-                        text: '開始遊戲',
+                        text: 'PLAY',
                         elevation: 8,
                       ),
                     ).animate().fadeIn(delay: 1000.ms),
@@ -109,7 +109,7 @@ class LevelSelectionScreen extends StatelessWidget {
                           //   // GoRouter.of(context).push('/playSession');
                           // });
                         },
-                        text: '遊戲規則',
+                        text: 'RULES',
                         elevation: 8,
                       ),
                     ).animate().fadeIn(delay: 1200.ms),
@@ -125,7 +125,7 @@ class LevelSelectionScreen extends StatelessWidget {
                           //   // GoRouter.of(context).push('/playSession');
                           // });
                         },
-                        text: '設定',
+                        text: 'SETTINGS',
                         elevation: 8,
                       ),
                     ).animate().fadeIn(delay: 1400.ms),
@@ -141,7 +141,7 @@ class LevelSelectionScreen extends StatelessWidget {
                           //   // GoRouter.of(context).push('/playSession');
                           // });
                         },
-                        text: '離開',
+                        text: 'CLOSE',
                         elevation: 8,
                       ),
                     ).animate().fadeIn(delay: 1600.ms),

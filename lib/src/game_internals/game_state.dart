@@ -18,6 +18,8 @@ class GameState extends ChangeNotifier {
   List<MathSymbol> mathSymbols = [];
   List<double> numbers = [];
   List<SelectedItem> selectedItems = [];
+  // 顯示選完的結果
+  bool showChooseResult = false;
 
   int step = 1;
 
@@ -177,7 +179,13 @@ class GameState extends ChangeNotifier {
       return;
       // print(result.in)
     }
-    step = step + 1;
+
+    showChooseResult = true;
+    Future.delayed(Duration(milliseconds: 2000), () {
+      showChooseResult = false;
+      step = step + 1;
+      notifyListeners();
+    });
     notifyListeners();
   }
 

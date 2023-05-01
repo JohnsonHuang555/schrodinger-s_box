@@ -8,12 +8,14 @@ class GameBoard<T> extends StatelessWidget {
   final bool isSymbol;
   final List<SelectedItem> selectedItems;
   final dynamic onSelect;
+  final bool showChooseResult;
   const GameBoard({
     super.key,
     required this.items,
     required this.isSymbol,
     required this.selectedItems,
     required this.onSelect,
+    required this.showChooseResult,
   });
 
   List<Widget> getGameCard() {
@@ -31,6 +33,7 @@ class GameBoard<T> extends StatelessWidget {
               isSymbol: isSymbol,
               selectedItems: selectedItems,
               onTap: onSelect,
+              showChooseResult: showChooseResult,
             ),
           ),
         ),
@@ -43,6 +46,7 @@ class GameBoard<T> extends StatelessWidget {
     return AnimationLimiter(
       child: GridView.count(
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(20),
         crossAxisSpacing: 15,
         mainAxisSpacing: 15,

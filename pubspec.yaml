@@ -25,6 +25,7 @@ dependencies:
   scaffold_gradient_background: ^1.0.3+1
   lottie: ^2.3.2
   font_awesome_flutter: ^10.4.0
+  material_dialogs: ^1.1.4
 
   # If you don't need one of the following dependencies,
   # delete the relevant line below, and get rid of any Dart code
@@ -61,6 +62,7 @@ flutter:
         - asset: assets/fonts/Saira/Saira-Regular.ttf
         - asset: assets/fonts/Saira/Saira-Medium.ttf
         - asset: assets/fonts/Saira/Saira-Bold.ttf
+        - asset: assets/fonts/Saira/Saira-Light.ttf
 
 flutter_icons:
   android: true

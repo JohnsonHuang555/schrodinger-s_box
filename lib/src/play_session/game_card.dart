@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_template/src/game_internals/game_risk.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
 import 'package:provider/provider.dart';
+
 import '../style/palette.dart';
 
 class GameCard<T> extends StatefulWidget {
@@ -11,6 +13,7 @@ class GameCard<T> extends StatefulWidget {
   final List<SelectedItem> selectedItems;
   final bool isSymbol;
   final dynamic onTap;
+  final bool showChooseResult;
   const GameCard({
     super.key,
     required this.index,
@@ -18,6 +21,7 @@ class GameCard<T> extends StatefulWidget {
     required this.selectedItems,
     required this.isSymbol,
     required this.onTap,
+    required this.showChooseResult,
   });
 
   @override
@@ -67,16 +71,22 @@ class _GameCardState extends State<GameCard> {
           Center(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: palette.secondary,
                 borderRadius: BorderRadius.circular(10),
+                border: isChecked
+                    ? Border.all(
+                        width: 6,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      )
+                    : null,
               ),
               margin: EdgeInsets.all(3.0),
               child: Center(
                 child: widget.isSymbol
-                    ? Icon(
+                    ? FaIcon(
                         GameRisk.convertSymbolToIcon(widget.item as MathSymbol),
-                        color: Colors.white,
-                        size: 40.0,
+                        color: palette.trueWhite,
+                        size: 40,
                       )
                     : Text(
                         GameRisk.isInteger(widget.item as double)
@@ -89,21 +99,22 @@ class _GameCardState extends State<GameCard> {
               ),
             ),
           ),
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: palette.secondary,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-                child: isChecked
-                    ? Icon(
-                        Icons.check,
-                        size: 50,
-                      )
-                    : null),
-          ),
+          !widget.showChooseResult
+              ? Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: palette.secondary,
+                    borderRadius: BorderRadius.circular(10),
+                    border: isChecked
+                        ? Border.all(
+                            width: 6,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          )
+                        : null,
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

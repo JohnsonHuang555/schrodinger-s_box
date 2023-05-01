@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/play_session/control_area.dart';
 import 'package:game_template/src/play_session/game_board.dart';
@@ -88,6 +89,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               symbol: item as MathSymbol,
             );
           },
+          showChooseResult: state.showChooseResult,
         );
       case 2:
         return GameBoard<double>(
@@ -100,6 +102,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               number: item as double,
             );
           },
+          showChooseResult: state.showChooseResult,
         );
       case 3:
         return Column(
@@ -194,6 +197,19 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     }
   }
 
+  String _getDescription(int step) {
+    switch (step) {
+      case 1:
+        return 'choose symbols';
+      case 2:
+        return '選擇數字';
+      case 3:
+        return '組合算式';
+      default:
+        return 'Something wrong...';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
@@ -220,24 +236,51 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                 Consumer<GameState>(builder: ((context, state, child) {
                   return Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: InkResponse(
-                          onTap: () => GoRouter.of(context).push('/settings'),
-                          child: Image.asset(
-                            'assets/images/settings.png',
-                            semanticLabel: 'Settings',
-                          ),
+                      Container(
+                        margin: EdgeInsets.all(16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: const [
+                            FaIcon(
+                              FontAwesomeIcons.clock,
+                              size: 22,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              '30',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontFamily: 'Saira',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       // 關卡風險
                       Text(
-                        '風險 ${state.risk} - ${state.currentStep}',
-                        style: TextStyle(fontSize: 24),
+                        'Risk ${state.risk}',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontFamily: 'Saira',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        _getDescription(state.step),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Saira',
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
                       // 盒子
                       Expanded(
-                        flex: state.step == 3 ? 4 : 2,
+                        // flex: state.step == 3 ? 4 : 2,
+                        flex: 2,
                         child: _getGameBoard(state, palette),
                       ),
                       // 內容物

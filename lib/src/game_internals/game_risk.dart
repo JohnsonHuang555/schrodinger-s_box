@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import './game_state.dart';
 
 class GameRisk {
   static IconData? convertSymbolToIcon(MathSymbol symbol) {
     switch (symbol) {
       case MathSymbol.plus:
-        return Icons.add;
+        return FontAwesomeIcons.plus;
       case MathSymbol.minus:
-        return Icons.remove;
+        return FontAwesomeIcons.minus;
       case MathSymbol.times:
-        return Icons.close;
+        return FontAwesomeIcons.xmark;
       case MathSymbol.divide:
-        return Icons.safety_divider;
+        return FontAwesomeIcons.divide;
       default:
         return null;
     }
