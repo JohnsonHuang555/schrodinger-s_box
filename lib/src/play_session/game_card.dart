@@ -94,6 +94,7 @@ class _GameCardState extends State<GameCard> {
                             : widget.item.toString(),
                         style: TextStyle(
                           fontSize: 36,
+                          color: palette.trueWhite,
                         ),
                       ),
               ),

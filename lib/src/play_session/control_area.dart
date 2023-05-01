@@ -99,7 +99,7 @@ class ControlArea extends StatelessWidget {
                   IconsButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Future.delayed(Duration(milliseconds: 1000), () {
+                      Future.delayed(Duration(milliseconds: 800), () {
                         nextStep();
                       });
                     },

@@ -19,6 +19,7 @@ import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
 import '../game_internals/game_risk.dart';
 import '../game_internals/level_state.dart';
+import '../game_internals/selected_symbol.dart';
 import '../games_services/games_services.dart';
 import '../games_services/score.dart';
 import '../in_app_purchase/in_app_purchase.dart';
@@ -46,34 +47,73 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   late DateTime _startOfPlay;
 
-  String getPreviewText(GameState state) {
-    var result = '100';
+  List<SelectedItem> currentFormulaItem = [];
+
+  List<Widget> _getBlackboardItems(GameState state, Palette palette) {
+    List<Widget> items = [];
     for (var item in state.selectedItems) {
       if (item.symbol != null) {
         switch (item.symbol) {
           case MathSymbol.plus:
-            result += ' + ';
+            items.add(FaIcon(
+              FontAwesomeIcons.plus,
+              color: palette.trueWhite,
+              size: 20,
+            ));
             break;
           case MathSymbol.minus:
-            result += ' - ';
+            items.add(FaIcon(
+              FontAwesomeIcons.minus,
+              color: palette.trueWhite,
+              size: 20,
+            ));
             break;
           case MathSymbol.times:
-            result += ' x ';
+            items.add(FaIcon(
+              FontAwesomeIcons.xmark,
+              color: palette.trueWhite,
+              size: 20,
+            ));
             break;
           case MathSymbol.divide:
-            result += ' / ';
+            items.add(FaIcon(
+              FontAwesomeIcons.divide,
+              color: palette.trueWhite,
+              size: 20,
+            ));
             break;
           default:
         }
       } else {
         if (GameRisk.isInteger(item.number as double)) {
-          result += (item.number as double).toInt().toString();
+          items.add(
+            Text(
+              (item.number as double).toInt().toString(),
+              style: TextStyle(
+                color: palette.trueWhite,
+                fontSize: 24,
+                fontFamily: 'Darumadrop',
+              ),
+            ),
+          );
         } else {
-          result += item.number.toString();
+          items.add(
+            Text(
+              item.number.toString(),
+              style: TextStyle(
+                color: palette.trueWhite,
+                fontSize: 24,
+                fontFamily: 'Darumadrop',
+              ),
+            ),
+          );
         }
       }
+      items.add(SizedBox(
+        width: 5,
+      ));
     }
-    return result;
+    return items;
   }
 
   Widget _getGameBoard(GameState state, Palette palette) {
@@ -106,85 +146,24 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         );
       case 3:
         return Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 20,
-            ),
-            // SizedBox(
-            //   height: 200,
-            //   child: Lottie.asset('assets/animations/calculator.json'),
-            // ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              '預覽',
-              style: TextStyle(fontSize: 22),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              getPreviewText(state),
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            SizedBox(
-              height: 100,
-              child: ReorderableListView(
-                scrollDirection: Axis.horizontal,
-                buildDefaultDragHandles: false,
-                children: <Widget>[
-                  for (int index = 0;
-                      index < state.selectedItems.length;
-                      index += 1)
-                    SizedBox(
-                      key: Key('$index'),
-                      width: 100,
-                      child: ReorderableDragStartListener(
-                        index: index,
-                        child: Card(
-                          color: palette.secondary,
-                          elevation: 2,
-                          child: Center(
-                            child: state.selectedItems[index].symbol != null
-                                ? Icon(
-                                    GameRisk.convertSymbolToIcon(state
-                                        .selectedItems[index]
-                                        .symbol as MathSymbol),
-                                    size: 40.0,
-                                    color: palette.trueWhite,
-                                  )
-                                : Text(
-                                    GameRisk.isInteger(state
-                                            .selectedItems[index]
-                                            .number as double)
-                                        ? (state.selectedItems[index].number
-                                                as double)
-                                            .toInt()
-                                            .toString()
-                                        : state.selectedItems[index].number
-                                            .toString(),
-                                    style: TextStyle(
-                                      fontSize: 36,
-                                      color: palette.trueWhite,
-                                    ),
-                                  ),
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-                onReorder: (oldIndex, newIndex) {
-                  state.sortSelectedItem(oldIndex, newIndex);
-                },
+            Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(225, 127, 155, 121),
+                borderRadius: BorderRadius.circular(10),
               ),
-            ),
-            SizedBox(
-              height: 20,
+              margin: EdgeInsets.all(20),
+              width: double.infinity,
+              height: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Center(
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: _getBlackboardItems(state, palette),
+                  ),
+                ),
+              ),
             ),
             Text(
               '= ?',
@@ -202,9 +181,9 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
       case 1:
         return 'choose symbols';
       case 2:
-        return '選擇數字';
+        return 'choose numbers';
       case 3:
-        return '組合算式';
+        return 'Combination math formula';
       default:
         return 'Something wrong...';
     }

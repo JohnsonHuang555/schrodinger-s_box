@@ -63,6 +63,9 @@ flutter:
         - asset: assets/fonts/Saira/Saira-Medium.ttf
         - asset: assets/fonts/Saira/Saira-Bold.ttf
         - asset: assets/fonts/Saira/Saira-Light.ttf
+    - family: Darumadrop
+      fonts:
+        - asset: assets/fonts/Darumadrop/DarumadropOne-Regular.ttf
 
 flutter_icons:
   android: true
