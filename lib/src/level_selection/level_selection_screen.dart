@@ -3,9 +3,11 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:game_template/src/components/fancy_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
@@ -28,17 +30,16 @@ class LevelSelectionScreen extends StatelessWidget {
         squarishMainArea: Column(
           children: [
             SizedBox(
-              height: 50,
+              height: 40,
             ),
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Center(
-                child: Text(
-                  '你的積分',
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Color.fromARGB(255, 33, 33, 33),
-                  ),
+            Center(
+              child: Text(
+                'Score',
+                style: TextStyle(
+                  fontSize: 28,
+                  color: Color.fromARGB(255, 33, 33, 33),
+                  fontFamily: 'Saira',
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -46,12 +47,37 @@ class LevelSelectionScreen extends StatelessWidget {
               child: Text(
                 '1000',
                 style: TextStyle(
-                  fontSize: 36,
+                  fontSize: 50,
                   color: Color.fromARGB(255, 33, 33, 33),
+                  fontFamily: 'Saira',
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-            const SizedBox(height: 80),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                FaIcon(
+                  FontAwesomeIcons.crown,
+                  size: 24,
+                  color: Color.fromARGB(255, 186, 121, 16),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  '1st',
+                  style: TextStyle(
+                    fontSize: 26,
+                    color: Color.fromARGB(255, 131, 84, 7),
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Saira',
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 45),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,58 +85,66 @@ class LevelSelectionScreen extends StatelessWidget {
                   Container(
                     width: 250,
                     margin: EdgeInsets.all(16),
-                    child: FancyButton.text(
-                      color: Colors.blueGrey,
-                      onPressed: () {
-                        Future.delayed(Duration(milliseconds: 300), () {
+                    child: Animate(
+                      child: FancyButton.text(
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          // Future.delayed(Duration(milliseconds: 100), () {
                           GoRouter.of(context).push('/playSession');
-                        });
-                      },
-                      text: '開始遊戲',
-                      elevation: 8,
-                    ),
+                          // });
+                        },
+                        text: '開始遊戲',
+                        elevation: 8,
+                      ),
+                    ).animate().fadeIn(delay: 1000.ms),
                   ),
                   Container(
                     width: 250,
                     margin: EdgeInsets.all(16),
-                    child: FancyButton.text(
-                      color: Colors.blueGrey,
-                      onPressed: () {
-                        Future.delayed(Duration(milliseconds: 300), () {
-                          // GoRouter.of(context).push('/playSession');
-                        });
-                      },
-                      text: '遊戲規則',
-                      elevation: 8,
-                    ),
+                    child: Animate(
+                      child: FancyButton.text(
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          // Future.delayed(Duration(milliseconds: 300), () {
+                          //   // GoRouter.of(context).push('/playSession');
+                          // });
+                        },
+                        text: '遊戲規則',
+                        elevation: 8,
+                      ),
+                    ).animate().fadeIn(delay: 1200.ms),
                   ),
                   Container(
                     width: 250,
                     margin: EdgeInsets.all(16),
-                    child: FancyButton.text(
-                      color: Colors.blueGrey,
-                      onPressed: () {
-                        Future.delayed(Duration(milliseconds: 300), () {
-                          // GoRouter.of(context).push('/playSession');
-                        });
-                      },
-                      text: '設定',
-                      elevation: 8,
-                    ),
+                    child: Animate(
+                      child: FancyButton.text(
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          // Future.delayed(Duration(milliseconds: 300), () {
+                          //   // GoRouter.of(context).push('/playSession');
+                          // });
+                        },
+                        text: '設定',
+                        elevation: 8,
+                      ),
+                    ).animate().fadeIn(delay: 1400.ms),
                   ),
                   Container(
                     width: 250,
                     margin: EdgeInsets.all(16),
-                    child: FancyButton.text(
-                      color: Colors.blueGrey,
-                      onPressed: () {
-                        Future.delayed(Duration(milliseconds: 300), () {
-                          // GoRouter.of(context).push('/playSession');
-                        });
-                      },
-                      text: '離開',
-                      elevation: 8,
-                    ),
+                    child: Animate(
+                      child: FancyButton.text(
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          // Future.delayed(Duration(milliseconds: 300), () {
+                          //   // GoRouter.of(context).push('/playSession');
+                          // });
+                        },
+                        text: '離開',
+                        elevation: 8,
+                      ),
+                    ).animate().fadeIn(delay: 1600.ms),
                   ),
                 ],
               ),
