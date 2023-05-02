@@ -51,6 +51,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   List<Widget> _getBlackboardItems(GameState state, Palette palette) {
     List<Widget> items = [];
+    // TODO: state.selectedItems
     for (var item in state.selectedItems) {
       if (item.symbol != null) {
         switch (item.symbol) {
@@ -91,7 +92,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               (item.number as double).toInt().toString(),
               style: TextStyle(
                 color: palette.trueWhite,
-                fontSize: 24,
+                fontSize: 26,
                 fontFamily: 'Darumadrop',
               ),
             ),
@@ -102,7 +103,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               item.number.toString(),
               style: TextStyle(
                 color: palette.trueWhite,
-                fontSize: 24,
+                fontSize: 26,
                 fontFamily: 'Darumadrop',
               ),
             ),
@@ -110,7 +111,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         }
       }
       items.add(SizedBox(
-        width: 5,
+        width: 8,
       ));
     }
     return items;
@@ -258,8 +259,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       ),
                       // 盒子
                       Expanded(
-                        // flex: state.step == 3 ? 4 : 2,
-                        flex: 2,
+                        flex: state.step == 3 ? 1 : 2,
                         child: _getGameBoard(state, palette),
                       ),
                       // 內容物
