@@ -47,12 +47,23 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   late DateTime _startOfPlay;
 
-  List<SelectedItem> currentFormulaItem = [];
+  List<SelectedItem> currentFormulaItems = [];
 
   List<Widget> _getBlackboardItems(GameState state, Palette palette) {
-    List<Widget> items = [];
-    // TODO: state.selectedItems
-    for (var item in state.selectedItems) {
+    List<Widget> items = [
+      Text(
+        '1000',
+        style: TextStyle(
+          color: palette.trueWhite,
+          fontSize: 26,
+          fontFamily: 'Darumadrop',
+        ),
+      ),
+      SizedBox(
+        width: 8,
+      ),
+    ];
+    for (var item in currentFormulaItems) {
       if (item.symbol != null) {
         switch (item.symbol) {
           case MathSymbol.plus:
@@ -184,7 +195,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
       case 2:
         return 'choose numbers';
       case 3:
-        return 'Combination math formula';
+        return 'combine math formula';
       default:
         return 'Something wrong...';
     }
@@ -265,13 +276,25 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       // 內容物
                       Expanded(
                         child: ControlArea(
-                          content: state.hint,
                           selectedItems: state.selectedItems,
-                          currentSelectedSymbolCount: state.selectedItems
-                              .where((element) => element.symbol != null)
-                              .length,
                           step: state.step,
                           nextStep: state.nextStep,
+                          onAnswerSelect: (item) {
+                            var alreadySelected = currentFormulaItems
+                                .singleWhere((e) => e.id == item.id,
+                                    orElse: () =>
+                                        SelectedItem(index: -1, id: ''));
+                            if (alreadySelected.id == '') {
+                              setState(() {
+                                currentFormulaItems.add(item);
+                              });
+                            } else {
+                              setState(() {
+                                currentFormulaItems.removeWhere(
+                                    (element) => element.id == item.id);
+                              });
+                            }
+                          },
                         ),
                       ),
                     ],

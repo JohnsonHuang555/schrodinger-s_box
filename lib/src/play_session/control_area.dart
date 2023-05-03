@@ -5,6 +5,7 @@ import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../components/fancy_button.dart';
 import '../game_internals/game_risk.dart';
@@ -13,18 +14,16 @@ import '../style/palette.dart';
 
 /// 提示與操作區塊
 class ControlArea extends StatelessWidget {
-  final List<IconData> content;
   final List<SelectedItem> selectedItems;
-  final int currentSelectedSymbolCount;
   final int step;
   final VoidCallback nextStep;
+  final Function(SelectedItem item) onAnswerSelect;
   const ControlArea({
     super.key,
-    required this.content,
-    required this.currentSelectedSymbolCount,
     required this.step,
     required this.selectedItems,
     required this.nextStep,
+    required this.onAnswerSelect,
   });
 
   List<Widget> getAnswerCard(Palette palette) {
@@ -37,33 +36,41 @@ class ControlArea extends StatelessWidget {
           ),
         );
       }
-      return Container(
-        decoration: BoxDecoration(
-          color: palette.secondary,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: selectedItems[index].symbol != null
-            ? Center(
-                child: FaIcon(
-                  GameRisk.convertSymbolToIcon(
-                      selectedItems[index].symbol as MathSymbol),
-                  color: palette.trueWhite,
-                  size: 40,
-                ),
-              )
-            : Center(
-                child: Text(
-                  GameRisk.isInteger(selectedItems[index].number as double)
-                      ? (selectedItems[index].number as double)
-                          .toInt()
-                          .toString()
-                      : selectedItems[index].number.toString(),
-                  style: TextStyle(
-                    fontSize: 36,
+      return InkResponse(
+        onTap: () {
+          var uuid = Uuid();
+          var id = uuid.v4();
+          selectedItems[index].id = id;
+          onAnswerSelect(selectedItems[index]);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: palette.secondary,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: selectedItems[index].symbol != null
+              ? Center(
+                  child: FaIcon(
+                    GameRisk.convertSymbolToIcon(
+                        selectedItems[index].symbol as MathSymbol),
                     color: palette.trueWhite,
+                    size: 40,
+                  ),
+                )
+              : Center(
+                  child: Text(
+                    GameRisk.isInteger(selectedItems[index].number as double)
+                        ? (selectedItems[index].number as double)
+                            .toInt()
+                            .toString()
+                        : selectedItems[index].number.toString(),
+                    style: TextStyle(
+                      fontSize: 36,
+                      color: palette.trueWhite,
+                    ),
                   ),
                 ),
-              ),
+        ),
       );
     });
   }

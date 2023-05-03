@@ -26,6 +26,7 @@ dependencies:
   lottie: ^2.3.2
   font_awesome_flutter: ^10.4.0
   material_dialogs: ^1.1.4
+  uuid: ^3.0.7
 
   # If you don't need one of the following dependencies,
   # delete the relevant line below, and get rid of any Dart code
