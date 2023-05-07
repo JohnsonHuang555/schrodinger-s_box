@@ -18,24 +18,30 @@ class ControlArea extends StatelessWidget {
   final int step;
   final VoidCallback nextStep;
   final Function(SelectedItem item) onAnswerSelect;
+  final List<SelectedItem> currentFormulaItems;
   const ControlArea({
     super.key,
     required this.step,
     required this.selectedItems,
     required this.nextStep,
     required this.onAnswerSelect,
+    required this.currentFormulaItems,
   });
 
   List<Widget> getAnswerCard(Palette palette) {
     return List.generate(8, (index) {
-      if (index > selectedItems.length - 1) {
+      var noItem = index > selectedItems.length - 1;
+      if (noItem) {
         return Container(
           decoration: BoxDecoration(
-            color: palette.secondary,
+            color: Color.fromARGB(255, 168, 176, 191),
             borderRadius: BorderRadius.circular(5),
           ),
         );
       }
+      var isSelect = currentFormulaItems.singleWhere(
+          (item) => item.id == selectedItems[index].id,
+          orElse: () => SelectedItem(id: '', index: -1));
       return InkResponse(
         onTap: () {
           var uuid = Uuid();
@@ -47,6 +53,12 @@ class ControlArea extends StatelessWidget {
           decoration: BoxDecoration(
             color: palette.secondary,
             borderRadius: BorderRadius.circular(5),
+            border: isSelect.id != ''
+                ? Border.all(
+                    width: 6,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  )
+                : null,
           ),
           child: selectedItems[index].symbol != null
               ? Center(

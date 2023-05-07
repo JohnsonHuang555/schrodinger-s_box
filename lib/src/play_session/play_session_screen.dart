@@ -47,15 +47,13 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   late DateTime _startOfPlay;
 
-  List<SelectedItem> currentFormulaItems = [];
-
   List<Widget> _getBlackboardItems(GameState state, Palette palette) {
     List<Widget> items = [
       Text(
         '1000',
         style: TextStyle(
           color: palette.trueWhite,
-          fontSize: 26,
+          fontSize: 32,
           fontFamily: 'Darumadrop',
         ),
       ),
@@ -63,35 +61,35 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         width: 8,
       ),
     ];
-    for (var item in currentFormulaItems) {
+    for (var item in state.currentFormulaItems) {
       if (item.symbol != null) {
         switch (item.symbol) {
           case MathSymbol.plus:
             items.add(FaIcon(
               FontAwesomeIcons.plus,
               color: palette.trueWhite,
-              size: 20,
+              size: 26,
             ));
             break;
           case MathSymbol.minus:
             items.add(FaIcon(
               FontAwesomeIcons.minus,
               color: palette.trueWhite,
-              size: 20,
+              size: 26,
             ));
             break;
           case MathSymbol.times:
             items.add(FaIcon(
               FontAwesomeIcons.xmark,
               color: palette.trueWhite,
-              size: 20,
+              size: 26,
             ));
             break;
           case MathSymbol.divide:
             items.add(FaIcon(
               FontAwesomeIcons.divide,
               color: palette.trueWhite,
-              size: 20,
+              size: 26,
             ));
             break;
           default:
@@ -103,7 +101,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               (item.number as double).toInt().toString(),
               style: TextStyle(
                 color: palette.trueWhite,
-                fontSize: 26,
+                fontSize: 30,
                 fontFamily: 'Darumadrop',
               ),
             ),
@@ -114,7 +112,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               item.number.toString(),
               style: TextStyle(
                 color: palette.trueWhite,
-                fontSize: 26,
+                fontSize: 30,
                 fontFamily: 'Darumadrop',
               ),
             ),
@@ -279,21 +277,9 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                           selectedItems: state.selectedItems,
                           step: state.step,
                           nextStep: state.nextStep,
+                          currentFormulaItems: state.currentFormulaItems,
                           onAnswerSelect: (item) {
-                            var alreadySelected = currentFormulaItems
-                                .singleWhere((e) => e.id == item.id,
-                                    orElse: () =>
-                                        SelectedItem(index: -1, id: ''));
-                            if (alreadySelected.id == '') {
-                              setState(() {
-                                currentFormulaItems.add(item);
-                              });
-                            } else {
-                              setState(() {
-                                currentFormulaItems.removeWhere(
-                                    (element) => element.id == item.id);
-                              });
-                            }
+                            state.selectAnswer(item);
                           },
                         ),
                       ),

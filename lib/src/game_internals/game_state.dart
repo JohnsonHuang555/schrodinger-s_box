@@ -20,6 +20,7 @@ class GameState extends ChangeNotifier {
   List<SelectedItem> selectedItems = [];
   // 顯示選完的結果
   bool showChooseResult = false;
+  List<SelectedItem> currentFormulaItems = [];
 
   int step = 1;
 
@@ -136,20 +137,19 @@ class GameState extends ChangeNotifier {
       }
     }
     // 送出算式
-    if (step == 3) {
+    if (step == 3 && currentFormulaItems.isNotEmpty) {
       // FIXME: 不要寫死 100
       String result = '100';
 
-      // 第一個一定要放符號最後一個一定要放數字
-      if (selectedItems[0].symbol == null ||
-          selectedItems[selectedItems.length - 1].number == null) {
+      // 第一個一定要放符號
+      if (currentFormulaItems[0].symbol == null) {
         return;
       }
 
-      for (var i = 0; i < selectedItems.length; i++) {
+      for (var i = 0; i < currentFormulaItems.length; i++) {
         // 奇數 - 符號
-        if (i % 2 == 0 && selectedItems[i].symbol != null) {
-          switch (selectedItems[i].symbol) {
+        if (currentFormulaItems[i].symbol != null) {
+          switch (currentFormulaItems[i].symbol) {
             case MathSymbol.plus:
               result += '+';
               break;
@@ -167,17 +167,19 @@ class GameState extends ChangeNotifier {
           }
         }
         // 偶數 - 數字
-        else if (i % 2 == 1 && selectedItems[i].number != null) {
-          result += selectedItems[i].number.toString();
-        } else {
-          // 算式不合法
-          return;
+        else if (currentFormulaItems[i].number != null) {
+          result += currentFormulaItems[i].number.toString();
         }
       }
 
-      print(result.interpret());
+      try {
+        print(result);
+
+        print(result.interpret());
+      } catch (e) {
+        print(e);
+      }
       return;
-      // print(result.in)
     }
 
     showChooseResult = true;
@@ -240,13 +242,16 @@ class GameState extends ChangeNotifier {
     notifyListeners();
   }
 
-  // 移動算式
-  void sortSelectedItem(int oldIndex, int newIndex) {
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
+  void selectAnswer(SelectedItem item) {
+    var alreadySelected = currentFormulaItems.singleWhere(
+        (e) => e.id == item.id,
+        orElse: () => SelectedItem(index: -1, id: ''));
+
+    if (alreadySelected.id == '') {
+      currentFormulaItems.add(item);
+    } else {
+      currentFormulaItems.removeWhere((element) => element.id == item.id);
     }
-    var item = selectedItems.removeAt(oldIndex);
-    selectedItems.insert(newIndex, item);
     notifyListeners();
   }
 }
