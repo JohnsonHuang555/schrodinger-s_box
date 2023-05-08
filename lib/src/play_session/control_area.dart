@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:game_template/src/components/modals/pick_item_modal.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
-import 'package:material_dialogs/material_dialogs.dart';
-import 'package:material_dialogs/widgets/buttons/icon_button.dart';
-import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -111,52 +109,36 @@ class ControlArea extends StatelessWidget {
         Container(
           width: double.infinity,
           margin: EdgeInsets.all(20),
-          child: FancyButton.text(
-            color: Colors.blueGrey,
-            onPressed: () {
-              Dialogs.materialDialog(
-                msg: 'Are you sure to pick these ?',
-                titleStyle: TextStyle(
-                  fontFamily: 'Saira',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
+          child: Row(
+            children: [
+              step == 3
+                  ? Expanded(
+                      child: FancyButton.icon(
+                        padding: EdgeInsets.all(6.5),
+                        color: Colors.red,
+                        onPressed: () {},
+                        icon: Icons.delete,
+                        elevation: 8,
+                      ),
+                    )
+                  : Expanded(flex: 0, child: Container()),
+              SizedBox(
+                width: step == 3 ? 10 : 0,
+              ),
+              Expanded(
+                flex: step == 3 ? 3 : 1,
+                child: FancyButton.text(
+                  color: Colors.blueGrey,
+                  onPressed: () {
+                    if (step == 1 || step == 2) {
+                      PickItemModal.createModal(context, nextStep);
+                    } else if (step == 3) {}
+                  },
+                  text: step == 3 ? 'CALCULATE' : 'NEXT',
+                  elevation: 8,
                 ),
-                msgStyle: TextStyle(
-                  fontFamily: 'Saira',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-                title: 'Confirm',
-                color: Colors.white,
-                context: context,
-                actions: [
-                  IconsOutlineButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    text: 'No',
-                    iconData: Icons.clear,
-                    textStyle: TextStyle(color: Colors.grey),
-                    iconColor: Colors.grey,
-                  ),
-                  IconsButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      Future.delayed(Duration(milliseconds: 800), () {
-                        nextStep();
-                      });
-                    },
-                    text: 'Yes',
-                    iconData: Icons.check,
-                    color: Colors.blueGrey,
-                    textStyle: TextStyle(color: Colors.white),
-                    iconColor: Colors.white,
-                  ),
-                ],
-              );
-            },
-            text: 'NEXT',
-            elevation: 8,
+              ),
+            ],
           ),
         ),
       ],
