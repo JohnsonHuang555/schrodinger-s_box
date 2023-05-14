@@ -176,7 +176,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               ),
             ),
             Text(
-              '= ?',
+              '= ${state.currentAnswer}',
               style: TextStyle(fontSize: 40),
             ),
           ],
@@ -280,6 +280,9 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                           currentFormulaItems: state.currentFormulaItems,
                           onAnswerSelect: (item) {
                             state.selectAnswer(item);
+                          },
+                          clearAnswer: () {
+                            state.clearAnswer();
                           },
                         ),
                       ),

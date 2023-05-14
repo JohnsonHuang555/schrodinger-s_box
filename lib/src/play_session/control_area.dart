@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:game_template/src/components/modals/calculate_answer_modal.dart';
 import 'package:game_template/src/components/modals/pick_item_modal.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ class ControlArea extends StatelessWidget {
   final List<SelectedItem> selectedItems;
   final int step;
   final VoidCallback nextStep;
+  final VoidCallback clearAnswer;
   final Function(SelectedItem item) onAnswerSelect;
   final List<SelectedItem> currentFormulaItems;
   const ControlArea({
@@ -24,6 +26,7 @@ class ControlArea extends StatelessWidget {
     required this.nextStep,
     required this.onAnswerSelect,
     required this.currentFormulaItems,
+    required this.clearAnswer,
   });
 
   List<Widget> getAnswerCard(Palette palette) {
@@ -116,7 +119,9 @@ class ControlArea extends StatelessWidget {
                       child: FancyButton.icon(
                         padding: EdgeInsets.all(6.5),
                         color: Colors.red,
-                        onPressed: () {},
+                        onPressed: () {
+                          clearAnswer();
+                        },
                         icon: Icons.delete,
                         elevation: 8,
                       ),
@@ -132,9 +137,13 @@ class ControlArea extends StatelessWidget {
                   onPressed: () {
                     if (step == 1 || step == 2) {
                       PickItemModal.createModal(context, nextStep);
-                    } else if (step == 3) {}
+                    } else if (step == 3) {
+                      CalculateAnswerModal.createModal(context, () {
+                        print("???");
+                      });
+                    }
                   },
-                  text: step == 3 ? 'CALCULATE' : 'NEXT',
+                  text: step == 3 ? 'SUBMIT' : 'NEXT',
                   elevation: 8,
                 ),
               ),

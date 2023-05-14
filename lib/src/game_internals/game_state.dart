@@ -103,6 +103,72 @@ class GameState extends ChangeNotifier {
     return icons;
   }
 
+  String get currentAnswer {
+    // FIXME: 不要寫死 100
+    String result = '100';
+
+    if (currentFormulaItems.isEmpty) {
+      return '?';
+    }
+
+    print(currentFormulaItems.length);
+
+    // // 第一個一定要放符號
+    // if (currentFormulaItems[0].symbol == null) {
+    //   return '?';
+    // }
+
+    for (var i = 0; i < currentFormulaItems.length; i++) {
+      // 符號
+      if (currentFormulaItems[i].symbol != null) {
+        switch (currentFormulaItems[i].symbol) {
+          case MathSymbol.plus:
+            result += '+';
+            break;
+          case MathSymbol.minus:
+            result += '-';
+            break;
+          case MathSymbol.times:
+            result += '*';
+            break;
+          case MathSymbol.divide:
+            result += '/';
+            break;
+          default:
+            break;
+        }
+      }
+      // 數字
+      else if (currentFormulaItems[i].number != null) {
+        // TODO: 修正小數點
+        var resultNumber = '';
+        if (GameRisk.isInteger(currentFormulaItems[i].number!)) {
+          if (currentFormulaItems[i].number! < 0) {
+            resultNumber =
+                '(${currentFormulaItems[i].number!.toInt().toString()})';
+          } else {
+            resultNumber = currentFormulaItems[i].number!.toInt().toString();
+          }
+        } else {
+          if (currentFormulaItems[i].number! < 0) {
+            resultNumber = '(${currentFormulaItems[i].number!.toString()})';
+          } else {
+            resultNumber = currentFormulaItems[i].number!.toString();
+          }
+        }
+        result += resultNumber;
+      }
+    }
+
+    try {
+      print("??");
+      return result.interpret().toString();
+    } catch (e) {
+      print(e);
+      return '?';
+    }
+  }
+
   /// 產生 1~max 的隨機亂數
   int _getRandomNumber(int max) {
     var random = Random();
@@ -135,51 +201,6 @@ class GameState extends ChangeNotifier {
       if (selectedItems.length != currentSelectedSymbolCount * 2) {
         return;
       }
-    }
-    // 送出算式
-    if (step == 3 && currentFormulaItems.isNotEmpty) {
-      // FIXME: 不要寫死 100
-      String result = '100';
-
-      // 第一個一定要放符號
-      if (currentFormulaItems[0].symbol == null) {
-        return;
-      }
-
-      for (var i = 0; i < currentFormulaItems.length; i++) {
-        // 奇數 - 符號
-        if (currentFormulaItems[i].symbol != null) {
-          switch (currentFormulaItems[i].symbol) {
-            case MathSymbol.plus:
-              result += '+';
-              break;
-            case MathSymbol.minus:
-              result += '-';
-              break;
-            case MathSymbol.times:
-              result += '*';
-              break;
-            case MathSymbol.divide:
-              result += '/';
-              break;
-            default:
-              break;
-          }
-        }
-        // 偶數 - 數字
-        else if (currentFormulaItems[i].number != null) {
-          result += currentFormulaItems[i].number.toString();
-        }
-      }
-
-      try {
-        print(result);
-
-        print(result.interpret());
-      } catch (e) {
-        print(e);
-      }
-      return;
     }
 
     showChooseResult = true;
@@ -252,6 +273,11 @@ class GameState extends ChangeNotifier {
     } else {
       currentFormulaItems.removeWhere((element) => element.id == item.id);
     }
+    notifyListeners();
+  }
+
+  void clearAnswer() {
+    currentFormulaItems.clear();
     notifyListeners();
   }
 }
