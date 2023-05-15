@@ -111,12 +111,10 @@ class GameState extends ChangeNotifier {
       return '?';
     }
 
-    print(currentFormulaItems.length);
-
-    // // 第一個一定要放符號
-    // if (currentFormulaItems[0].symbol == null) {
-    //   return '?';
-    // }
+    // 第一個一定要放符號
+    if (currentFormulaItems[0].symbol == null) {
+      return 'x';
+    }
 
     for (var i = 0; i < currentFormulaItems.length; i++) {
       // 符號
@@ -140,15 +138,9 @@ class GameState extends ChangeNotifier {
       }
       // 數字
       else if (currentFormulaItems[i].number != null) {
-        // TODO: 修正小數點
         var resultNumber = '';
         if (GameRisk.isInteger(currentFormulaItems[i].number!)) {
-          if (currentFormulaItems[i].number! < 0) {
-            resultNumber =
-                '(${currentFormulaItems[i].number!.toInt().toString()})';
-          } else {
-            resultNumber = currentFormulaItems[i].number!.toInt().toString();
-          }
+          resultNumber = currentFormulaItems[i].number!.toInt().toString();
         } else {
           if (currentFormulaItems[i].number! < 0) {
             resultNumber = '(${currentFormulaItems[i].number!.toString()})';
@@ -161,8 +153,11 @@ class GameState extends ChangeNotifier {
     }
 
     try {
-      print("??");
-      return result.interpret().toString();
+      var answer = result.interpret();
+      if (answer.toInt() == answer) {
+        return answer.toInt().toString();
+      }
+      return answer.toString();
     } catch (e) {
       print(e);
       return '?';

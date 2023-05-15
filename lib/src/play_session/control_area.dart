@@ -118,7 +118,7 @@ class ControlArea extends StatelessWidget {
                   ? Expanded(
                       child: FancyButton.icon(
                         padding: EdgeInsets.all(6.5),
-                        color: Colors.red,
+                        color: Colors.deepOrange,
                         onPressed: () {
                           clearAnswer();
                         },
@@ -138,8 +138,10 @@ class ControlArea extends StatelessWidget {
                     if (step == 1 || step == 2) {
                       PickItemModal.createModal(context, nextStep);
                     } else if (step == 3) {
-                      CalculateAnswerModal.createModal(context, () {
-                        print("???");
+                      Future.delayed(Duration(milliseconds: 200), () {
+                        CalculateAnswerModal.createModal(context, () {
+                          // TODO: 送出計算分數
+                        });
                       });
                     }
                   },
