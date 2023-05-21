@@ -137,6 +137,7 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
+                          throw StateError('whoa!');
                           // Future.delayed(Duration(milliseconds: 300), () {
                           //   // GoRouter.of(context).push('/playSession');
                           // });
