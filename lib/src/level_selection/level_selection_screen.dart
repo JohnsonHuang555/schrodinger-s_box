@@ -45,7 +45,7 @@ class LevelSelectionScreen extends StatelessWidget {
             ),
             Center(
               child: Text(
-                '1000',
+                playerProgress.yourScore, // TODO: from firebase
                 style: TextStyle(
                   fontSize: 50,
                   color: Color.fromARGB(255, 33, 33, 33),
@@ -137,7 +137,7 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          throw StateError('whoa!');
+                          // throw StateError('whoa!');
                           // Future.delayed(Duration(milliseconds: 300), () {
                           //   // GoRouter.of(context).push('/playSession');
                           // });

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:function_tree/function_tree.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import './game_risk.dart';
 import './selected_symbol.dart';
@@ -14,6 +15,7 @@ enum MathSymbol {
 }
 
 class GameState extends ChangeNotifier {
+  FirebaseDatabase database = FirebaseDatabase.instance;
   int? risk;
   List<MathSymbol> mathSymbols = [];
   List<double> numbers = [];
@@ -103,9 +105,8 @@ class GameState extends ChangeNotifier {
     return icons;
   }
 
-  String get currentAnswer {
-    // FIXME: 不要寫死 100
-    String result = '100';
+  String getCurrentAnswer(String currentScore) {
+    String result = currentScore;
 
     if (currentFormulaItems.isEmpty) {
       return '?';

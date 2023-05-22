@@ -48,9 +48,11 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   late DateTime _startOfPlay;
 
   List<Widget> _getBlackboardItems(GameState state, Palette palette) {
+    var yourScore = context.read<PlayerProgress>().yourScore;
+
     List<Widget> items = [
       Text(
-        '1000',
+        yourScore,
         style: TextStyle(
           color: palette.trueWhite,
           fontSize: 32,
@@ -127,6 +129,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   }
 
   Widget _getGameBoard(GameState state, Palette palette) {
+    var yourScore = context.read<PlayerProgress>().yourScore;
+
     switch (state.step) {
       case 1:
         return GameBoard<MathSymbol>(
@@ -176,7 +180,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               ),
             ),
             Text(
-              '= ${state.currentAnswer}',
+              '= ${state.getCurrentAnswer(yourScore)}',
               style: TextStyle(fontSize: 40),
             ),
           ],

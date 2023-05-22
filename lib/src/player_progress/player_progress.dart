@@ -15,6 +15,7 @@ class PlayerProgress extends ChangeNotifier {
   final PlayerProgressPersistence _store;
 
   int _highestLevelReached = 0;
+  int _yourScore = 1002;
 
   /// Creates an instance of [PlayerProgress] backed by an injected
   /// persistence [store].
@@ -22,6 +23,8 @@ class PlayerProgress extends ChangeNotifier {
 
   /// The highest level that the player has reached so far.
   int get highestLevelReached => _highestLevelReached;
+
+  String get yourScore => _yourScore.round().toString();
 
   /// Fetches the latest data from the backing persistence store.
   Future<void> getLatestFromStore() async {
