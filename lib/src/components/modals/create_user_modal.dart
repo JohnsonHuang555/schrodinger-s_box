@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lottie/lottie.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/shared/types.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
@@ -15,14 +14,21 @@ class CreateUserModal {
 
     Dialogs.materialDialog(
       title: 'Enter your name',
+      titleStyle: TextStyle(
+        fontFamily: 'Saira',
+        fontWeight: FontWeight.w500,
+        fontSize: 20,
+      ),
       color: Color.fromARGB(255, 234, 238, 241),
       customView: SizedBox(
         width: 280,
         child: TextField(
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Your name',
-          ),
+              border: OutlineInputBorder(),
+              labelText: 'Your name',
+              labelStyle: TextStyle(
+                fontFamily: 'Saira',
+              )),
           controller: _controller,
           autofocus: true,
           maxLength: 12,

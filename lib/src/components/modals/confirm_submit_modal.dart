@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:provider/provider.dart';
 
-class PickItemModal {
-  static void createModal(BuildContext context, VoidCallback nextStep) {
+import '../../player_progress/player_progress.dart';
+
+class ConfirmSubmitModal {
+  static void createModal(BuildContext context) {
     Dialogs.materialDialog(
-      msg: 'Are you sure to pick these ?',
+      msg: 'Are you sure to submit ?',
       titleStyle: TextStyle(
         fontFamily: 'Saira',
         fontWeight: FontWeight.w500,
@@ -16,7 +20,7 @@ class PickItemModal {
         fontFamily: 'Saira',
         fontSize: 18,
       ),
-      title: 'Confirm',
+      title: 'Calculate',
       color: Color.fromARGB(255, 234, 238, 241),
       context: context,
       actions: [
@@ -30,9 +34,9 @@ class PickItemModal {
         IconsButton(
           onPressed: () {
             Navigator.of(context).pop();
-            Future.delayed(Duration(milliseconds: 800), () {
-              nextStep();
-            });
+            var yourScore = context.read<PlayerProgress>().yourScore;
+            var answer = context.read<GameState>().getCurrentAnswer(yourScore);
+            context.read<PlayerProgress>().saveNewScore(answer);
           },
           text: 'Yes',
           color: Colors.blueGrey,

@@ -160,7 +160,6 @@ class GameState extends ChangeNotifier {
       }
       return answer.toString();
     } catch (e) {
-      print(e);
       return '?';
     }
   }
@@ -276,4 +275,6 @@ class GameState extends ChangeNotifier {
     currentFormulaItems.clear();
     notifyListeners();
   }
+
+  void setAnswerToFirebase() {}
 }

@@ -4,13 +4,14 @@ import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/shared/types.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 
-class CalculateAnswerModal {
-  static void createModal(BuildContext context, VoidCallback confirm) {
+class CongratulationsModal {
+  static void createModal(BuildContext context) {
     Dialogs.materialDialog(
       title: 'Congratulations !',
       titleStyle: TextStyle(
-        fontSize: 20,
         fontFamily: 'Saira',
+        fontWeight: FontWeight.w500,
+        fontSize: 20,
       ),
       color: Color.fromARGB(255, 234, 238, 241),
       customView: Column(
@@ -50,7 +51,7 @@ class CalculateAnswerModal {
           onPressed: () {
             Navigator.of(context).pop();
             Future.delayed(Duration(milliseconds: 800), () {
-              confirm();
+              // confirm();
             });
           },
           text: 'Play Again',

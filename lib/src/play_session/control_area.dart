@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:game_template/src/components/modals/calculate_answer_modal.dart';
+import 'package:game_template/src/components/modals/alert_pick_item_modal.dart';
+import 'package:game_template/src/components/modals/congratulations_modal.dart';
+import 'package:game_template/src/components/modals/confirm_submit_modal.dart';
 import 'package:game_template/src/components/modals/pick_item_modal.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
+import 'package:game_template/src/play_session/confirm_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -136,12 +139,30 @@ class ControlArea extends StatelessWidget {
                   color: Colors.blueGrey,
                   onPressed: () {
                     if (step == 1 || step == 2) {
+                      if (step == 1) {
+                        // FIXME: 重複的 code
+                        // 已選擇的符號
+                        var currentSelectedSymbolCount = selectedItems
+                            .where((element) => element.symbol != null)
+                            .length;
+                        if (currentSelectedSymbolCount == 0) {
+                          AlertPickItemModal.createModal(context);
+                          return;
+                        }
+                      } else if (step == 2) {
+                        // 已選擇的數字
+                        var currentSelectedNumberCount = selectedItems
+                            .where((element) => element.number != null)
+                            .length;
+                        if (currentSelectedNumberCount == 0) {
+                          AlertPickItemModal.createModal(context);
+                          return;
+                        }
+                      }
                       PickItemModal.createModal(context, nextStep);
                     } else if (step == 3) {
                       Future.delayed(Duration(milliseconds: 200), () {
-                        CalculateAnswerModal.createModal(context, () {
-                          // TODO: 送出計算分數
-                        });
+                        ConfirmSubmitModal.createModal(context);
                       });
                     }
                   },

@@ -17,6 +17,7 @@ import 'package:lottie/lottie.dart';
 import '../ads/ads_controller.dart';
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
+import '../components/modals/congratulations_modal.dart';
 import '../game_internals/game_risk.dart';
 import '../game_internals/level_state.dart';
 import '../game_internals/selected_symbol.dart';
@@ -206,6 +207,11 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
+    // final gameState = context.watch<GameState>();
+
+    // if (gameState.newScore) {
+    //   CalculateAnswerModal.createModal(context);
+    // }
 
     return MultiProvider(
       providers: [
@@ -229,26 +235,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                 Consumer<GameState>(builder: ((context, state, child) {
                   return Column(
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            FaIcon(
-                              FontAwesomeIcons.clock,
-                              size: 22,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              '30',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontFamily: 'Saira',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
+                      SizedBox(
+                        height: 40,
                       ),
                       // 關卡風險
                       Text(

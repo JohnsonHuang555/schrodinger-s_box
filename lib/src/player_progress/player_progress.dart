@@ -19,10 +19,11 @@ class PlayerProgress extends ChangeNotifier {
 
   int _highestLevelReached = 0;
   String _playerName = '';
-  int _yourScore = 100; // 預設
+  String _yourScore = '100'; // 預設
   String _userId = '';
 
   bool _showCreateUserModal = false;
+  bool _showCongratulationsModal = false;
 
   /// Creates an instance of [PlayerProgress] backed by an injected
   /// persistence [store].
@@ -31,13 +32,14 @@ class PlayerProgress extends ChangeNotifier {
   /// The highest level that the player has reached so far.
   int get highestLevelReached => _highestLevelReached;
 
-  String get yourScore => _yourScore.round().toString();
+  String get yourScore => _yourScore;
 
   String get userId => _userId;
 
   String get playerName => _playerName;
 
   bool get showCreateUserModal => _showCreateUserModal;
+  bool get showCongratulationsModal => _showCongratulationsModal;
 
   /// Fetches the latest data from the backing persistence store.
   Future<void> getLatestFromStore() async {
@@ -55,7 +57,7 @@ class PlayerProgress extends ChangeNotifier {
         final dynamic data = event.snapshot.value;
         if (data != null) {
           _playerName = data['name'] as String;
-          _yourScore = data['score'] as int;
+          _yourScore = data['score'] as String;
           return;
         } else {
           _showCreateUserModal = true;
@@ -95,9 +97,24 @@ class PlayerProgress extends ChangeNotifier {
 
     await userInfo.set({
       'name': playerName,
-      'score': 100,
+      'score': '100',
     });
 
     _showCreateUserModal = false;
+  }
+
+  Future<void> saveNewScore(String score) async {
+    DatabaseReference userInfo = FirebaseDatabase.instance.ref('users/$userId');
+
+    await userInfo.update({
+      'score': score,
+    });
+
+    notifyListeners();
+  }
+
+  void closeCongratulationsModal() {
+    _showCongratulationsModal = false;
+    notifyListeners();
   }
 }
