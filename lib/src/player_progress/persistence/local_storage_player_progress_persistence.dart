@@ -23,4 +23,22 @@ class LocalStoragePlayerProgressPersistence extends PlayerProgressPersistence {
     final prefs = await instanceFuture;
     await prefs.setInt('highestLevelReached', level);
   }
+
+  @override
+  Future<String> getUserId() async {
+    final prefs = await instanceFuture;
+    // var uuid = Uuid();
+    // var id = uuid.v4();
+    // print("----------------------------");
+    // print(prefs.getString('userId'));
+    // print("----------------------------");
+
+    return prefs.getString('userId') ?? '';
+  }
+
+  @override
+  Future<void> setUserId(String userId) async {
+    final prefs = await instanceFuture;
+    await prefs.setString('userId', userId);
+  }
 }

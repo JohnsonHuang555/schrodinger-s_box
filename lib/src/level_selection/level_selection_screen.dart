@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:game_template/src/components/fancy_button.dart';
+import 'package:game_template/src/components/modals/create_user_modal.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,6 +24,12 @@ class LevelSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
     final playerProgress = context.watch<PlayerProgress>();
+
+    if (playerProgress.showCreateUserModal) {
+      Future.delayed(Duration(milliseconds: 1000), () {
+        CreateUserModal.createModal(context);
+      });
+    }
 
     return Scaffold(
       backgroundColor: palette.primary,

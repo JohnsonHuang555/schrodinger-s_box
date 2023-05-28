@@ -3,8 +3,11 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:ffi';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
+import 'package:uuid/uuid.dart';
 
 import 'persistence/player_progress_persistence.dart';
 
@@ -15,7 +18,11 @@ class PlayerProgress extends ChangeNotifier {
   final PlayerProgressPersistence _store;
 
   int _highestLevelReached = 0;
-  int _yourScore = 1002;
+  String _playerName = '';
+  int _yourScore = 100; // 預設
+  String _userId = '';
+
+  bool _showCreateUserModal = false;
 
   /// Creates an instance of [PlayerProgress] backed by an injected
   /// persistence [store].
@@ -26,14 +33,35 @@ class PlayerProgress extends ChangeNotifier {
 
   String get yourScore => _yourScore.round().toString();
 
+  String get userId => _userId;
+
+  String get playerName => _playerName;
+
+  bool get showCreateUserModal => _showCreateUserModal;
+
   /// Fetches the latest data from the backing persistence store.
   Future<void> getLatestFromStore() async {
-    final level = await _store.getHighestLevelReached();
-    if (level > _highestLevelReached) {
-      _highestLevelReached = level;
-      notifyListeners();
-    } else if (level < _highestLevelReached) {
-      await _store.saveHighestLevelReached(_highestLevelReached);
+    final userId = await _store.getUserId();
+    _userId = userId;
+    if (userId == '') {
+      var uuid = Uuid();
+      var createdId = uuid.v4();
+      await _store.setUserId(createdId);
+      _showCreateUserModal = true;
+    } else {
+      DatabaseReference userInfo =
+          FirebaseDatabase.instance.ref('users/$userId');
+      userInfo.onValue.listen((event) async {
+        final dynamic data = event.snapshot.value;
+        if (data != null) {
+          _playerName = data['name'] as String;
+          _yourScore = data['score'] as int;
+          return;
+        } else {
+          _showCreateUserModal = true;
+        }
+        notifyListeners();
+      });
     }
   }
 
@@ -56,5 +84,20 @@ class PlayerProgress extends ChangeNotifier {
 
       unawaited(_store.saveHighestLevelReached(level));
     }
+  }
+
+  void setPlayerName(String name) {
+    _playerName = name;
+  }
+
+  Future<void> savePlayerName() async {
+    DatabaseReference userInfo = FirebaseDatabase.instance.ref('users/$userId');
+
+    await userInfo.set({
+      'name': playerName,
+      'score': 100,
+    });
+
+    _showCreateUserModal = false;
   }
 }
