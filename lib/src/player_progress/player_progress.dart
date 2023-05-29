@@ -23,7 +23,6 @@ class PlayerProgress extends ChangeNotifier {
   String _userId = '';
 
   bool _showCreateUserModal = false;
-  bool _showCongratulationsModal = false;
 
   /// Creates an instance of [PlayerProgress] backed by an injected
   /// persistence [store].
@@ -39,7 +38,6 @@ class PlayerProgress extends ChangeNotifier {
   String get playerName => _playerName;
 
   bool get showCreateUserModal => _showCreateUserModal;
-  bool get showCongratulationsModal => _showCongratulationsModal;
 
   /// Fetches the latest data from the backing persistence store.
   Future<void> getLatestFromStore() async {
@@ -58,7 +56,6 @@ class PlayerProgress extends ChangeNotifier {
         if (data != null) {
           _playerName = data['name'] as String;
           _yourScore = data['score'] as String;
-          return;
         } else {
           _showCreateUserModal = true;
         }
@@ -103,18 +100,13 @@ class PlayerProgress extends ChangeNotifier {
     _showCreateUserModal = false;
   }
 
-  Future<void> saveNewScore(String score) async {
+  Future<bool> saveNewScore(String score) async {
     DatabaseReference userInfo = FirebaseDatabase.instance.ref('users/$userId');
 
     await userInfo.update({
-      'score': score,
+      'score': double.parse(score).round().toString(),
     });
 
-    notifyListeners();
-  }
-
-  void closeCongratulationsModal() {
-    _showCongratulationsModal = false;
-    notifyListeners();
+    return true;
   }
 }

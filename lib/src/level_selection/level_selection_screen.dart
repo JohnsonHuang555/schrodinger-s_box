@@ -128,11 +128,11 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          // Future.delayed(Duration(milliseconds: 300), () {
-                          //   // GoRouter.of(context).push('/playSession');
-                          // });
+                          Future.delayed(Duration(milliseconds: 300), () {
+                            GoRouter.of(context).push('/leaderboard');
+                          });
                         },
-                        text: 'SETTINGS',
+                        text: 'LEADERBOARD',
                         elevation: 8,
                       ),
                     ).animate().fadeIn(delay: 1400.ms),

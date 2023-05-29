@@ -7,6 +7,7 @@
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:game_template/src/leaderboard/leaderboard_screen.dart';
 import 'firebase_options.dart';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -136,7 +137,7 @@ class MyApp extends StatelessWidget {
             GoRoute(
               path: 'play',
               pageBuilder: (context, state) => buildMyTransition<void>(
-                child: const LevelSelectionScreen(key: Key('level selection')),
+                child: const LevelSelectionScreen(key: Key('play')),
                 color: context.watch<Palette>().primary,
               ),
               // routes: [
@@ -178,10 +179,15 @@ class MyApp extends StatelessWidget {
                   const PlaySessionScreen(key: Key('play session')),
             ),
             GoRoute(
-              path: 'settings',
+              path: 'leaderboard',
               builder: (context, state) =>
-                  const SettingsScreen(key: Key('settings')),
+                  const LeaderboardScreen(key: Key('leaderboard')),
             ),
+            // GoRoute(
+            //   path: 'settings',
+            //   builder: (context, state) =>
+            //       const SettingsScreen(key: Key('settings')),
+            // ),
           ]),
     ],
   );

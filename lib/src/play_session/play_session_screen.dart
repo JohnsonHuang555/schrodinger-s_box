@@ -207,20 +207,9 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
-    // final gameState = context.watch<GameState>();
-
-    // if (gameState.newScore) {
-    //   CalculateAnswerModal.createModal(context);
-    // }
 
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider(
-        //   create: (context) => LevelState(
-        //     goal: widget.level.difficulty,
-        //     onWin: _playerWon,
-        //   ),
-        // ),
         ChangeNotifierProvider(
           create: (context) => GameState(),
         ),

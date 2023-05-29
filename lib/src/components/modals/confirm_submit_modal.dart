@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_template/src/components/modals/congratulations_modal.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
@@ -36,7 +37,14 @@ class ConfirmSubmitModal {
             Navigator.of(context).pop();
             var yourScore = context.read<PlayerProgress>().yourScore;
             var answer = context.read<GameState>().getCurrentAnswer(yourScore);
-            context.read<PlayerProgress>().saveNewScore(answer);
+            var result = context.read<PlayerProgress>().saveNewScore(answer);
+            result.then((value) {
+              if (value) {
+                CongratulationsModal.createModal(context, answer);
+              } else {
+                // TODO: error...
+              }
+            });
           },
           text: 'Yes',
           color: Colors.blueGrey,

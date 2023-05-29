@@ -52,7 +52,7 @@ class CreateUserModal {
       ),
       customViewPosition: CustomViewPosition.BEFORE_ACTION,
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: false,
       actions: [
         IconsButton(
           onPressed: () {

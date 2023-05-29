@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/shared/types.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 
 class CongratulationsModal {
-  static void createModal(BuildContext context) {
+  static void createModal(BuildContext context, String answer) {
     Dialogs.materialDialog(
       title: 'Congratulations !',
       titleStyle: TextStyle(
@@ -23,7 +24,7 @@ class CongratulationsModal {
             ),
           ),
           Text(
-            '500',
+            answer,
             style: TextStyle(
               fontSize: 30,
               fontFamily: 'Saira',
@@ -32,6 +33,7 @@ class CongratulationsModal {
         ],
       ),
       customViewPosition: CustomViewPosition.BEFORE_ACTION,
+      barrierDismissible: false,
       lottieBuilder: Lottie.asset(
         'assets/animations/congrats.json',
         fit: BoxFit.contain,
@@ -41,6 +43,7 @@ class CongratulationsModal {
         IconsButton(
           onPressed: () {
             Navigator.of(context).pop();
+            GoRouter.of(context).push('/play');
           },
           text: 'Return Menu',
           iconData: Icons.arrow_back_rounded,
@@ -50,9 +53,7 @@ class CongratulationsModal {
         IconsButton(
           onPressed: () {
             Navigator.of(context).pop();
-            Future.delayed(Duration(milliseconds: 800), () {
-              // confirm();
-            });
+            GoRouter.of(context).push('/playSession');
           },
           text: 'Play Again',
           iconData: Icons.replay,
