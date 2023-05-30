@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:game_template/src/components/fancy_button.dart';
+import 'package:game_template/src/components/modals/close_game_modal.dart';
 import 'package:game_template/src/components/modals/create_user_modal.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -112,9 +113,9 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          // Future.delayed(Duration(milliseconds: 300), () {
-                          //   // GoRouter.of(context).push('/playSession');
-                          // });
+                          Future.delayed(Duration(milliseconds: 300), () {
+                            GoRouter.of(context).push('/leaderboard');
+                          });
                         },
                         text: 'RULES',
                         elevation: 8,
@@ -128,9 +129,7 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          Future.delayed(Duration(milliseconds: 300), () {
-                            GoRouter.of(context).push('/leaderboard');
-                          });
+                          Future.delayed(Duration(milliseconds: 300), () {});
                         },
                         text: 'LEADERBOARD',
                         elevation: 8,
@@ -145,9 +144,7 @@ class LevelSelectionScreen extends StatelessWidget {
                         color: Colors.blueGrey,
                         onPressed: () {
                           // throw StateError('whoa!');
-                          // Future.delayed(Duration(milliseconds: 300), () {
-                          //   // GoRouter.of(context).push('/playSession');
-                          // });
+                          CloseGameModal.createModal(context);
                         },
                         text: 'CLOSE',
                         elevation: 8,
