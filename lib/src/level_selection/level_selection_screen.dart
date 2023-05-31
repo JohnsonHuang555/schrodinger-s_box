@@ -53,7 +53,7 @@ class LevelSelectionScreen extends StatelessWidget {
             ),
             Center(
               child: Text(
-                playerProgress.yourScore, // TODO: from firebase
+                playerProgress.yourScore,
                 style: TextStyle(
                   fontSize: 50,
                   color: Color.fromARGB(255, 33, 33, 33),
@@ -85,7 +85,7 @@ class LevelSelectionScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 45),
+            SizedBox(height: 30),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,6 +142,18 @@ class LevelSelectionScreen extends StatelessWidget {
                     child: Animate(
                       child: FancyButton.text(
                         color: Colors.blueGrey,
+                        onPressed: () {},
+                        text: 'SETTINGS',
+                        elevation: 8,
+                      ),
+                    ).animate().fadeIn(delay: 1600.ms),
+                  ),
+                  Container(
+                    width: 250,
+                    margin: EdgeInsets.all(16),
+                    child: Animate(
+                      child: FancyButton.text(
+                        color: Colors.blueGrey,
                         onPressed: () {
                           // throw StateError('whoa!');
                           CloseGameModal.createModal(context);
@@ -149,7 +161,7 @@ class LevelSelectionScreen extends StatelessWidget {
                         text: 'CLOSE',
                         elevation: 8,
                       ),
-                    ).animate().fadeIn(delay: 1600.ms),
+                    ).animate().fadeIn(delay: 1800.ms),
                   ),
                 ],
               ),

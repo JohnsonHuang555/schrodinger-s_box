@@ -5,7 +5,7 @@
 import 'dart:async';
 import 'dart:ffi';
 
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -39,6 +39,8 @@ class PlayerProgress extends ChangeNotifier {
 
   bool get showCreateUserModal => _showCreateUserModal;
 
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
   /// Fetches the latest data from the backing persistence store.
   Future<void> getLatestFromStore() async {
     final userId = await _store.getUserId();
@@ -49,19 +51,18 @@ class PlayerProgress extends ChangeNotifier {
       await _store.setUserId(createdId);
       _showCreateUserModal = true;
     } else {
-      DatabaseReference userInfo =
-          FirebaseDatabase.instance.ref('users/$userId');
-      userInfo.onValue.listen((event) async {
-        final dynamic data = event.snapshot.value;
-        if (data != null) {
+      final userInfoRef = db.collection('users').doc(userId);
+      await userInfoRef.get().then((doc) {
+        if (doc.exists) {
+          final data = doc.data() as Map<String, dynamic>;
           _playerName = data['name'] as String;
-          _yourScore = data['score'] as String;
+          _yourScore = data['score'].toString();
         } else {
           _showCreateUserModal = true;
         }
-        notifyListeners();
       });
     }
+    notifyListeners();
   }
 
   /// Resets the player's progress so it's like if they just started
@@ -90,22 +91,19 @@ class PlayerProgress extends ChangeNotifier {
   }
 
   Future<void> savePlayerName() async {
-    DatabaseReference userInfo = FirebaseDatabase.instance.ref('users/$userId');
-
-    await userInfo.set({
+    final city = {
       'name': playerName,
-      'score': '100',
-    });
+      'score': 100,
+    };
+
+    await db.collection('users').doc(userId).set(city);
 
     _showCreateUserModal = false;
   }
 
   Future<bool> saveNewScore(String score) async {
-    DatabaseReference userInfo = FirebaseDatabase.instance.ref('users/$userId');
-
-    await userInfo.update({
-      'score': double.parse(score).round().toString(),
-    });
+    final data = {'score': double.parse(score).round()};
+    await db.collection('users').doc(userId).set(data, SetOptions(merge: true));
 
     return true;
   }

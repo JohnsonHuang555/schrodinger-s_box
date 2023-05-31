@@ -183,11 +183,11 @@ class MyApp extends StatelessWidget {
               builder: (context, state) =>
                   const LeaderboardScreen(key: Key('leaderboard')),
             ),
-            // GoRoute(
-            //   path: 'settings',
-            //   builder: (context, state) =>
-            //       const SettingsScreen(key: Key('settings')),
-            // ),
+            GoRoute(
+              path: 'settings',
+              builder: (context, state) =>
+                  const SettingsScreen(key: Key('settings')),
+            ),
           ]),
     ],
   );

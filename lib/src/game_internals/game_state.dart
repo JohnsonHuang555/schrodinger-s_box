@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:function_tree/function_tree.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 import './game_risk.dart';
 import './selected_symbol.dart';
@@ -15,7 +14,6 @@ enum MathSymbol {
 }
 
 class GameState extends ChangeNotifier {
-  FirebaseDatabase database = FirebaseDatabase.instance;
   int? risk;
   List<MathSymbol> mathSymbols = [];
   List<double> numbers = [];

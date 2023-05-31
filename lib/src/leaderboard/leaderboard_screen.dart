@@ -40,7 +40,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           image: const Center(
             child: Icon(Icons.waving_hand, size: 50.0),
           ),
-          // decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Title of blue page",
@@ -49,7 +48,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           image: const Center(
             child: Icon(Icons.waving_hand, size: 50.0),
           ),
-          // decoration: pageDecoration,
         )
       ],
     );
