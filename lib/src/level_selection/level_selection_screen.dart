@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:game_template/src/components/fancy_button.dart';
 import 'package:game_template/src/components/modals/close_game_modal.dart';
 import 'package:game_template/src/components/modals/create_user_modal.dart';
+import 'package:game_template/src/game_internals/helpers.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -65,7 +66,7 @@ class LevelSelectionScreen extends StatelessWidget {
             SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 FaIcon(
                   FontAwesomeIcons.crown,
                   size: 24,
@@ -75,7 +76,7 @@ class LevelSelectionScreen extends StatelessWidget {
                   width: 10,
                 ),
                 Text(
-                  '1st',
+                  Helpers.getOrdinalSuffix(playerProgress.yourRank),
                   style: TextStyle(
                     fontSize: 26,
                     color: Color.fromARGB(255, 131, 84, 7),

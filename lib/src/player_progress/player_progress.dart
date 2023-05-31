@@ -18,9 +18,10 @@ class PlayerProgress extends ChangeNotifier {
   final PlayerProgressPersistence _store;
 
   int _highestLevelReached = 0;
+  String _userId = '';
   String _playerName = '';
   String _yourScore = '100'; // 預設
-  String _userId = '';
+  int _yourRank = 0;
 
   bool _showCreateUserModal = false;
 
@@ -31,11 +32,10 @@ class PlayerProgress extends ChangeNotifier {
   /// The highest level that the player has reached so far.
   int get highestLevelReached => _highestLevelReached;
 
-  String get yourScore => _yourScore;
-
   String get userId => _userId;
-
   String get playerName => _playerName;
+  String get yourScore => _yourScore;
+  int get yourRank => _yourRank;
 
   bool get showCreateUserModal => _showCreateUserModal;
 
@@ -51,12 +51,14 @@ class PlayerProgress extends ChangeNotifier {
       await _store.setUserId(createdId);
       _showCreateUserModal = true;
     } else {
-      final userInfoRef = db.collection('users').doc(userId);
-      await userInfoRef.get().then((doc) {
+      final usersRef = db.collection('users');
+      await usersRef.doc(userId).get().then((doc) async {
         if (doc.exists) {
           final data = doc.data() as Map<String, dynamic>;
           _playerName = data['name'] as String;
           _yourScore = data['score'].toString();
+          final rank = await getUserRank();
+          _yourRank = rank;
         } else {
           _showCreateUserModal = true;
         }
@@ -106,5 +108,27 @@ class PlayerProgress extends ChangeNotifier {
     await db.collection('users').doc(userId).set(data, SetOptions(merge: true));
 
     return true;
+  }
+
+  Future<int> getUserRank() async {
+    final usersRef = db.collection('users');
+
+    // 步驟1：取得自己的使用者資料
+    final selfUserDoc = await usersRef.doc(userId).get();
+    final selfUser = selfUserDoc.data();
+
+    // 步驟2：取得自己的分數
+    final selfScore = selfUser!['score'] as int;
+
+    // 步驟3：查詢分數比自己高的使用者數量
+    final higherScoreUsersQuery =
+        usersRef.where('score', isGreaterThan: selfScore);
+    final higherScoreUsersSnapshot = await higherScoreUsersQuery.get();
+    final higherScoreUsersCount = higherScoreUsersSnapshot.docs.length;
+
+    // 步驟4：計算自己的排名
+    final selfRank = higherScoreUsersCount + 1;
+
+    return selfRank;
   }
 }
