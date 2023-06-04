@@ -130,7 +130,9 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          Future.delayed(Duration(milliseconds: 300), () {});
+                          Future.delayed(Duration(milliseconds: 300), () {
+                            GoRouter.of(context).push('/leaderboard');
+                          });
                         },
                         text: 'LEADERBOARD',
                         elevation: 8,

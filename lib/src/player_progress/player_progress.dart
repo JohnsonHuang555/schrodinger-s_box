@@ -20,7 +20,7 @@ class PlayerProgress extends ChangeNotifier {
   int _highestLevelReached = 0;
   String _userId = '';
   String _playerName = '';
-  String _yourScore = '100'; // 預設
+  String _yourScore = '---'; // 預設
   int _yourRank = 0;
 
   bool _showCreateUserModal = false;

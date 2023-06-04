@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:introduction_screen/introduction_screen.dart';
+import 'package:game_template/src/leaderboard/player.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../player_progress/player_progress.dart';
+import '../style/palette.dart';
+import '../style/responsive_screen.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({super.key});
@@ -10,46 +15,76 @@ class LeaderboardScreen extends StatefulWidget {
 }
 
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
-  final _introKey = GlobalKey<IntroductionScreenState>();
+  Future<List<DocumentSnapshot>> getTopTenUsers() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        // .orderBy('score', descending: true)
+        .limit(10)
+        .get();
+
+    return querySnapshot.docs;
+  }
 
   @override
   Widget build(BuildContext context) {
-    const bodyStyle = TextStyle(fontSize: 19.0);
-    const pageDecoration = PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
-      bodyTextStyle: bodyStyle,
-      bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      pageColor: Colors.white,
-      imagePadding: EdgeInsets.zero,
-    );
+    final palette = context.watch<Palette>();
+    var yourScore = context.read<PlayerProgress>().yourScore;
 
-    return IntroductionScreen(
-      key: _introKey,
-      showNextButton: false,
-      back: const Icon(Icons.arrow_back),
-      done: const Text("Done"),
-      onDone: () {
-        GoRouter.of(context).push('/play');
+    return FutureBuilder(
+      future: getTopTenUsers(),
+      builder: (context, snapshot) {
+        // if (snapshot.connectionState == ConnectionState.waiting) {
+        //   return Text('Loading...'); // 加載中的指示器
+        // }
+
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        List<dynamic> topTenUsers = snapshot.data as List<dynamic>;
+
+        return Scaffold(
+          backgroundColor: palette.backgroundSettings,
+          body: ResponsiveScreen(
+            squarishMainArea: Container(
+              child: Column(
+                children: [
+                  Text(
+                    'TOP 10',
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontFamily: 'Saira',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  for (final user in topTenUsers)
+                    SingleChildScrollView(
+                      child: Row(
+                        children: [
+                          Text(user.id as String),
+                          Text(user['name'] as String),
+                          Text(user['score'].toString()),
+                        ],
+                      ),
+                    )
+                ],
+              ),
+            ),
+            rectangularMenuArea: Column(
+              children: [
+                Divider(
+                  thickness: 3,
+                  color: palette.secondary,
+                ),
+                LeaderboardPlayer(
+                  name: 'You',
+                  score: yourScore,
+                ),
+              ],
+            ),
+          ),
+        );
       },
-      safeAreaList: const [true, true, true, true],
-      pages: [
-        PageViewModel(
-          title: "Title of blue page",
-          body:
-              "Welcome to the app! This is a description on a page with a blue background.",
-          image: const Center(
-            child: Icon(Icons.waving_hand, size: 50.0),
-          ),
-        ),
-        PageViewModel(
-          title: "Title of blue page",
-          body:
-              "Welcome to the app! This is a description on a page with a blue background.",
-          image: const Center(
-            child: Icon(Icons.waving_hand, size: 50.0),
-          ),
-        )
-      ],
     );
   }
 }
