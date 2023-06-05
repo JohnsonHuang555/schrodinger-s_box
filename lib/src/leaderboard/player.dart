@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/widgets.dart';
 
 class LeaderboardPlayer extends StatelessWidget {
   final String name;
   final String score;
+  final bool highlight;
   const LeaderboardPlayer({
     super.key,
     required this.name,
     required this.score,
+    required this.highlight,
   });
 
   @override
@@ -26,6 +25,7 @@ class LeaderboardPlayer extends StatelessWidget {
             style: TextStyle(
               fontSize: 22,
               fontFamily: 'Saira',
+              color: highlight ? Colors.orange[900] : null,
             ),
           ),
         ),
@@ -36,6 +36,7 @@ class LeaderboardPlayer extends StatelessWidget {
             style: TextStyle(
               fontSize: 22,
               fontFamily: 'Saira',
+              color: highlight ? Colors.orange[900] : null,
             ),
           ),
         ),
