@@ -3,12 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/shared/types.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:provider/provider.dart';
 
 import '../../player_progress/player_progress.dart';
 
 /// 建立玩家資料 Modal
-class CreateUserModal {
+class EditUserModal {
   static void createModal(BuildContext context) {
     final TextEditingController controller = TextEditingController();
 
@@ -54,6 +55,13 @@ class CreateUserModal {
       context: context,
       barrierDismissible: false,
       actions: [
+        IconsOutlineButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          text: 'Cancel',
+          textStyle: TextStyle(color: Colors.grey),
+        ),
         IconsButton(
           onPressed: () {
             var value = context.read<PlayerProgress>().playerName;
@@ -62,7 +70,7 @@ class CreateUserModal {
             }
             Navigator.of(context).pop();
             Future.delayed(Duration(milliseconds: 800), () {
-              context.read<PlayerProgress>().savePlayerName();
+              context.read<PlayerProgress>().editPlayerName();
             });
           },
           text: 'OK',

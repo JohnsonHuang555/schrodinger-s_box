@@ -3,6 +3,8 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:game_template/src/components/fancy_button.dart';
+import 'package:game_template/src/components/modals/edit_user_modal.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +18,7 @@ import 'settings.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  static const _gap = SizedBox(height: 60);
+  static const _gap = SizedBox(height: 40);
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +26,16 @@ class SettingsScreen extends StatelessWidget {
     final palette = context.watch<Palette>();
 
     return Scaffold(
-      backgroundColor: palette.backgroundSettings,
+      backgroundColor: palette.primary,
       body: ResponsiveScreen(
-        squarishMainArea: ListView(
+        squarishMainArea: Column(
           children: [
-            _gap,
-            const Text(
+            Text(
               'Settings',
-              textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Permanent Marker',
-                fontSize: 55,
-                height: 1,
+                fontSize: 30,
+                fontFamily: 'Saira',
+                fontWeight: FontWeight.w500,
               ),
             ),
             _gap,
@@ -85,27 +85,19 @@ class SettingsScreen extends StatelessWidget {
                 onSelected: callback,
               );
             }),
-            _SettingsLine(
-              'Reset progress',
-              const Icon(Icons.delete),
-              onSelected: () {
-                context.read<PlayerProgress>().reset();
-
-                final messenger = ScaffoldMessenger.of(context);
-                messenger.showSnackBar(
-                  const SnackBar(
-                      content: Text('Player progress has been reset.')),
-                );
-              },
-            ),
-            _gap,
+            const _LanguageLine('Language'),
           ],
         ),
-        rectangularMenuArea: ElevatedButton(
-          onPressed: () {
-            GoRouter.of(context).pop();
-          },
-          child: const Text('Back'),
+        rectangularMenuArea: SizedBox(
+          width: double.infinity,
+          child: FancyButton.text(
+            color: Colors.blueGrey,
+            onPressed: () {
+              GoRouter.of(context).pop();
+            },
+            text: 'BACK',
+            elevation: 8,
+          ),
         ),
       ),
     );
@@ -119,30 +111,29 @@ class _NameChangeLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.watch<SettingsController>();
+    final playerProgress = context.watch<PlayerProgress>();
 
     return InkResponse(
       highlightShape: BoxShape.rectangle,
-      onTap: () => showCustomNameDialog(context),
+      onTap: () => EditUserModal.createModal(context),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title,
-                style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 30,
-                )),
+            Text(
+              title,
+              style: const TextStyle(
+                fontFamily: 'Saira',
+                fontSize: 24,
+              ),
+            ),
             const Spacer(),
-            ValueListenableBuilder(
-              valueListenable: settings.playerName,
-              builder: (context, name, child) => Text(
-                '‘$name’',
-                style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 30,
-                ),
+            Text(
+              playerProgress.playerName,
+              style: const TextStyle(
+                fontFamily: 'Saira',
+                fontSize: 24,
               ),
             ),
           ],
@@ -173,11 +164,50 @@ class _SettingsLine extends StatelessWidget {
           children: [
             Text(title,
                 style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 30,
+                  fontFamily: 'Saira',
+                  fontSize: 24,
                 )),
             const Spacer(),
             icon,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LanguageLine extends StatelessWidget {
+  final String title;
+
+  const _LanguageLine(this.title);
+
+  @override
+  Widget build(BuildContext context) {
+    final playerProgress = context.watch<PlayerProgress>();
+
+    return InkResponse(
+      highlightShape: BoxShape.rectangle,
+      onTap: () => showCustomNameDialog(context),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontFamily: 'Saira',
+                fontSize: 24,
+              ),
+            ),
+            const Spacer(),
+            Text(
+              playerProgress.playerName,
+              style: const TextStyle(
+                fontFamily: 'Saira',
+                fontSize: 24,
+              ),
+            ),
           ],
         ),
       ),

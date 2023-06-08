@@ -93,19 +93,36 @@ class PlayerProgress extends ChangeNotifier {
   }
 
   Future<void> savePlayerName() async {
-    final city = {
+    final userInfo = {
       'name': playerName,
       'score': 100,
     };
 
-    await db.collection('users').doc(userId).set(city);
+    await db.collection('users').doc(userId).set(userInfo);
 
     _showCreateUserModal = false;
+    notifyListeners();
+  }
+
+  Future<void> editPlayerName() async {
+    final userInfo = {
+      'name': playerName,
+    };
+
+    await db
+        .collection('users')
+        .doc(userId)
+        .set(userInfo, SetOptions(merge: true));
+
+    _showCreateUserModal = false;
+    notifyListeners();
   }
 
   Future<bool> saveNewScore(String score) async {
     final data = {'score': double.parse(score).round()};
     await db.collection('users').doc(userId).set(data, SetOptions(merge: true));
+
+    _yourScore = score;
 
     return true;
   }

@@ -114,9 +114,9 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          Future.delayed(Duration(milliseconds: 300), () {
-                            GoRouter.of(context).push('/leaderboard');
-                          });
+                          // Future.delayed(Duration(milliseconds: 300), () {
+                          // GoRouter.of(context).push('/leaderboard');
+                          // });
                         },
                         text: 'RULES',
                         elevation: 8,
@@ -130,9 +130,9 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          Future.delayed(Duration(milliseconds: 300), () {
-                            GoRouter.of(context).push('/leaderboard');
-                          });
+                          // Future.delayed(Duration(milliseconds: 300), () {
+                          GoRouter.of(context).push('/leaderboard');
+                          // });
                         },
                         text: 'LEADERBOARD',
                         elevation: 8,
@@ -145,7 +145,9 @@ class LevelSelectionScreen extends StatelessWidget {
                     child: Animate(
                       child: FancyButton.text(
                         color: Colors.blueGrey,
-                        onPressed: () {},
+                        onPressed: () {
+                          GoRouter.of(context).push('/settings');
+                        },
                         text: 'SETTINGS',
                         elevation: 8,
                       ),
@@ -169,34 +171,8 @@ class LevelSelectionScreen extends StatelessWidget {
                 ],
               ),
             )
-            // Expanded(
-            //   child: ListView(
-            //     children: [
-            //       for (final level in gameLevels)
-            //         ListTile(
-            //           enabled: playerProgress.highestLevelReached >=
-            //               level.number - 1,
-            //           onTap: () {
-            //             final audioController = context.read<AudioController>();
-            //             audioController.playSfx(SfxType.buttonTap);
-
-            //             GoRouter.of(context)
-            //                 .go('/play/session/${level.number}');
-            //           },
-            //           leading: Text(level.number.toString()),
-            //           title: Text('Level #${level.number}'),
-            //         )
-            //     ],
-            //   ),
-            // ),
           ],
         ),
-        // rectangularMenuArea: ElevatedButton(
-        //   onPressed: () {
-        //     GoRouter.of(context).go('/');
-        //   },
-        //   child: const Text('Back'),
-        // ),
         rectangularMenuArea: Container(),
       ),
     );
