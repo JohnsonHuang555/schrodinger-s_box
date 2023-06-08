@@ -2,28 +2,27 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_template/src/components/fancy_button.dart';
 import 'package:game_template/src/components/modals/close_game_modal.dart';
 import 'package:game_template/src/components/modals/create_user_modal.dart';
 import 'package:game_template/src/game_internals/helpers.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../audio/audio_controller.dart';
-import '../audio/sounds.dart';
 import '../player_progress/player_progress.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
-import 'levels.dart';
 
 class LevelSelectionScreen extends StatelessWidget {
   const LevelSelectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    context.setLocale(Locale('zh', 'TW'));
     final palette = context.watch<Palette>();
     final playerProgress = context.watch<PlayerProgress>();
 
@@ -43,14 +42,14 @@ class LevelSelectionScreen extends StatelessWidget {
             ),
             Center(
               child: Text(
-                'Score',
+                'score',
                 style: TextStyle(
                   fontSize: 28,
                   color: Color.fromARGB(255, 33, 33, 33),
                   fontFamily: 'Saira',
                   fontWeight: FontWeight.w500,
                 ),
-              ),
+              ).tr(),
             ),
             Center(
               child: Text(

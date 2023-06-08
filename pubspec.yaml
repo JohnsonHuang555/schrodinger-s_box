@@ -28,6 +28,7 @@ dependencies:
   material_dialogs: ^1.1.4
   uuid: ^3.0.7
   introduction_screen: ^3.1.8
+  easy_localization: ^3.0.2
 
   # If you don't need one of the following dependencies,
   # delete the relevant line below, and get rid of any Dart code
@@ -37,7 +38,6 @@ dependencies:
   games_services: ^3.0.0 # Achievements and leaderboards
   google_mobile_ads: ^2.0.1 # Ads
   in_app_purchase: ^3.0.1 # In-app purchases
-  firebase_database: ^10.2.1
   cloud_firestore: ^4.8.0
 
 dev_dependencies:
@@ -56,6 +56,7 @@ flutter:
     - assets/music/
     - assets/sfx/
     - assets/animations/
+    - assets/translations/
 
   fonts:
     - family: Permanent Marker
