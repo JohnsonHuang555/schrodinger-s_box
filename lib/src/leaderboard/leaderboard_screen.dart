@@ -27,6 +27,19 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     return querySnapshot.docs;
   }
 
+  List<Widget> getPlayers(List<dynamic> topTenUsers, int rank, String userId) {
+    List<Widget> list = [];
+    for (final user in topTenUsers) {
+      list.add(LeaderboardPlayer(
+        rank: rank++,
+        name: user['name'] as String,
+        score: user['score'].toString(),
+        highlight: userId == user.id as String,
+      ));
+    }
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
@@ -66,6 +79,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         }
 
         List<dynamic> topTenUsers = snapshot.data as List<dynamic>;
+        var rank = 1;
 
         return Scaffold(
           backgroundColor: palette.primary,
@@ -84,14 +98,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   thickness: 3,
                   color: palette.secondary,
                 ),
-                for (final user in topTenUsers)
-                  SingleChildScrollView(
-                    child: LeaderboardPlayer(
-                      name: user['name'] as String,
-                      score: user['score'].toString(),
-                      highlight: playerProgress.userId == user.id as String,
+                Expanded(
+                  child: ListView(
+                    children: getPlayers(
+                      topTenUsers,
+                      rank,
+                      playerProgress.userId,
                     ),
-                  )
+                  ),
+                )
               ],
             ),
             rectangularMenuArea: Column(

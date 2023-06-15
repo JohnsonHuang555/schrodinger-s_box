@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LeaderboardPlayer extends StatelessWidget {
+  final int? rank;
   final String name;
   final String score;
   final bool highlight;
@@ -9,12 +10,27 @@ class LeaderboardPlayer extends StatelessWidget {
     required this.name,
     required this.score,
     required this.highlight,
+    this.rank,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        rank != null
+            ? SizedBox(
+                width: 20,
+                child: Center(
+                  child: Text(
+                    rank.toString(),
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontFamily: 'Saira',
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
         SizedBox(
           width: 10,
         ),
@@ -25,7 +41,7 @@ class LeaderboardPlayer extends StatelessWidget {
             style: TextStyle(
               fontSize: 22,
               fontFamily: 'Saira',
-              color: highlight ? Colors.orange[900] : null,
+              color: highlight ? Colors.deepOrange[800] : null,
             ),
           ),
         ),
@@ -36,12 +52,9 @@ class LeaderboardPlayer extends StatelessWidget {
             style: TextStyle(
               fontSize: 22,
               fontFamily: 'Saira',
-              color: highlight ? Colors.orange[900] : null,
+              color: highlight ? Colors.deepOrange[800] : null,
             ),
           ),
-        ),
-        SizedBox(
-          width: 10,
         ),
       ],
     );
