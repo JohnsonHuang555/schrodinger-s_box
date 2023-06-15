@@ -22,7 +22,6 @@ class LevelSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.setLocale(Locale('zh', 'TW'));
     final palette = context.watch<Palette>();
     final playerProgress = context.watch<PlayerProgress>();
 

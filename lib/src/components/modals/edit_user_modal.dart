@@ -25,11 +25,12 @@ class EditUserModal {
         width: 280,
         child: TextField(
           decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Your name',
-              labelStyle: TextStyle(
-                fontFamily: 'Saira',
-              )),
+            border: OutlineInputBorder(),
+            labelText: 'Your name',
+            labelStyle: TextStyle(
+              fontFamily: 'Saira',
+            ),
+          ),
           controller: controller,
           autofocus: true,
           maxLength: 12,

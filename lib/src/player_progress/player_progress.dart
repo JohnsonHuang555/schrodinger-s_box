@@ -49,6 +49,7 @@ class PlayerProgress extends ChangeNotifier {
       var uuid = Uuid();
       var createdId = uuid.v4();
       await _store.setUserId(createdId);
+      _userId = createdId;
       _showCreateUserModal = true;
     } else {
       final usersRef = db.collection('users');
@@ -100,6 +101,7 @@ class PlayerProgress extends ChangeNotifier {
 
     await db.collection('users').doc(userId).set(userInfo);
 
+    _yourScore = '100';
     _showCreateUserModal = false;
     notifyListeners();
   }
