@@ -96,9 +96,7 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          // Future.delayed(Duration(milliseconds: 100), () {
                           GoRouter.of(context).push('/playSession');
-                          // });
                         },
                         text: 'PLAY',
                         elevation: 8,
@@ -111,11 +109,7 @@ class LevelSelectionScreen extends StatelessWidget {
                     child: Animate(
                       child: FancyButton.text(
                         color: Colors.blueGrey,
-                        onPressed: () {
-                          // Future.delayed(Duration(milliseconds: 300), () {
-                          // GoRouter.of(context).push('/leaderboard');
-                          // });
-                        },
+                        onPressed: () {},
                         text: 'RULES',
                         elevation: 8,
                       ),
@@ -128,9 +122,7 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          // Future.delayed(Duration(milliseconds: 300), () {
                           GoRouter.of(context).push('/leaderboard');
-                          // });
                         },
                         text: 'LEADERBOARD',
                         elevation: 8,
@@ -158,7 +150,6 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          // throw StateError('whoa!');
                           CloseGameModal.createModal(context);
                         },
                         text: 'CLOSE',

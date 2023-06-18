@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_template/src/components/modals/alert_pick_item_modal.dart';
 import 'package:game_template/src/components/modals/congratulations_modal.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:material_dialogs/material_dialogs.dart';
@@ -37,12 +38,16 @@ class ConfirmSubmitModal {
             Navigator.of(context).pop();
             var yourScore = context.read<PlayerProgress>().yourScore;
             var answer = context.read<GameState>().getCurrentAnswer(yourScore);
+            if (answer == '?' || answer == 'x') {
+              AlertPickItemModal.createModal(context, 'Format is wrong');
+              return;
+            }
             var result = context.read<PlayerProgress>().saveNewScore(answer);
             result.then((value) {
               if (value) {
                 CongratulationsModal.createModal(context, answer);
               } else {
-                // TODO: error...
+                throw StateError('error! confirm modal');
               }
             });
           },

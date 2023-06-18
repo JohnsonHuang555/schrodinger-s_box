@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:game_template/src/components/modals/leave_playing_modal.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/play_session/control_area.dart';
 import 'package:game_template/src/play_session/game_board.dart';
@@ -194,11 +195,11 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   String _getDescription(int step) {
     switch (step) {
       case 1:
-        return 'choose symbols';
+        return 'Choose symbols';
       case 2:
-        return 'choose numbers';
+        return 'Choose numbers';
       case 3:
-        return 'combine math formula';
+        return 'Combine math formula';
       default:
         return 'Something wrong...';
     }
@@ -218,59 +219,66 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         ignoring: _duringCelebration,
         child: Scaffold(
           backgroundColor: palette.primary,
-          body: SafeArea(
-            child: Stack(
-              children: [
-                Consumer<GameState>(builder: ((context, state, child) {
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: 40,
-                      ),
-                      // 關卡風險
-                      Text(
-                        'Risk ${state.risk}',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontFamily: 'Saira',
-                          fontWeight: FontWeight.w500,
+          body: WillPopScope(
+            onWillPop: () async {
+              var shouldExist = await LeavePlayingModal.createModal(context);
+              print(shouldExist);
+              return shouldExist;
+            },
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  Consumer<GameState>(builder: ((context, state, child) {
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 40,
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        _getDescription(state.step),
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Saira',
-                          fontWeight: FontWeight.w300,
+                        // 關卡風險
+                        Text(
+                          'Risk ${state.risk}',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontFamily: 'Saira',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      // 盒子
-                      Expanded(
-                        flex: state.step == 3 ? 1 : 2,
-                        child: _getGameBoard(state, palette),
-                      ),
-                      // 內容物
-                      Expanded(
-                        child: ControlArea(
-                          selectedItems: state.selectedItems,
-                          step: state.step,
-                          nextStep: state.nextStep,
-                          currentFormulaItems: state.currentFormulaItems,
-                          onAnswerSelect: (item) {
-                            state.selectAnswer(item);
-                          },
-                          clearAnswer: () {
-                            state.clearAnswer();
-                          },
+                        SizedBox(
+                          height: 20,
                         ),
-                      ),
-                    ],
-                  );
-                }))
-              ],
+                        Text(
+                          _getDescription(state.step),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Saira',
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        // 盒子
+                        Expanded(
+                          flex: state.step == 3 ? 1 : 2,
+                          child: _getGameBoard(state, palette),
+                        ),
+                        // 內容物
+                        Expanded(
+                          child: ControlArea(
+                            selectedItems: state.selectedItems,
+                            step: state.step,
+                            nextStep: state.nextStep,
+                            currentFormulaItems: state.currentFormulaItems,
+                            onAnswerSelect: (item) {
+                              state.selectAnswer(item);
+                            },
+                            clearAnswer: () {
+                              state.clearAnswer();
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  }))
+                ],
+              ),
             ),
           ),
         ),

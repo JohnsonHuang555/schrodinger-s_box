@@ -68,27 +68,6 @@ class PlayerProgress extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Resets the player's progress so it's like if they just started
-  /// playing the game for the first time.
-  void reset() {
-    _highestLevelReached = 0;
-    notifyListeners();
-    _store.saveHighestLevelReached(_highestLevelReached);
-  }
-
-  /// Registers [level] as reached.
-  ///
-  /// If this is higher than [highestLevelReached], it will update that
-  /// value and save it to the injected persistence store.
-  void setLevelReached(int level) {
-    if (level > _highestLevelReached) {
-      _highestLevelReached = level;
-      notifyListeners();
-
-      unawaited(_store.saveHighestLevelReached(level));
-    }
-  }
-
   void setPlayerName(String name) {
     _playerName = name;
   }
@@ -122,11 +101,18 @@ class PlayerProgress extends ChangeNotifier {
 
   Future<bool> saveNewScore(String score) async {
     final data = {'score': double.parse(score).round()};
-    await db.collection('users').doc(userId).set(data, SetOptions(merge: true));
-
-    _yourScore = score;
-
-    return true;
+    try {
+      await db
+          .collection('users')
+          .doc(userId)
+          .set(data, SetOptions(merge: true));
+      _yourScore = score;
+      final rank = await getUserRank();
+      _yourRank = rank;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<int> getUserRank() async {

@@ -138,24 +138,32 @@ class ControlArea extends StatelessWidget {
                 child: FancyButton.text(
                   color: Colors.blueGrey,
                   onPressed: () {
+                    // 已選擇的符號
+                    var currentSelectedSymbolCount = selectedItems
+                        .where((element) => element.symbol != null)
+                        .length;
+
+                    // 已選擇的數字
+                    var currentSelectedNumberCount = selectedItems
+                        .where((element) => element.number != null)
+                        .length;
                     if (step == 1 || step == 2) {
                       if (step == 1) {
-                        // FIXME: 重複的 code
-                        // 已選擇的符號
-                        var currentSelectedSymbolCount = selectedItems
-                            .where((element) => element.symbol != null)
-                            .length;
                         if (currentSelectedSymbolCount == 0) {
-                          AlertPickItemModal.createModal(context);
+                          AlertPickItemModal.createModal(
+                              context, 'Choose at least 1 item');
                           return;
                         }
                       } else if (step == 2) {
-                        // 已選擇的數字
-                        var currentSelectedNumberCount = selectedItems
-                            .where((element) => element.number != null)
-                            .length;
                         if (currentSelectedNumberCount == 0) {
-                          AlertPickItemModal.createModal(context);
+                          AlertPickItemModal.createModal(
+                              context, 'Choose at least 1 item');
+                          return;
+                        }
+                        if (currentSelectedNumberCount <
+                            currentSelectedSymbolCount) {
+                          AlertPickItemModal.createModal(context,
+                              'Choose at least $currentSelectedSymbolCount items');
                           return;
                         }
                       }

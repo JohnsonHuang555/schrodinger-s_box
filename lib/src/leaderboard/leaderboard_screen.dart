@@ -116,7 +116,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   color: palette.secondary,
                 ),
                 LeaderboardPlayer(
-                  name: 'You',
+                  name: 'Your Score',
                   score: playerProgress.yourScore,
                   highlight: false,
                 ),

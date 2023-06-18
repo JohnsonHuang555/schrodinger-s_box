@@ -43,7 +43,7 @@ class CongratulationsModal {
         IconsButton(
           onPressed: () {
             Navigator.of(context).pop();
-            GoRouter.of(context).push('/play');
+            GoRouter.of(context).pushReplacement('/play');
           },
           text: 'Return Menu',
           iconData: Icons.arrow_back_rounded,
@@ -53,11 +53,11 @@ class CongratulationsModal {
         IconsButton(
           onPressed: () {
             Navigator.of(context).pop();
-            GoRouter.of(context).push('/playSession');
+            GoRouter.of(context).pushReplacement('/playSession');
           },
           text: 'Play Again',
           iconData: Icons.replay,
-          color: Colors.deepOrange,
+          color: Colors.blueGrey,
           textStyle: TextStyle(color: Color.fromARGB(255, 234, 238, 241)),
           iconColor: Color.fromARGB(255, 234, 238, 241),
         ),

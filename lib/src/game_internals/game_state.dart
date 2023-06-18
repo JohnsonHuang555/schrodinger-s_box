@@ -186,15 +186,6 @@ class GameState extends ChangeNotifier {
     if (selectedItems.isEmpty) {
       return;
     }
-    // 要等於 step 1 的數量
-    if (step == 2) {
-      // 已選擇的符號
-      var currentSelectedSymbolCount =
-          selectedItems.where((element) => element.symbol != null).length;
-      if (selectedItems.length != currentSelectedSymbolCount * 2) {
-        return;
-      }
-    }
 
     showChooseResult = true;
     Future.delayed(Duration(milliseconds: 2000), () {
@@ -236,13 +227,12 @@ class GameState extends ChangeNotifier {
         }
       }
 
-      // 已選擇的符號
-      var currentSelectedSymbolCount =
-          selectedItems.where((element) => element.symbol != null).length;
+      // 已選擇的數字
+      var currentSelectedNumber =
+          selectedItems.where((element) => element.number != null).length + 1;
 
       // 第二階段依照第一階段選幾個就要選幾個
-      if (!isExist &&
-          currentSelectedSymbolCount * 2 >= selectedItems.length + 1) {
+      if (!isExist && currentSelectedNumber <= 3) {
         selectedItems.add(SelectedItem(
           index: index,
           number: number,
@@ -273,6 +263,4 @@ class GameState extends ChangeNotifier {
     currentFormulaItems.clear();
     notifyListeners();
   }
-
-  void setAnswerToFirebase() {}
 }
