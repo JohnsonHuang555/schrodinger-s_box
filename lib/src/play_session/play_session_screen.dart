@@ -38,7 +38,8 @@ class PlaySessionScreen extends StatefulWidget {
   State<PlaySessionScreen> createState() => _PlaySessionScreenState();
 }
 
-class _PlaySessionScreenState extends State<PlaySessionScreen> {
+class _PlaySessionScreenState extends State<PlaySessionScreen>
+    with WidgetsBindingObserver {
   static final _log = Logger('PlaySessionScreen');
 
   static const _celebrationDuration = Duration(milliseconds: 2000);
@@ -47,7 +48,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   bool _duringCelebration = false;
 
-  late DateTime _startOfPlay;
+  late BuildContext appContext;
 
   List<Widget> _getBlackboardItems(GameState state, Palette palette) {
     var yourScore = context.read<PlayerProgress>().yourScore;
@@ -207,6 +208,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    appContext = context;
     final palette = context.watch<Palette>();
 
     return MultiProvider(
@@ -222,7 +224,6 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
           body: WillPopScope(
             onWillPop: () async {
               var shouldExist = await LeavePlayingModal.createModal(context);
-              print(shouldExist);
               return shouldExist;
             },
             child: SafeArea(
@@ -289,8 +290,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   @override
   void initState() {
     super.initState();
-
-    _startOfPlay = DateTime.now();
+    WidgetsBinding.instance.addObserver(this);
 
     // Preload ad for the win screen.
     final adsRemoved =
@@ -301,15 +301,20 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      LeavePlayingModal.deductTotalScore(appContext);
+    }
+  }
+
   Future<void> _playerWon() async {
-    // _log.info('Level ${widget.level.number} won');
-
-    // final score = Score(
-    //   widget.level.number,
-    //   widget.level.difficulty,
-    //   DateTime.now().difference(_startOfPlay),
-    // );
-
     final playerProgress = context.read<PlayerProgress>();
     // playerProgress.setLevelReached(widget.level.number);
 

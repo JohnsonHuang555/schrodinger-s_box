@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:provider/provider.dart';
+
+import '../../player_progress/player_progress.dart';
 
 class LeavePlayingModal {
   static Future<bool> createModal(BuildContext context) async {
@@ -33,6 +36,7 @@ class LeavePlayingModal {
         IconsButton(
           onPressed: () {
             Navigator.of(context).pop();
+            deductTotalScore(context);
             confirm = true;
           },
           text: 'Yes',
@@ -42,5 +46,16 @@ class LeavePlayingModal {
       ],
     );
     return confirm;
+  }
+
+  static void deductTotalScore(BuildContext context) {
+    var playerProgress = context.read<PlayerProgress>();
+    var yourNewScore = double.parse(playerProgress.yourScore).round() * 0.95;
+    var result = playerProgress.saveNewScore(yourNewScore.round().toString());
+    result.then((value) {
+      if (!value) {
+        throw StateError('error! confirm modal');
+      }
+    });
   }
 }

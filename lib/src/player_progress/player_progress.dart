@@ -112,6 +112,8 @@ class PlayerProgress extends ChangeNotifier {
       return true;
     } catch (e) {
       return false;
+    } finally {
+      notifyListeners();
     }
   }
 
