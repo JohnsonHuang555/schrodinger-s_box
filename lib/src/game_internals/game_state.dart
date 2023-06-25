@@ -25,7 +25,7 @@ class GameState extends ChangeNotifier {
   int step = 1;
 
   GameState() {
-    risk = _getRandomNumber(3);
+    risk = _getRandomNumber(10);
     mathSymbols = _getCurrentSymbols();
     numbers = _getCurrentNumbers();
   }
@@ -42,6 +42,27 @@ class GameState extends ChangeNotifier {
         break;
       case 3:
         symbols = GameRisk.symbolRisk3();
+        break;
+      case 4:
+        symbols = GameRisk.symbolRisk4();
+        break;
+      case 5:
+        symbols = GameRisk.symbolRisk5();
+        break;
+      case 6:
+        symbols = GameRisk.symbolRisk6();
+        break;
+      case 7:
+        symbols = GameRisk.symbolRisk7();
+        break;
+      case 8:
+        symbols = GameRisk.symbolRisk8();
+        break;
+      case 9:
+        symbols = GameRisk.symbolRisk9();
+        break;
+      case 10:
+        symbols = GameRisk.symbolRisk10();
         break;
       default:
         symbols = GameRisk.symbolRisk1();
@@ -62,6 +83,27 @@ class GameState extends ChangeNotifier {
         break;
       case 3:
         numbers = GameRisk.numberRisk3();
+        break;
+      case 4:
+        numbers = GameRisk.numberRisk4();
+        break;
+      case 5:
+        numbers = GameRisk.numberRisk5();
+        break;
+      case 6:
+        numbers = GameRisk.numberRisk6();
+        break;
+      case 7:
+        numbers = GameRisk.numberRisk7();
+        break;
+      case 8:
+        numbers = GameRisk.numberRisk8();
+        break;
+      case 9:
+        numbers = GameRisk.numberRisk9();
+        break;
+      case 10:
+        numbers = GameRisk.numberRisk10();
         break;
       default:
         numbers = GameRisk.numberRisk1();

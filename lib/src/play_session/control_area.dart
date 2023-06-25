@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_template/src/components/modals/alert_pick_item_modal.dart';
-import 'package:game_template/src/components/modals/congratulations_modal.dart';
 import 'package:game_template/src/components/modals/confirm_submit_modal.dart';
 import 'package:game_template/src/components/modals/pick_item_modal.dart';
 import 'package:game_template/src/game_internals/selected_symbol.dart';
-import 'package:game_template/src/play_session/confirm_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -60,7 +58,7 @@ class ControlArea extends StatelessWidget {
             border: isSelect.id != ''
                 ? Border.all(
                     width: 6,
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: Color.fromARGB(255, 246, 246, 246),
                   )
                 : null,
           ),

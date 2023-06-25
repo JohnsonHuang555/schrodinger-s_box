@@ -110,7 +110,7 @@ class _GameCardState extends State<GameCard> {
                     border: isChecked
                         ? Border.all(
                             width: 6,
-                            color: Color.fromARGB(255, 255, 255, 255),
+                            color: Color.fromARGB(255, 246, 246, 246),
                           )
                         : null,
                   ),
