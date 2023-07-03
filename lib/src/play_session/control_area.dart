@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_template/src/components/modals/alert_pick_item_modal.dart';
@@ -149,19 +150,22 @@ class ControlArea extends StatelessWidget {
                       if (step == 1) {
                         if (currentSelectedSymbolCount == 0) {
                           AlertPickItemModal.createModal(
-                              context, 'Choose at least 1 item');
+                              context, 'alert_choose_at_least'.tr(args: ['1']));
                           return;
                         }
                       } else if (step == 2) {
                         if (currentSelectedNumberCount == 0) {
                           AlertPickItemModal.createModal(
-                              context, 'Choose at least 1 item');
+                              context, 'alert_choose_at_least'.tr(args: ['1']));
                           return;
                         }
                         if (currentSelectedNumberCount <
                             currentSelectedSymbolCount) {
-                          AlertPickItemModal.createModal(context,
-                              'Choose at least $currentSelectedSymbolCount items');
+                          AlertPickItemModal.createModal(
+                              context,
+                              'alert_choose_at_least'.tr(args: [
+                                currentSelectedSymbolCount.toString()
+                              ]));
                           return;
                         }
                       }
@@ -172,7 +176,7 @@ class ControlArea extends StatelessWidget {
                       });
                     }
                   },
-                  text: step == 3 ? 'SUBMIT' : 'NEXT',
+                  text: step == 3 ? 'submit'.tr() : 'next'.tr(),
                   elevation: 8,
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_dialogs/material_dialogs.dart';
@@ -14,7 +15,7 @@ class EditUserModal {
     final TextEditingController controller = TextEditingController();
 
     Dialogs.materialDialog(
-      title: 'Enter your name',
+      title: 'edit_your_name'.tr(),
       titleStyle: TextStyle(
         fontFamily: 'Saira',
         fontWeight: FontWeight.w500,
@@ -26,7 +27,7 @@ class EditUserModal {
         child: TextField(
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: 'Your name',
+            labelText: 'your_name'.tr(),
             labelStyle: TextStyle(
               fontFamily: 'Saira',
             ),
@@ -60,7 +61,7 @@ class EditUserModal {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          text: 'Cancel',
+          text: 'cancel'.tr(),
           textStyle: TextStyle(color: Colors.grey),
         ),
         IconsButton(
@@ -74,7 +75,7 @@ class EditUserModal {
               context.read<PlayerProgress>().editPlayerName();
             });
           },
-          text: 'OK',
+          text: 'ok'.tr(),
           color: Colors.blueGrey,
           textStyle: TextStyle(color: Color.fromARGB(255, 234, 238, 241)),
         ),

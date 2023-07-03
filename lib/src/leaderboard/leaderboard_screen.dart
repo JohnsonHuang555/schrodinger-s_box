@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:game_template/src/components/fancy_button.dart';
 import 'package:game_template/src/leaderboard/player.dart';
@@ -53,7 +54,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             backgroundColor: palette.primary,
             body: Center(
               child: Text(
-                'Loading...',
+                'loading'.tr(),
                 style: TextStyle(
                   fontFamily: 'Saira',
                   fontSize: 26,
@@ -116,7 +117,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   color: palette.secondary,
                 ),
                 LeaderboardPlayer(
-                  name: 'Your Score',
+                  name: 'your_score'.tr(),
                   score: playerProgress.yourScore,
                   highlight: false,
                 ),
@@ -130,7 +131,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                     onPressed: () {
                       GoRouter.of(context).pop();
                     },
-                    text: 'BACK',
+                    text: 'back'.tr(),
                     elevation: 8,
                   ),
                 ),

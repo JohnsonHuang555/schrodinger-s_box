@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_template/src/components/fancy_button.dart';
+import 'package:game_template/src/components/modals/before_start_game_modal.dart';
 import 'package:game_template/src/components/modals/close_game_modal.dart';
 import 'package:game_template/src/components/modals/create_user_modal.dart';
 import 'package:game_template/src/game_internals/helpers.dart';
@@ -96,9 +97,9 @@ class LevelSelectionScreen extends StatelessWidget {
                       child: FancyButton.text(
                         color: Colors.blueGrey,
                         onPressed: () {
-                          GoRouter.of(context).push('/playSession');
+                          BeforeStartGameModal.createModal(context);
                         },
-                        text: 'PLAY',
+                        text: 'play'.tr(),
                         elevation: 8,
                       ),
                     ).animate().fadeIn(delay: 1000.ms),
@@ -109,22 +110,10 @@ class LevelSelectionScreen extends StatelessWidget {
                     child: Animate(
                       child: FancyButton.text(
                         color: Colors.blueGrey,
-                        onPressed: () {},
-                        text: 'RULES',
-                        elevation: 8,
-                      ),
-                    ).animate().fadeIn(delay: 1200.ms),
-                  ),
-                  Container(
-                    width: 250,
-                    margin: EdgeInsets.all(16),
-                    child: Animate(
-                      child: FancyButton.text(
-                        color: Colors.blueGrey,
                         onPressed: () {
                           GoRouter.of(context).push('/leaderboard');
                         },
-                        text: 'LEADERBOARD',
+                        text: 'leaderboard'.tr(),
                         elevation: 8,
                       ),
                     ).animate().fadeIn(delay: 1400.ms),
@@ -138,7 +127,7 @@ class LevelSelectionScreen extends StatelessWidget {
                         onPressed: () {
                           GoRouter.of(context).push('/settings');
                         },
-                        text: 'SETTINGS',
+                        text: 'settings'.tr(),
                         elevation: 8,
                       ),
                     ).animate().fadeIn(delay: 1600.ms),
@@ -152,7 +141,7 @@ class LevelSelectionScreen extends StatelessWidget {
                         onPressed: () {
                           CloseGameModal.createModal(context);
                         },
-                        text: 'CLOSE',
+                        text: 'close'.tr(),
                         elevation: 8,
                       ),
                     ).animate().fadeIn(delay: 1800.ms),

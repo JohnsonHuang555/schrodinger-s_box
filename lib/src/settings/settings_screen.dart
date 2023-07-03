@@ -31,21 +31,21 @@ class SettingsScreen extends StatelessWidget {
         squarishMainArea: Column(
           children: [
             Text(
-              'Settings',
+              'settings_screen',
               style: TextStyle(
                 fontSize: 30,
                 fontFamily: 'Saira',
                 fontWeight: FontWeight.w500,
               ),
-            ),
+            ).tr(),
             _gap,
-            const _NameChangeLine(
-              'Name',
+            _NameChangeLine(
+              'name',
             ),
             ValueListenableBuilder<bool>(
               valueListenable: settings.soundsOn,
               builder: (context, soundsOn, child) => _SettingsLine(
-                'Sound FX',
+                'sound_fx',
                 Icon(soundsOn ? Icons.graphic_eq : Icons.volume_off),
                 onSelected: () => settings.toggleSoundsOn(),
               ),
@@ -53,7 +53,7 @@ class SettingsScreen extends StatelessWidget {
             ValueListenableBuilder<bool>(
               valueListenable: settings.musicOn,
               builder: (context, musicOn, child) => _SettingsLine(
-                'Music',
+                'music',
                 Icon(musicOn ? Icons.music_note : Icons.music_off),
                 onSelected: () => settings.toggleMusicOn(),
               ),
@@ -85,7 +85,7 @@ class SettingsScreen extends StatelessWidget {
                 onSelected: callback,
               );
             }),
-            const _LanguageLine('Language'),
+            const _LanguageLine('language'),
           ],
         ),
         rectangularMenuArea: SizedBox(
@@ -95,7 +95,7 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () {
               GoRouter.of(context).pop();
             },
-            text: 'BACK',
+            text: 'back'.tr(),
             elevation: 8,
           ),
         ),
@@ -107,7 +107,7 @@ class SettingsScreen extends StatelessWidget {
 class _NameChangeLine extends StatelessWidget {
   final String title;
 
-  const _NameChangeLine(this.title);
+  _NameChangeLine(this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +127,7 @@ class _NameChangeLine extends StatelessWidget {
                 fontFamily: 'Saira',
                 fontSize: 24,
               ),
-            ),
+            ).tr(),
             const Spacer(),
             Text(
               playerProgress.playerName,
@@ -162,11 +162,13 @@ class _SettingsLine extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title,
-                style: const TextStyle(
-                  fontFamily: 'Saira',
-                  fontSize: 24,
-                )),
+            Text(
+              title,
+              style: const TextStyle(
+                fontFamily: 'Saira',
+                fontSize: 24,
+              ),
+            ).tr(),
             const Spacer(),
             icon,
           ],
@@ -184,7 +186,6 @@ class _LanguageLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String currentLanguage = context.locale.toString();
-    print(currentLanguage);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -198,7 +199,7 @@ class _LanguageLine extends StatelessWidget {
               fontFamily: 'Saira',
               fontSize: 24,
             ),
-          ),
+          ).tr(),
           const Spacer(),
           Expanded(
             flex: 2,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_dialogs/material_dialogs.dart';
@@ -13,7 +14,7 @@ class CreateUserModal {
     final TextEditingController controller = TextEditingController();
 
     Dialogs.materialDialog(
-      title: 'Enter your name',
+      title: 'enter_your_name'.tr(),
       titleStyle: TextStyle(
         fontFamily: 'Saira',
         fontWeight: FontWeight.w500,
@@ -25,7 +26,7 @@ class CreateUserModal {
         child: TextField(
           decoration: InputDecoration(
               border: OutlineInputBorder(),
-              labelText: 'Your name',
+              labelText: 'your_name'.tr(),
               labelStyle: TextStyle(
                 fontFamily: 'Saira',
               )),
@@ -65,7 +66,7 @@ class CreateUserModal {
               context.read<PlayerProgress>().savePlayerName();
             });
           },
-          text: 'OK',
+          text: 'ok'.tr(),
           color: Colors.blueGrey,
           textStyle: TextStyle(color: Color.fromARGB(255, 234, 238, 241)),
         ),

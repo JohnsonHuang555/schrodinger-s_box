@@ -4,28 +4,22 @@
 
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_template/src/components/modals/leave_playing_modal.dart';
 import 'package:game_template/src/game_internals/game_state.dart';
 import 'package:game_template/src/play_session/control_area.dart';
 import 'package:game_template/src/play_session/game_board.dart';
-import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
 import 'package:provider/provider.dart';
-import 'package:lottie/lottie.dart';
 
 import '../ads/ads_controller.dart';
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
-import '../components/modals/congratulations_modal.dart';
 import '../game_internals/game_risk.dart';
-import '../game_internals/level_state.dart';
-import '../game_internals/selected_symbol.dart';
 import '../games_services/games_services.dart';
-import '../games_services/score.dart';
 import '../in_app_purchase/in_app_purchase.dart';
-import '../level_selection/levels.dart';
 import '../player_progress/player_progress.dart';
 import '../style/palette.dart';
 
@@ -196,11 +190,11 @@ class _PlaySessionScreenState extends State<PlaySessionScreen>
   String _getDescription(int step) {
     switch (step) {
       case 1:
-        return 'Choose symbols';
+        return 'choose_symbols'.tr();
       case 2:
-        return 'Choose numbers';
+        return 'choose_numbers'.tr();
       case 3:
-        return 'Combine math formula';
+        return 'combine_math_formula'.tr();
       default:
         return 'Something wrong...';
     }
@@ -237,13 +231,13 @@ class _PlaySessionScreenState extends State<PlaySessionScreen>
                         ),
                         // 關卡風險
                         Text(
-                          'Risk ${state.risk}',
+                          'risk',
                           style: TextStyle(
                             fontSize: 24,
                             fontFamily: 'Saira',
                             fontWeight: FontWeight.w500,
                           ),
-                        ),
+                        ).tr(args: [state.risk.toString()]),
                         SizedBox(
                           height: 20,
                         ),

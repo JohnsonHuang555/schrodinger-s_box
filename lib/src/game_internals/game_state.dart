@@ -112,19 +112,6 @@ class GameState extends ChangeNotifier {
     return _shuffleArray(numbers);
   }
 
-  String get currentStep {
-    switch (step) {
-      case 1:
-        return '符號';
-      case 2:
-        return '數字';
-      case 3:
-        return '組合';
-      default:
-        return '';
-    }
-  }
-
   // 關卡提示內容物
   List<IconData> get hint {
     List<IconData> icons;
@@ -195,10 +182,8 @@ class GameState extends ChangeNotifier {
 
     try {
       var answer = result.interpret();
-      if (answer.toInt() == answer) {
-        return answer.toInt().toString();
-      }
-      return answer.toString();
+      print(result);
+      return answer.toInt().toString();
     } catch (e) {
       return '?';
     }

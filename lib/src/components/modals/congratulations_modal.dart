@@ -18,9 +18,10 @@ class CongratulationsModal {
       customView: Column(
         children: [
           Text(
-            'your new score',
+            'Your new score',
             style: TextStyle(
               fontFamily: 'Saira',
+              fontSize: 18,
             ),
           ),
           Text(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:game_template/src/components/modals/alert_pick_item_modal.dart';
 import 'package:game_template/src/components/modals/congratulations_modal.dart';
@@ -12,7 +13,7 @@ import '../../player_progress/player_progress.dart';
 class ConfirmSubmitModal {
   static void createModal(BuildContext context) {
     Dialogs.materialDialog(
-      msg: 'Are you sure to submit ?',
+      msg: 'confirm_submit'.tr(),
       titleStyle: TextStyle(
         fontFamily: 'Saira',
         fontWeight: FontWeight.w500,
@@ -22,7 +23,7 @@ class ConfirmSubmitModal {
         fontFamily: 'Saira',
         fontSize: 18,
       ),
-      title: 'Calculate',
+      title: 'calculate'.tr(),
       color: Color.fromARGB(255, 234, 238, 241),
       context: context,
       actions: [
@@ -30,7 +31,7 @@ class ConfirmSubmitModal {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          text: 'No',
+          text: 'no'.tr(),
           textStyle: TextStyle(color: Colors.grey),
         ),
         IconsButton(
@@ -51,7 +52,7 @@ class ConfirmSubmitModal {
               }
             });
           },
-          text: 'Yes',
+          text: 'yes'.tr(),
           color: Colors.blueGrey,
           textStyle: TextStyle(color: Colors.white),
         ),

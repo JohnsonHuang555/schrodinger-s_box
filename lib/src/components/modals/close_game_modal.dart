@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_dialogs/material_dialogs.dart';
@@ -9,7 +10,7 @@ import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 class CloseGameModal {
   static void createModal(BuildContext context) {
     Dialogs.materialDialog(
-      msg: 'Do you want to leave?',
+      msg: 'exit_hint'.tr(),
       titleStyle: TextStyle(
         fontFamily: 'Saira',
         fontWeight: FontWeight.w500,
@@ -17,9 +18,9 @@ class CloseGameModal {
       ),
       msgStyle: TextStyle(
         fontFamily: 'Saira',
-        fontSize: 16,
+        fontSize: 18,
       ),
-      title: 'Exit',
+      title: 'exit'.tr(),
       color: Color.fromARGB(255, 234, 238, 241),
       context: context,
       actions: [
@@ -27,7 +28,7 @@ class CloseGameModal {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          text: 'NO',
+          text: 'no'.tr(),
           textStyle: TextStyle(color: Colors.grey),
         ),
         IconsButton(
@@ -39,7 +40,7 @@ class CloseGameModal {
               exit(0);
             }
           },
-          text: 'YES',
+          text: 'yes'.tr(),
           color: Colors.blueGrey,
           textStyle: TextStyle(color: Colors.white),
         ),

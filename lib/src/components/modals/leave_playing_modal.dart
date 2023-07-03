@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
@@ -10,8 +11,7 @@ class LeavePlayingModal {
   static Future<bool> createModal(BuildContext context) async {
     var confirm = false;
     await Dialogs.materialDialog(
-      msg:
-          'Are you sure you want to leave? This will deduct 5% of the total points.',
+      msg: 'leave_playing_desc'.tr(),
       titleStyle: TextStyle(
         fontFamily: 'Saira',
         fontWeight: FontWeight.w500,
@@ -21,7 +21,7 @@ class LeavePlayingModal {
         fontFamily: 'Saira',
         fontSize: 18,
       ),
-      title: 'Alert',
+      title: 'alert'.tr(),
       color: Color.fromARGB(255, 234, 238, 241),
       context: context,
       actions: [
@@ -30,7 +30,7 @@ class LeavePlayingModal {
             Navigator.of(context).pop();
             confirm = false;
           },
-          text: 'No',
+          text: 'no'.tr(),
           textStyle: TextStyle(color: Colors.grey),
         ),
         IconsButton(
@@ -39,7 +39,7 @@ class LeavePlayingModal {
             deductTotalScore(context);
             confirm = true;
           },
-          text: 'Yes',
+          text: 'yes'.tr(),
           color: Colors.blueGrey,
           textStyle: TextStyle(color: Colors.white),
         ),

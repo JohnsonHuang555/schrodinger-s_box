@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
@@ -13,9 +14,9 @@ class AlertPickItemModal {
       ),
       msgStyle: TextStyle(
         fontFamily: 'Saira',
-        fontSize: 16,
+        fontSize: 18,
       ),
-      title: 'Alert',
+      title: 'alert'.tr(),
       color: Color.fromARGB(255, 234, 238, 241),
       context: context,
       actions: [

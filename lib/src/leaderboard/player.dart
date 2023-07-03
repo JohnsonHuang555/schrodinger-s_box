@@ -19,7 +19,7 @@ class LeaderboardPlayer extends StatelessWidget {
       children: [
         rank != null
             ? SizedBox(
-                width: 20,
+                width: 10,
                 child: Center(
                   child: Text(
                     rank.toString(),
@@ -32,7 +32,7 @@ class LeaderboardPlayer extends StatelessWidget {
               )
             : Container(),
         SizedBox(
-          width: 10,
+          width: rank != null ? 30 : 10,
         ),
         Expanded(
           flex: 2,
