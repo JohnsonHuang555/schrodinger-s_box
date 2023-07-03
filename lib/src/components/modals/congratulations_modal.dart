@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
@@ -8,7 +9,7 @@ import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 class CongratulationsModal {
   static void createModal(BuildContext context, String answer) {
     Dialogs.materialDialog(
-      title: 'Congratulations !',
+      title: 'congrats'.tr(),
       titleStyle: TextStyle(
         fontFamily: 'Saira',
         fontWeight: FontWeight.w500,
@@ -18,7 +19,7 @@ class CongratulationsModal {
       customView: Column(
         children: [
           Text(
-            'Your new score',
+            'your_new_score'.tr(),
             style: TextStyle(
               fontFamily: 'Saira',
               fontSize: 18,
@@ -46,7 +47,7 @@ class CongratulationsModal {
             Navigator.of(context).pop();
             GoRouter.of(context).pushReplacement('/play');
           },
-          text: 'Return Menu',
+          text: 'return_menu'.tr(),
           iconData: Icons.arrow_back_rounded,
           textStyle: TextStyle(color: Colors.blueGrey),
           iconColor: Colors.blueGrey,
@@ -56,7 +57,7 @@ class CongratulationsModal {
             Navigator.of(context).pop();
             GoRouter.of(context).pushReplacement('/playSession');
           },
-          text: 'Play Again',
+          text: 'play_again'.tr(),
           iconData: Icons.replay,
           color: Colors.blueGrey,
           textStyle: TextStyle(color: Color.fromARGB(255, 234, 238, 241)),
