@@ -44,5 +44,6 @@
   "your_name": "Your name",
   "cancel": "Cancel",
   "loading": "Loading...",
-  "settings_screen": "Settings"
+  "settings_screen": "Settings",
+  "error_name_exist": "Name is exist."
 }

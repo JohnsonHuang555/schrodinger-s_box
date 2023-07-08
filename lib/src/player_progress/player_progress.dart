@@ -18,6 +18,7 @@ class PlayerProgress extends ChangeNotifier {
 
   int _highestLevelReached = 0;
   String _userId = '';
+  String _editedPlayerName = '';
   String _playerName = '';
   String _yourScore = '---'; // 預設
   int _yourRank = 0;
@@ -33,6 +34,7 @@ class PlayerProgress extends ChangeNotifier {
 
   String get userId => _userId;
   String get playerName => _playerName;
+  String get editedPlayerName => _editedPlayerName;
   String get yourScore => _yourScore;
   int get yourRank => _yourRank;
 
@@ -68,26 +70,52 @@ class PlayerProgress extends ChangeNotifier {
   }
 
   void setPlayerName(String name) {
-    _playerName = name;
+    _editedPlayerName = name;
   }
 
-  Future<void> savePlayerName() async {
+  Future<bool> savePlayerName() async {
     final userInfo = {
-      'name': playerName,
+      'name': editedPlayerName,
       'score': 100,
     };
+
+    // 檢查資料庫是否存在相同的名稱
+    final querySnapshot = await db
+        .collection('users')
+        .where('name', isEqualTo: editedPlayerName)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // 名稱已存在，返回錯誤訊息或提示
+      notifyListeners();
+      return false;
+    }
 
     await db.collection('users').doc(userId).set(userInfo);
 
     _yourScore = '100';
+    _playerName = editedPlayerName;
     _showCreateUserModal = false;
     notifyListeners();
+    return true;
   }
 
-  Future<void> editPlayerName() async {
+  Future<bool> editPlayerName() async {
     final userInfo = {
-      'name': playerName,
+      'name': editedPlayerName,
     };
+
+    // 檢查資料庫是否存在相同的名稱
+    final querySnapshot = await db
+        .collection('users')
+        .where('name', isEqualTo: editedPlayerName)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // 名稱已存在，返回錯誤訊息或提示
+      notifyListeners();
+      return false;
+    }
 
     await db
         .collection('users')
@@ -95,7 +123,9 @@ class PlayerProgress extends ChangeNotifier {
         .set(userInfo, SetOptions(merge: true));
 
     _showCreateUserModal = false;
+    _playerName = editedPlayerName;
     notifyListeners();
+    return true;
   }
 
   Future<bool> saveNewScore(String score) async {

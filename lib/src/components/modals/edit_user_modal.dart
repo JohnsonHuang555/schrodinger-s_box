@@ -8,14 +8,21 @@ import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:provider/provider.dart';
 
 import '../../player_progress/player_progress.dart';
+import '../../style/palette.dart';
 
 /// 建立玩家資料 Modal
 class EditUserModal {
   static void createModal(BuildContext context) {
+    final palette = context.read<Palette>();
     final TextEditingController controller = TextEditingController();
 
+    var errorSnackBar = SnackBar(
+      content: Text('error_name_exist').tr(),
+      backgroundColor: palette.alert,
+    );
+
     Dialogs.materialDialog(
-      title: 'edit_your_name'.tr(),
+      title: 'enter_your_name'.tr(),
       titleStyle: TextStyle(
         fontFamily: 'Saira',
         fontWeight: FontWeight.w500,
@@ -49,7 +56,13 @@ class EditUserModal {
               return;
             }
             Navigator.pop(context);
-            context.read<PlayerProgress>().savePlayerName();
+            context.read<PlayerProgress>().editPlayerName().then((success) {
+              if (success) {
+                Navigator.of(context).pop();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
+              }
+            });
           },
         ),
       ),
@@ -66,13 +79,17 @@ class EditUserModal {
         ),
         IconsButton(
           onPressed: () {
-            var value = context.read<PlayerProgress>().playerName;
-            if (value == '') {
+            var editedPlayerName =
+                context.read<PlayerProgress>().editedPlayerName;
+            if (editedPlayerName == '') {
               return;
             }
-            Navigator.of(context).pop();
-            Future.delayed(Duration(milliseconds: 800), () {
-              context.read<PlayerProgress>().editPlayerName();
+            context.read<PlayerProgress>().editPlayerName().then((success) {
+              if (success) {
+                Navigator.of(context).pop();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
+              }
             });
           },
           text: 'ok'.tr(),

@@ -44,5 +44,6 @@
   "your_name": "你的名字",
   "cancel": "取消",
   "loading": "載入中...",
-  "settings_screen": "設定"
+  "settings_screen": "設定",
+  "error_name_exist": "名稱已存在"
 }

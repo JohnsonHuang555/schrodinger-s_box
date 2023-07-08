@@ -26,8 +26,9 @@ class LevelSelectionScreen extends StatelessWidget {
     final palette = context.watch<Palette>();
     final playerProgress = context.watch<PlayerProgress>();
 
-    if (playerProgress.showCreateUserModal) {
-      Future.delayed(Duration(milliseconds: 1000), () {
+    if (playerProgress.showCreateUserModal &&
+        playerProgress.editedPlayerName == '') {
+      Future.delayed(Duration(milliseconds: 100), () {
         CreateUserModal.createModal(context);
       });
     }

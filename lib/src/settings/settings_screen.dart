@@ -107,7 +107,7 @@ class SettingsScreen extends StatelessWidget {
 class _NameChangeLine extends StatelessWidget {
   final String title;
 
-  _NameChangeLine(this.title);
+  const _NameChangeLine(this.title);
 
   @override
   Widget build(BuildContext context) {
